@@ -1,5 +1,5 @@
 export function getDrawArea(canvas) {
-    console.log("Canvas height: ", canvas.height, ", width: ", canvas.width)
+    // console.log("Canvas height: ", canvas.height, ", width: ", canvas.width)
     const kitchenWidth = 206;
     const kitchenHeight = 156;
     const border = 5;

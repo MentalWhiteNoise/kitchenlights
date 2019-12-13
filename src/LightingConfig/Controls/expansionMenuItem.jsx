@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 export default function ExpansionMenuItem(props){
     return(
-      <ListItem>
+      <ListItem style={{padding:0, margin:0}}>
       <ExpansionPanel
         square 
         expanded={props.Expand}
@@ -17,7 +17,7 @@ export default function ExpansionMenuItem(props){
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />} >
         <Typography >{props.Label}</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails>
+      <ExpansionPanelDetails  style={{padding:0, margin:0}}>
       {props.children}
       </ExpansionPanelDetails>
       </ExpansionPanel>

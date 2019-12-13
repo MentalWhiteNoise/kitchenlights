@@ -18,9 +18,9 @@ export default function ColorMenu(props){
         {Value:ColorMode.OFF, Label:"OFF"},
         {Value:ColorMode.WHITEONLY, Label:"WHITEONLY"},
         {Value:ColorMode.CONSTANT, Label:"CONSTANT"},
-        {Value:ColorMode.RANDOM, Label:"RANDOM"},
+        {Value:ColorMode.ORDERED, Label:"ORDERED"},
         {Value:ColorMode.ALTERNATE, Label:"ALTERNATE"},
-        {Value:ColorMode.ORDERED, Label:"ORDERED"}
+        {Value:ColorMode.RANDOM, Label:"RANDOM"}
       ]}
     />
     <Divider />
@@ -35,9 +35,8 @@ export default function ColorMenu(props){
           Color={Lighting.Transition.ColorArray[0]} 
           onChange={set_color}
           Disabled={Lighting.ColorMode !== ColorMode.CONSTANT}
-        >
-        Color
-      </ColorPicker>
+          label = "Color"
+        />
     </ListItem>
     </>);
   }

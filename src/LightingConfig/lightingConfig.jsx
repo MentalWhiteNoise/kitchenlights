@@ -54,6 +54,7 @@ export default function ConfigMenu(props){
             set_transitionchasetarget={props.set_transitionchasetarget}
             set_transitionchasespeed={props.set_transitionchasespeed}
             set_transitionchasewidth={props.set_transitionchasewidth}
+            set_transitioncolorarray={props.set_transitioncolorarray}
           />
         </List>
         </div>

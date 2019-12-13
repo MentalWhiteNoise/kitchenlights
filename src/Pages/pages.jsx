@@ -1,9 +1,8 @@
-import React, {useRef, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import Lighting from '../Lighting/lighting.js'
 import LightingConfig from '../LightingConfig/lightingConfig.jsx'
 import { AnimatedDisplay } from '../Display/animatedDisplay.jsx'
-import { Button } from '@material-ui/core';
 
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -34,7 +33,7 @@ class Pages extends React.Component {
       }
     }
     handleResize(w, h){
-      console.log("dimensions: ", h, ", ", w)
+      // console.log("dimensions: ", h, ", ", w)
       if (h !== this.state.h || w !== this.state.w) {
         this.setState({Display: { height: h, width: w}});
       }
@@ -172,6 +171,12 @@ class Pages extends React.Component {
         newLighting.Transition.Chase.Width = value;
         this.setState ({Lighting: newLighting});
     };
+    set_transitioncolorarray = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Transition.ColorArray = [...value];
+      newLighting.Transition.ColorArray_Length = value.length;
+      this.setState ({Lighting: newLighting});
+    }
     // disable_transition();
     // pause_transition();
     // resume_transition();
@@ -225,6 +230,7 @@ class Pages extends React.Component {
           set_transitionchasetarget={this.set_transitionchasetarget}
           set_transitionchasespeed={this.set_transitionchasespeed}
           set_transitionchasewidth={this.set_transitionchasewidth}
+          set_transitioncolorarray={this.set_transitioncolorarray}
           // disable_fade();
           // pause_fade();
           // resume_fade();

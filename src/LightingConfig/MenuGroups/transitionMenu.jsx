@@ -11,6 +11,7 @@ import { TransitionMode} from '../../Lighting/lightingTransition.js'
 import SliderMenuItem from '../Controls/sliderMenuItem.jsx';
 import { ShiftMode, ShiftTarget } from '../../Lighting/lightingShift.js'
 import { ChaseMode, ChaseTarget } from '../../Lighting/lightingChase.js'
+import ColorArrayMenu from '../Controls/colorArrayMenu.jsx';
 
 export default function TransitionMenu(props){
     const {Lighting, set_transitionmode, OnExpand, Expanded} = props;
@@ -40,7 +41,11 @@ export default function TransitionMenu(props){
       >
       <List>
         <ListItem>
-        Color Array (TBD)
+        <ColorArrayMenu
+          colorArray={props.Lighting.Transition.ColorArray}
+          onChange={props.set_transitioncolorarray}
+          label="Color Array"
+        />
         </ListItem>          
         <Divider />
         <SliderMenuItem

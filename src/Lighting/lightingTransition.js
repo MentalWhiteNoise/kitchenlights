@@ -27,8 +27,9 @@ export default class LightingTransition{
             this.Chase = new LightingChase(from.Chase);
             this.ColorArray = [];
             for(var i = 0; i < this.ColorArray_Length; i++){
-                this.ColorArray[i] = new ColorRGBW(0,0,0,0);
+                this.ColorArray.push(new ColorRGBW(0,0,0,0));
                 this.ColorArray[i] = ColorRGBW.Copy(from.ColorArray[i]);
+                this.ColorArray[i].key = i;
             }
         }
         else {
@@ -41,7 +42,8 @@ export default class LightingTransition{
             this.Shift = new LightingShift();
             this.Chase = new LightingChase();
             this.ColorArray = [];
-            this.ColorArray[0] = new ColorRGBW(0,0,0,0);
+            this.ColorArray.push(new ColorRGBW(0,0,0,0));
+            this.ColorArray[0].key = 0;
             this.ColorArray_Length = 1;
         }
     }
@@ -51,15 +53,18 @@ export default class LightingTransition{
     }
 
     Append_ColorArray(color){
-        this.ColorArray[this.ColorArray_Length] = new ColorRGBW(0,0,0,0);
+        this.ColorArray.push(new ColorRGBW(0,0,0,0));
         this.ColorArray[this.ColorArray_Length] = ColorRGBW.Copy(color);
+        this.ColorArray[this.ColorArray_Length].key = this.ColorArray_Length
         this.ColorArray_Length++;
     }
 
     Set_Color(color){
         //console.log(color);
-        this.ColorArray[0] = new ColorRGBW(0,0,0,0);
+        this.ColorArray = [];
+        this.ColorArray.push(new ColorRGBW(0,0,0,0));
         this.ColorArray[0] = ColorRGBW.Copy(color);
+        this.ColorArray[0].key = 0;
         this.ColorArray_Length = 1;
     }
 

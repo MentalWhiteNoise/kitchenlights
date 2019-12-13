@@ -39,9 +39,9 @@ export default function FadeMenu(props){
         <ListItem>
           <ColorPicker 
               Color={props.Lighting.Fade.BgColor} 
-              onChange={props.set_bgcolor}>
-            Background Color
-          </ColorPicker>
+              onChange={props.set_bgcolor}
+              label="Background Color"
+            />
         </ListItem>
         <Divider />
         <SliderMenuItem
