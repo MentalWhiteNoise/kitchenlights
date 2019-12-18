@@ -1,6 +1,7 @@
-import LightingFade from "./lightingFade.js";
-import LightingTransition from "./lightingTransition.js";
+import LightingFade, { FadeMode } from "./lightingFade.js";
+import LightingTransition, {TransitionMode} from "./lightingTransition.js";
 import ColorRGBW from "../ColorRGBW/colorRGBW.js";
+import Random from '../Random/Random.js'
 
 export const ColorMode = {
     OFF: "OFF", 
@@ -159,42 +160,30 @@ export default class Lighting {
             this.Targets = GetTargets();
         }
     }
-    GetPixelColor(pixel, tick){
+    GetPixelColor(pixel, timing){
         var color = new ColorRGBW(0,0,0,0);
         
         if (this.ColorMode === ColorMode.OFF || this.Brightness === 0){
             return color;
         }
-        var fadeValue = this.Fade.GetFadePct(pixel, tick);
-        
-        switch (this.ColorMode){
-            //case ColorMode.OFF:return color;
-            case ColorMode.CONSTANT:
-                if (this.Transition.ColorArray_Length > 0){
-                    color = ColorRGBW.Copy(this.Transition.Get_ColorValue(0));
-                }
-                break;
-            case ColorMode.WHITEONLY:
-                if (this.Transition.ColorArray_Length > 0){
-                    const c = this.Transition.Get_ColorValue(0);        
-                    color = new ColorRGBW(0,0,0,(c.White === 0) ? this.Brightness : c.White);            
-                    console.log(color);
-                }
-                break;
-            case ColorMode.RANDOM:
-            case ColorMode.ALTERNATE:
-            case ColorMode.ORDERED:
-                return color;
-            default:
-                return color;
+
+        // Get location shift; (uses pixel location!)
+        const locationShift = {
+            transitionShift: 0,
+            fadeShift: 0
         }
+        //console.log("timing: ", timing)
+        var fadeValue = this.Fade.GetFadePct(timing.fade.percent + locationShift.fadeShift);
+        color = ColorRGBW.Copy(this.GetTransitionColor({ ...timing.transition, percent: (timing.transition.percent + locationShift.transitionShift)}));
 
         //console.log("color, pre fade:", color)
         // Apply Fade
-        color.Red = color.Red - fadeValue * (color.Red - this.Fade.BgColor.Red);
-        color.Green = color.Green - fadeValue * (color.Green - this.Fade.BgColor.Green);
-        color.Blue = color.Blue - fadeValue * (color.Blue - this.Fade.BgColor.Blue);
-        color.White = color.White - fadeValue * (color.White - this.Fade.BgColor.White);
+        if (fadeValue !== 0) {
+            color.Red = color.Red - fadeValue * (color.Red - this.Fade.BgColor.Red);
+            color.Green = color.Green - fadeValue * (color.Green - this.Fade.BgColor.Green);
+            color.Blue = color.Blue - fadeValue * (color.Blue - this.Fade.BgColor.Blue);
+            color.White = color.White - fadeValue * (color.White - this.Fade.BgColor.White);
+        }
 
         //console.log("color, pre brightness:", color)
         // Apply Brightness
@@ -206,7 +195,58 @@ export default class Lighting {
         //console.log("color, prior to return:", color)
         return color;
     }
-    GetRandomColor(){
-
+    
+    GetTransitionColor(transition){
+        // if transition.percent >= 1, increment position / index
+        const currentPosition = this.GetCurrentPosition(transition);
+        var currentColor = {...this.Transition.ColorArray[currentPosition]};
+        if (transition.percent === 0)
+        {
+            return currentColor; 
+        }
+        const nextPosition = this.GetNextPosition(transition);
+        const nextColor = this.Transition.ColorArray[nextPosition];
+        const transitionPercent = this.Transition.GetTransitionPct(transition.percent)
+        currentColor.Red = currentColor.Red + (nextColor.Red - currentColor.Red) * transitionPercent;
+        currentColor.Green = currentColor.Green + (nextColor.Green - currentColor.Green) * transitionPercent;
+        currentColor.Blue = currentColor.Blue + (nextColor.Blue - currentColor.Blue) * transitionPercent;
+        currentColor.White = currentColor.White + (nextColor.White - currentColor.White) * transitionPercent;
+        return currentColor;
+    }
+    GetNextPosition(transition){
+        if(this.Transition.ColorArray_Length === 0 || this.Transition.ColorArray_Length === 1)
+            return 0;
+        if (this.ColorMode === ColorMode.RANDOM) {
+            var rnd = new Random(transition.seed);
+            var pTemp = Math.round(rnd.getValue() * (this.Transition.ColorArray_Length - 1));
+            while (pTemp === transition.index) {
+                pTemp = Math.round(rnd.next() * (this.Transition.ColorArray_Length - 1));
+            }
+            return pTemp;
+        }
+        return this.GetCurrentPosition({...transition, cycle: transition.cycle + 1 });
+    }
+    GetCurrentPosition(transition){
+        if(this.Transition.ColorArray_Length === 0 || this.Transition.ColorArray_Length === 1)
+            return 0;
+        
+        switch (this.ColorMode){
+            //case ColorMode.OFF:return color;
+            case ColorMode.CONSTANT:
+            case ColorMode.WHITEONLY:
+                return 0;
+            case ColorMode.RANDOM:
+                return transition.index;
+            case ColorMode.ALTERNATE:
+                const l2 = transition.cycle % ((this.Transition.ColorArray_Length-1) * 2);
+                if (l2 > this.Transition.ColorArray_Length-1){
+                    return ((this.Transition.ColorArray_Length-1) * 2) - l2;
+                }
+                return l2;
+            case ColorMode.ORDERED:
+                return transition.cycle % this.Transition.ColorArray_Length;
+            default:
+                return 0;
+        }
     }
 }

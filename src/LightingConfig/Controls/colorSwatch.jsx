@@ -40,7 +40,8 @@ const useStyles = makeStyles(theme => ({
       transition: "box-shadow 200ms, border-width 200ms"
     },
     popover: {
-      position: 'fixed',
+      //position: 'fixed',      
+      position: 'absolute',
       zIndex: '2',
     },
     cover: {

@@ -8,8 +8,8 @@ export class Display extends React.Component {
       this.canvasRef = React.createRef();
       this.getColor = this.getColor.bind(this);
     }
-    getColor(pixel, tick){
-        return this.props.lightingEffect.GetPixelColor(pixel, tick);
+    getColor(pixel, timing){
+        return this.props.lightingEffect.GetPixelColor(pixel, this.props.timing);
     }
     componentDidMount(){
         drawCabinets(this.canvasRef.current);

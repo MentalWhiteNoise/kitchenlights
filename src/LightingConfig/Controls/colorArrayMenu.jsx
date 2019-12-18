@@ -116,7 +116,7 @@ export default function ColorArrayMenu(props){
     }
     const handleUpdateColor = (c,i) => {
       //var updatedArray = {...colorArray};
-      colorArray[i] = c;
+      colorArray[i] = {...c, key: colorArray[i].key};
       //console.log(updatedArray);
       onChange(colorArray);
     }
@@ -161,6 +161,7 @@ export default function ColorArrayMenu(props){
                 <Paper>
                 <List>
                 {colorArray.map((c, i) => {
+                  console.log(c);
                   return (<ListItem key={c.key}>
                     <ColorPicker 
                         Color={c} 

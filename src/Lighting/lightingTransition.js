@@ -13,6 +13,10 @@ export const TransitionMode = {
     PIXELATE: "PIXELATE"
 };
 
+const MinCycleTickTime = 10;
+//const MaxCycleTickTime = 10000;
+const MaxCycleTickTime = 1000;
+
 export default class LightingTransition{
     constructor(from){
         if (from){
@@ -46,6 +50,7 @@ export default class LightingTransition{
             this.ColorArray[0].key = 0;
             this.ColorArray_Length = 1;
         }
+        this.CycleRate = (255-this.Speed) / 255 * (MaxCycleTickTime - MinCycleTickTime) + MinCycleTickTime;
     }
     
     Clear_ColorArray(){
@@ -71,14 +76,7 @@ export default class LightingTransition{
     Get_ColorValue(position){
         //console.log(this.ColorArray[position]);
         return this.ColorArray[position];
-    }
-
-    GetTransitionPct(pixel, tick){
-        /*switch (this.Mode){
-            case TransitionMode.OFF
-        }*/
-        return 0;
-    }
+   }
 
     GetTransitionDistance(pixel, tick){
         return 0;
@@ -105,5 +103,36 @@ export default class LightingTransition{
 // void append_colorarray(uint32_t c);
 // uint32_t get_firstcolor();
 
+    GetTransitionPct(timingPercent){
+        const CycleTime = timingPercent % 1; // 0 to 1.0
+        //console.log("Speed: ", this.Speed, "CycleRate: ", CycleRate, ", CycleTime: ", CycleTime, ", Mode: ", this.Mode)
+        switch(this.Mode){
+            case TransitionMode.OFF:
+                return 0;
+            case TransitionMode.IMMIDIATE:
+                return 0;
+            case TransitionMode.BLEND:
+                return CycleTime;
+                //return 1 - (0.5 - Math.cos(2*CycleTime*Math.PI) / 2);
+            case TransitionMode.STICKYBLEND:
+                if (CycleTime <= 0.25){
+                    return 1 - (0.5 - Math.cos(2 * (CycleTime * 2) * Math.PI) / 2);
+                }
+                else if (CycleTime <= 0.5){
+                    return 1 - (0.5 - Math.cos(2 * ((0.5 - CycleTime) * 2 * Math.PI) / 2)) / 4;
+                }
+                return 1;
+            case TransitionMode.ONBOUNCE:
+                return 0;
+            case TransitionMode.CHASE:
+                return 0;
+            case TransitionMode.FLICKER:
+                return 0;
+            case TransitionMode.PIXELATE:
+                return 0;
+            default:
+                return 0;
+        }
+    }
 
 }

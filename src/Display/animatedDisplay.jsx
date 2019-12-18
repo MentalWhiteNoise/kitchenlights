@@ -7,12 +7,12 @@ export class AnimatedDisplay extends React.Component {
       this.state = { tick: 0 };
       this.updateAnimationState = this.updateAnimationState.bind(this);
       this.animate = this.animate.bind(this);
-    }
+    }    
     componentDidMount() {
         this.animate();
     }
     componentDidUpdate(prevState, prevProps) {
-        if (prevState.play !== this.state.play)
+        if (prevProps.play !== this.props.play || this.state.timing !== prevState.timing)
         {
             this.animate();
         }
@@ -23,8 +23,12 @@ export class AnimatedDisplay extends React.Component {
     }
     updateAnimationState(prevState) {
         if (this.props.play){
-            this.setState({ tick: this.state.tick + 1 });
-            console.log(this.state.tick);
+            //console.log("pre:" + this.props.timing);
+            //this.setState({ tick: this.state.tick + 1 });
+            //this.timing.tick(this.props.lightingEffect)
+            this.props.tick();
+            //console.log(this.state.tick);
+            //console.log(this.timing);
             //this.animate();
             //setTimeout(this.animate, 1000);
         }
@@ -39,6 +43,6 @@ export class AnimatedDisplay extends React.Component {
         if (this.state.play){
             requestAnimationFrame(this.render);
         }
-      return <Display width={this.props.width} height={this.props.height} tick={this.state.tick} lightingEffect={this.props.lightingEffect} />;
+      return <Display width={this.props.width} height={this.props.height} tick={this.state.tick} timing={this.props.timing} lightingEffect={this.props.lightingEffect} />;
     }
 }

@@ -38,10 +38,11 @@ export default class LightingFade{
             this.Shift = new LightingShift();
             this.Chase = new LightingChase();
         }
+        this.CycleRate = (255-this.Speed) / 255 * (MaxCycleTickTime - MinCycleTickTime) + MinCycleTickTime;
     }
-    GetFadePct(pixel, tick){
-        const CycleRate = (255-this.Speed) / 255 * (MaxCycleTickTime - MinCycleTickTime) + MinCycleTickTime;
-        const CycleTime = (tick % CycleRate) / CycleRate; // 0 to 1.0
+    GetFadePct(timingPercent){        
+        // if timingPercent >= 1, increment position / index ?
+        const CycleTime = timingPercent % 1; // 0 to 1.0
         //console.log("Speed: ", this.Speed, "CycleRate: ", CycleRate, ", CycleTime: ", CycleTime, ", Mode: ", this.Mode)
         switch(this.Mode){
             case FadeMode.OFF:

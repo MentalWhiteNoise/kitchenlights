@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import clsx from 'clsx';
+import Timing from '../Lighting/timing.js'
 import Lighting from '../Lighting/lighting.js'
 import LightingConfig from '../LightingConfig/lightingConfig.jsx'
 import { AnimatedDisplay } from '../Display/animatedDisplay.jsx'
@@ -23,6 +24,7 @@ class Pages extends React.Component {
       super(props);
       this.state = {
         Lighting: new Lighting(),
+        Timing: new Timing(),
         Display: { height: 70, width: 20}
       };
       this.handleResize = this.handleResize.bind(this);
@@ -44,6 +46,11 @@ class Pages extends React.Component {
     // turn_off();
     // enable_whitemode();
     // disable_whitemode();
+    tick = () => {
+      var newTiming = new Timing(this.state.Timing);
+      newTiming.tick(this.state.Lighting);
+      this.setState ({Timing: newTiming});
+    }
     set_colormode = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.ColorMode = value;
@@ -242,7 +249,10 @@ class Pages extends React.Component {
           // clear_colorarray();
           />);
       return(
-        <PersistentDrawerLeft ToolBar={lightingConfig} LightingEffect={this.state.Lighting} OnResize={this.handleResize} Height={this.state.Display.height}  Width={this.state.Display.width} />
+        <PersistentDrawerLeft ToolBar={lightingConfig} LightingEffect={this.state.Lighting} 
+          tick={this.tick} 
+          timing={this.state.Timing}
+          OnResize={this.handleResize} Height={this.state.Display.height}  Width={this.state.Display.width} />
       )
     }
 }
@@ -387,6 +397,8 @@ function PersistentDrawerLeft(props) {
             <AnimatedDisplay 
               width={props.Width} 
               height={props.Height} 
+              tick={props.tick} 
+              timing={props.timing}
               lightingEffect={props.LightingEffect} play={play}/> 
             <div style={{
               position: "absolute", top: (window.innerHeight + 75) / 2 - 25, left: drawerWidth + (window.innerWidth - drawerWidth) / 2 - 25, zIndex:"10"}}>
