@@ -1,6 +1,7 @@
 import React from 'react';
 import drawCabinets from './drawCabinets.js'
 import drawLights from './drawLights.js'
+import { LightingTargets } from '../Lighting/lightingTargets.js'
 
 export class Display extends React.Component {
     constructor(props) {
@@ -8,7 +9,7 @@ export class Display extends React.Component {
       this.canvasRef = React.createRef();
       this.getColor = this.getColor.bind(this);
     }
-    getColor(pixel, timing){
+    getColor(pixel){
         return this.props.lightingEffect.GetPixelColor(pixel, this.props.timing);
     }
     componentDidMount(){
@@ -22,7 +23,7 @@ export class Display extends React.Component {
                 drawCabinets(this.canvasRef.current);
             }
         }
-        drawLights(this.canvasRef.current, this.props.tick, this.getColor, this.props.lightingEffect.Targets);
+        drawLights(this.canvasRef.current, this.getColor, LightingTargets);
     }
     render() {
       return(

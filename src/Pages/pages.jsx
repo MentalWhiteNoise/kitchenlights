@@ -51,18 +51,67 @@ class Pages extends React.Component {
       newTiming.tick(this.state.Lighting);
       this.setState ({Timing: newTiming});
     }
+    
+    // Color Menu Methods
     set_colormode = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.ColorMode = value;
         this.setState ({Lighting: newLighting});
     };
+    set_color = (color) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Transition.Set_Color(color);
+      //console.log(newLighting.Transition);
+      this.setState ({Lighting: newLighting});
+    }
+    set_brightness = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Brightness = value;
+      this.setState ({Lighting: newLighting});
+    }
+
+    // Fade Menu Methods
+    // disable_fade();
+    // pause_fade();
+    // resume_fade();
+    // enable_fade();
     set_fademode = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.Fade.Mode = value;
         this.setState ({Lighting: newLighting});
     };
-    // set_fadechasemode(String mode);
-    // set_fadechasetarget(String target);
+    set_bgcolor = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.BgColor = value;
+      this.setState ({Lighting: newLighting});
+    }
+    set_fadespeed = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.Speed = value;
+      this.setState ({Lighting: newLighting});
+    }
+    set_fadeforwardwidth = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.ForwardWidth = value;
+      this.setState ({Lighting: newLighting});
+    }    
+    set_fadelagwidth = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.LagWidth = value;
+      this.setState ({Lighting: newLighting});
+    }
+    set_fadeactivation = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.Activation = value;
+      this.setState ({Lighting: newLighting});
+    }
+    set_faderandomness = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.Randomness = value;
+      this.setState ({Lighting: newLighting});
+    }
+
+    // Fade Shift Sub Menu Methods
     set_fadeshiftmode = (mode) => {
       var newLighting = new Lighting(this.state.Lighting);
       newLighting.Fade.Shift.Mode = mode;
@@ -78,6 +127,13 @@ class Pages extends React.Component {
       newLighting.Fade.Shift.Amount = value;
       this.setState ({Lighting: newLighting});
     }
+    set_fadeshiftoffset = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Fade.Shift.Offset = value;
+      this.setState ({Lighting: newLighting});
+    }
+
+    // Fade Chase Sub Menu Methods    
     set_fadechasemode  = (mode) => {
       var newLighting = new Lighting(this.state.Lighting);
       newLighting.Fade.Chase.Mode = mode;
@@ -93,41 +149,39 @@ class Pages extends React.Component {
       newLighting.Fade.Chase.Speed = value;
       this.setState ({Lighting: newLighting});
     }
-    set_fadechasewidth = (value) => {
+    set_fadechasecenteroffset = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Fade.Chase.Width = value;
+      newLighting.Fade.Chase.CenterOffset = value;
       this.setState ({Lighting: newLighting});
     }
-    // disable_fade();
-    // pause_fade();
-    // resume_fade();
-    // enable_fade();
-    set_bgcolor = (value) => {
+    set_fadechaseoverlapeffect = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Fade.BgColor = value;
+      newLighting.Fade.Chase.OverlapEffect = value;
       this.setState ({Lighting: newLighting});
     }
-    set_brightness = (value) => {
-      var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Brightness = value;
-      this.setState ({Lighting: newLighting});
-    }
-    set_fadespeed = (value) => {
-      var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Fade.Speed = value;
-      this.setState ({Lighting: newLighting});
-    }    
-    set_fadeflickeractivation = (value) => {
-      var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Fade.FlickerActivation = value;
-      this.setState ({Lighting: newLighting});
-    }
+
+    // Transition Menu Methods
+    // disable_transition();
+    // pause_transition();
+    // resume_transition();
+    // enable_transition();
     set_transitionmode = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.Transition.Mode = value;
         this.setState ({Lighting: newLighting});
     };
-
+    set_transitioncolorarray = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Transition.ColorArray = [...value];
+      newLighting.Transition.ColorArray_Length = value.length;
+      this.setState ({Lighting: newLighting});
+    }
+    // clear_colorarray();
+    append_colorarray = (color) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Transition.Append_ColorArray(color);
+      this.setState ({Lighting: newLighting});
+    }
     set_transitionspeed = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.Transition.Speed = value;
@@ -138,11 +192,18 @@ class Pages extends React.Component {
         newLighting.Transition.Width = value;
         this.setState ({Lighting: newLighting});
     };
-    set_transitionflickeractivation = (value) => {
+    set_transitionforwardwidth = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
-        newLighting.Transition.FlickerActivation = value;
+        newLighting.Transition.ForwardWidth = value;
         this.setState ({Lighting: newLighting});
     };
+    set_transitionactivation = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+        newLighting.Transition.Activation = value;
+        this.setState ({Lighting: newLighting});
+    };
+
+    // Transition Shift Sub Menu Methods
     set_transitionshiftmode = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.Transition.Shift.Mode = value;
@@ -158,6 +219,13 @@ class Pages extends React.Component {
         newLighting.Transition.Shift.Amount = value;
         this.setState ({Lighting: newLighting});
     };
+    set_transitionshiftoffset = (value) => {
+      var newLighting = new Lighting(this.state.Lighting);
+      newLighting.Transition.Shift.Offset = value;
+      this.setState ({Lighting: newLighting});
+    }
+    
+    // Transition Chase Sub Menu Methods
     set_transitionchasemode = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
         newLighting.Transition.Chase.Mode = value;
@@ -173,80 +241,84 @@ class Pages extends React.Component {
         newLighting.Transition.Chase.Speed = value;
         this.setState ({Lighting: newLighting});
     };
-    set_transitionchasewidth = (value) => {
+    set_transitionchasecenteroffset = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
-        newLighting.Transition.Chase.Width = value;
-        this.setState ({Lighting: newLighting});
-    };
-    set_transitioncolorarray = (value) => {
-      var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Transition.ColorArray = [...value];
-      newLighting.Transition.ColorArray_Length = value.length;
+      newLighting.Transition.Chase.CenterOffset = value;
       this.setState ({Lighting: newLighting});
     }
-    // disable_transition();
-    // pause_transition();
-    // resume_transition();
-    // enable_transition();
-    // clear_colorarray();
-    set_color = (color) => {
+    set_transitionchaseoverlapeffect = (value) => {
       var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Transition.Set_Color(color);
-      //console.log(newLighting.Transition);
+      newLighting.FadTransitione.Chase.OverlapEffect = value;
       this.setState ({Lighting: newLighting});
     }
-    append_colorarray = (color) => {
-      var newLighting = new Lighting(this.state.Lighting);
-      newLighting.Transition.Append_ColorArray(color);
-      this.setState ({Lighting: newLighting});
-    }
-    
     
     render() {
       //console.log(this.state.Lighting);
       const lightingConfig = (
         <LightingConfig 
           Lighting={this.state.Lighting} 
-          // turn_on();
-          // turn_on(uint32_t color);
-          // turn_off();
-          // enable_whitemode();
-          // disable_whitemode();
-          set_colormode={this.set_colormode} 
-          set_brightness={this.set_brightness} 
-          set_fademode={this.set_fademode} 
-          set_transitionmode={this.set_transitionmode}
+
+          // Color Menu Methods
+          // turn_on={this.}
+          // turn_off={this.}
+          // enable_whitemode={this.}
+          // disable_whitemode={this.}
+          set_colormode={this.set_colormode}
+          set_color={this.set_color}
+          set_brightness={this.set_brightness}
+
+          // Fade Menu Methods
+          // disable_fade={this.}
+          // pause_fade={this.}
+          // resume_fade={this.}
+          // enable_fade={this.}
+          set_fademode={this.set_fademode}
           set_bgcolor={this.set_bgcolor}
           set_fadespeed={this.set_fadespeed}
-          set_fadeflickeractivation={this.set_fadeflickeractivation}
-          set_color = {this.set_color}
-          set_fadeshiftmode={this.set_fadeshiftmode}
+          set_fadeforwardwidth={this.set_fadeforwardwidth}
+          set_fadelagwidth={this.set_fadelagwidth}
+          set_fadeactivation={this.set_fadeactivation}
+          set_faderandomness={this.set_faderandomness}
+
+          // Fade Shift Sub Menu Methods
+          set_fadeshiftmode ={this.set_fadeshiftmode}
           set_fadeshifttarget={this.set_fadeshifttarget}
           set_fadeshiftamount={this.set_fadeshiftamount}
+          set_fadeshiftoffset={this.set_fadeshiftoffset}
+
+          // Fade Chase Sub Menu Methods    
           set_fadechasemode={this.set_fadechasemode}
           set_fadechasetarget={this.set_fadechasetarget}
           set_fadechasespeed={this.set_fadechasespeed}
-          set_fadechasewidth={this.set_fadechasewidth}
+          set_fadechasecenteroffset={this.set_fadechasecenteroffset}
+          set_fadechaseoverlapeffect={this.set_fadechaseoverlapeffect}
+
+          // Transition Menu Methods
+          // disable_transition={this.}
+          // pause_transition={this.}
+          // resume_transition={this.}
+          // enable_transition={this.}
+          set_transitionmode={this.set_transitionmode}
+          set_transitioncolorarray={this.set_transitioncolorarray}
+          // clear_colorarray={this.}
+          append_colorarray ={this.append_colorarray}
           set_transitionspeed={this.set_transitionspeed}
           set_transitionwidth={this.set_transitionwidth}
-          set_transitionflickeractivation={this.set_transitionflickeractivation}
+          set_transitionforwardwidth={this.set_transitionforwardwidth}
+          set_transitionactivation={this.set_transitionactivation}
+
+          // Transition Shift Sub Menu Methods
           set_transitionshiftmode={this.set_transitionshiftmode}
           set_transitionshifttarget={this.set_transitionshifttarget}
           set_transitionshiftamount={this.set_transitionshiftamount}
+          set_transitionshiftoffset={this.set_transitionshiftoffset}
+
+          // Transition Chase Sub Menu Methods
           set_transitionchasemode={this.set_transitionchasemode}
           set_transitionchasetarget={this.set_transitionchasetarget}
           set_transitionchasespeed={this.set_transitionchasespeed}
-          set_transitionchasewidth={this.set_transitionchasewidth}
-          set_transitioncolorarray={this.set_transitioncolorarray}
-          // disable_fade();
-          // pause_fade();
-          // resume_fade();
-          // enable_fade();
-          // disable_transition();
-          // pause_transition();
-          // resume_transition();
-          // enable_transition();
-          // clear_colorarray();
+          set_transitionchasecenteroffset ={this.set_transitionchasecenteroffset}
+          set_transitionchaseoverlapeffect={this.set_transitionchaseoverlapeffect}
           />);
       return(
         <PersistentDrawerLeft ToolBar={lightingConfig} LightingEffect={this.state.Lighting} 

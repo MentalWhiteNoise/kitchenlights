@@ -10,7 +10,7 @@ import { ColorMode} from '../../Lighting/lighting.js'
 import { TransitionMode} from '../../Lighting/lightingTransition.js'
 import SliderMenuItem from '../Controls/sliderMenuItem.jsx';
 import { ShiftMode, ShiftTarget } from '../../Lighting/lightingShift.js'
-import { ChaseMode, ChaseTarget } from '../../Lighting/lightingChase.js'
+import { ChaseMode, ChaseTarget, OverlapEffect } from '../../Lighting/lightingChase.js'
 import ColorArrayMenu from '../Controls/colorArrayMenu.jsx';
 
 export default function TransitionMenu(props){
@@ -23,13 +23,12 @@ export default function TransitionMenu(props){
       OnChange={set_transitionmode}
       MenuItems={[
         {Value:TransitionMode.OFF, Label:"OFF"},
-        {Value:TransitionMode.IMMIDIATE, Label:"IMMIDIATE"},
-        {Value:TransitionMode.BLEND, Label:"BLEND"},
-        {Value:TransitionMode.STICKYBLEND, Label:"STICKYBLEND"},
+        {Value:TransitionMode.IMMEDIATE, Label:"IMMEDIATE"},
+        {Value:TransitionMode.SMOOTH, Label:"SMOOTH"},
+        {Value:TransitionMode.LINEAR, Label:"LINEAR"},
         {Value:TransitionMode.ONBOUNCE, Label:"ONBOUNCE"},
-        {Value:TransitionMode.FLICKER, Label:"FLICKER"},
-        {Value:TransitionMode.CHASE, Label:"CHASE"},
-        {Value:TransitionMode.PIXELATE, Label:"PIXELATE"}
+        {Value:TransitionMode.PIXELATE, Label:"PIXELATE"},
+        {Value:TransitionMode.CHASE, Label:"CHASE"}
       ]}
       Disabled={Lighting.ColorMode === ColorMode.OFF || Lighting.ColorMode === ColorMode.WHITEONLY || Lighting.ColorMode === ColorMode.CONSTANT}
       />
@@ -61,9 +60,15 @@ export default function TransitionMenu(props){
         />
         <Divider />
         <SliderMenuItem
-          Label={"Transition Flicker Activation"}
-          OnChange={props.set_transitionflickeractivation}
-          Value={props.Lighting.Transition.FlickerActivation}
+          Label={"Transition Forward Width"}
+          OnChange={props.set_transitionforwardwidth}
+          Value={props.Lighting.Transition.ForwardWidth}
+        />
+        <Divider />
+        <SliderMenuItem
+          Label={"Transition Activation"}
+          OnChange={props.set_transitionactivation}
+          Value={props.Lighting.Transition.Activation}
         />        
         <Divider />
         <SelectMenuItem 
@@ -72,6 +77,7 @@ export default function TransitionMenu(props){
           OnChange={props.set_transitionshiftmode}
           MenuItems={[
             {Value:ShiftMode.OFF, Label:"OFF"},
+            {Value:ShiftMode.CYCLE, Label:"CYCLE"},
             {Value:ShiftMode.ALTERNATE, Label:"ALTERNATE"},
             {Value:ShiftMode.RANDOM, Label:"RANDOM"}
           ]}
@@ -95,6 +101,13 @@ export default function TransitionMenu(props){
           Label={"Shift Amount"}
           OnChange={props.set_transitionshiftamount}
           Value={props.Lighting.Transition.Shift.Amount}
+          Disabled={props.Lighting.Transition.Shift.Mode === ShiftMode.OFF}
+        />
+        <Divider />
+        <SliderMenuItem
+          Label={"Shift Offset"}
+          OnChange={props.set_transitionshiftoffset}
+          Value={props.Lighting.Transition.Shift.Offset}
           Disabled={props.Lighting.Transition.Shift.Mode === ShiftMode.OFF}
         />
         <Divider />
@@ -136,11 +149,22 @@ export default function TransitionMenu(props){
         />
         <Divider />
         <SliderMenuItem
-          Label={"Chase Width"}
-          OnChange={props.set_transitionchasewidth}
-          Value={props.Lighting.Transition.Chase.Width}
+          Label={"Chase Center Offset"}
+          OnChange={props.set_transitionchasecenteroffset}
+          Value={props.Lighting.Transition.Chase.CenterOffset}
           Disabled={props.Lighting.Transition.Mode !== TransitionMode.CHASE || props.Lighting.Transition.Chase.Mode === ChaseMode.OFF}
         />
+        <SelectMenuItem 
+          Label={"Chase Overlap Effect"}
+          Value={props.Lighting.Transition.Chase.OverlapEffect}
+          OnChange={props.set_transitionchaseoverlapeffect}
+          MenuItems={[
+            {Value:OverlapEffect.AVERAGE, Label:"AVERAGE"},
+            {Value:OverlapEffect.MAX, Label:"MAX"},
+            {Value:OverlapEffect.MIN, Label:"MIN"}
+          ]}
+          Disabled={props.Lighting.Transition.Mode !== TransitionMode.CHASE || props.Lighting.Transition.Chase.Mode === ChaseMode.OFF}
+          />
       </List>
       </ExpansionMenuItem>
     </>);

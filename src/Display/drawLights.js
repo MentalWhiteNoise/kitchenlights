@@ -1,11 +1,11 @@
 import { getDrawArea, drawPoint } from "./drawHelpers";
 
-export default function drawLights(canvas, tick, getColor, targets) {
+export default function drawLights(canvas, getColor, targets) {
     const lightSpacing = 0.656;
     var drawArea = getDrawArea(canvas);
     drawArea.context.beginPath();
     drawArea.context.save();
-    const c = getColor(0, tick);
+    const c = getColor(0);
     const wallThickness = 0.75;
     const inset = 0.5;
 

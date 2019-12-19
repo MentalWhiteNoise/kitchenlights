@@ -9,7 +9,7 @@ import ColorPicker from '../Controls/colorPicker.jsx';
 import { ColorMode} from '../../Lighting/lighting.js'
 import { FadeMode} from '../../Lighting/lightingFade.js'
 import { ShiftMode, ShiftTarget } from '../../Lighting/lightingShift.js'
-import { ChaseMode, ChaseTarget } from '../../Lighting/lightingChase.js'
+import { ChaseMode, ChaseTarget, OverlapEffect } from '../../Lighting/lightingChase.js'
 
 export default function FadeMenu(props){
     return (
@@ -51,10 +51,28 @@ export default function FadeMenu(props){
         />
         <Divider />
         <SliderMenuItem
-          Label={"Flicker Activation"}
-          OnChange={props.set_fadeflickeractivation}
-          Value={props.Lighting.Fade.FlickerActivation}
+          Label={"Forward Width"}
+          OnChange={props.set_fadeforwardwidth}
+          Value={props.Lighting.Fade.ForwardWidth}
+        />
+        <Divider />
+        <SliderMenuItem
+          Label={"Lag Width"}
+          OnChange={props.set_fadelagwidth}
+          Value={props.Lighting.Fade.LagWidth}
+        />
+        <Divider />
+        <SliderMenuItem
+          Label={"Activation"}
+          OnChange={props.set_fadeactivation}
+          Value={props.Lighting.Fade.Activation}
           Disabled={props.Lighting.Fade.Mode !== FadeMode.FLASH && props.Lighting.Fade.Mode !== FadeMode.FLICKER}
+        />
+        <Divider />
+        <SliderMenuItem
+          Label={"Randomness"}
+          OnChange={props.set_faderandomness}
+          Value={props.Lighting.Fade.Randomness}
         />
         <Divider />
         <SelectMenuItem 
@@ -63,8 +81,10 @@ export default function FadeMenu(props){
           OnChange={props.set_fadeshiftmode}
           MenuItems={[
             {Value:ShiftMode.OFF, Label:"OFF"},
+            {Value:ShiftMode.CYCLE, Label:"CYCLE"},
             {Value:ShiftMode.ALTERNATE, Label:"ALTERNATE"},
             {Value:ShiftMode.RANDOM, Label:"RANDOM"}
+            
           ]}
           />
         <Divider />
@@ -86,6 +106,13 @@ export default function FadeMenu(props){
           Label={"Shift Amount"}
           OnChange={props.set_fadeshiftamount}
           Value={props.Lighting.Fade.Shift.Amount}
+          Disabled={props.Lighting.Fade.Shift.Mode === ShiftMode.OFF}
+        />
+        <Divider />
+        <SliderMenuItem
+          Label={"Shift Offset"}
+          OnChange={props.set_fadeshiftoffset}
+          Value={props.Lighting.Fade.Shift.Offset}
           Disabled={props.Lighting.Fade.Shift.Mode === ShiftMode.OFF}
         />
         <Divider />
@@ -127,11 +154,22 @@ export default function FadeMenu(props){
         />
         <Divider />
         <SliderMenuItem
-          Label={"Chase Width"}
-          OnChange={props.set_fadechasewidth}
-          Value={props.Lighting.Fade.Chase.Width}
+          Label={"Chase Center Offset"}
+          OnChange={props.set_fadechasecenteroffset}
+          Value={props.Lighting.Fade.Chase.CenterOffset}
           Disabled={props.Lighting.Fade.Mode !== FadeMode.CHASE || props.Lighting.Fade.Chase.Mode === ChaseMode.OFF}
         />
+        <SelectMenuItem 
+          Label={"Chase Overlap Effect"}
+          Value={props.Lighting.Fade.Chase.OverlapEffect}
+          OnChange={props.set_fadechaseoverlapeffect}
+          MenuItems={[
+            {Value:OverlapEffect.AVERAGE, Label:"AVERAGE"},
+            {Value:OverlapEffect.MAX, Label:"MAX"},
+            {Value:OverlapEffect.MIN, Label:"MIN"}
+          ]}
+          Disabled={props.Lighting.Fade.Mode !== FadeMode.CHASE || props.Lighting.Fade.Chase.Mode === ChaseMode.OFF}
+          />
       </List>
     </ExpansionMenuItem>
     </>);
