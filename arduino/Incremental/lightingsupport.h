@@ -4,7 +4,7 @@
 
 struct lookup {uint8_t val; const char *str;};
 
-uint8_t lookupFromString(String str, const lookup* lookuptable);
+uint8_t lookupFromString(String str, const lookup* lookuptable, int lookuptable_size);
 
 double unitSineWave(double x);
 

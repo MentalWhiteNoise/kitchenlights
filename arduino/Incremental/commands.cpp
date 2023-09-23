@@ -237,6 +237,7 @@ void Commands::apply_command(){
   
   else if (command == F("SET COLOR ARRAY")){ // #FFFFFF... , #FFFFFFFF...
     String currentColor = "";
+    _lighting->clear_colorarray();
     for(int i = 0; i < parameters.length(); i++){
       if (parameters.charAt(i) == ' '){
         //try{
@@ -301,6 +302,32 @@ void Commands::apply_command(){
   }
   else if (command == F("RESUME TRANSITION")) {
     _lighting->resume_transition();
+  }
+  else if (command == F("SET FADE CHASE WIDTH")){ // #FF
+    //try{
+      uint8_t v = HexToInt8(parameters);
+      _lighting->set_fadechasewidth(v);
+    //}
+    //catch(...){invalidParameter = true;}
+  }
+  else if (command == F("SET FADE CHASE MODE")) { // "OFF", "BOUNCE", "OUTWARD", "INWARD", "CENTERBOUNCE", "CLOCKWISE", "COUNTER"
+    //try{
+      _lighting->set_fadechasemode(parameters);
+    //}
+    //catch(...){invalidParameter = true;}
+  } 
+  else if (command == F("SET TRANSITION WIDTH")){ // #FF
+    //try{
+      uint8_t v = HexToInt8(parameters);
+      _lighting->set_transitionwidth(v);
+    //}
+    //catch(...){invalidParameter = true;}
+  }
+  else if (command == F("SET TRANSITION CHASE MODE")) { // "OFF", "BOUNCE", "OUTWARD", "INWARD", "CENTERBOUNCE", "CLOCKWISE", "COUNTER"
+    //try{
+      _lighting->set_transitionchasemode(parameters);
+    //}
+    //catch(...){invalidParameter = true;}
   }
   else {
     _serial->print(F("Invalid method specified: '"));

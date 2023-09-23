@@ -8,7 +8,6 @@
 const uint32_t defaultconstantcolor = 2147483648; // #80000000 / 128 white, 0 color
 const uint8_t defaultbrightness = 128;
 const uint8_t defaultflickeractivation = 64;
-const uint8_t defaultWidth = 8;
 
 enum ColorMode : uint8_t { COLORMODE_OFF, COLORMODE_CONSTANT, COLORMODE_WHITEONLY, COLORMODE_RANDOM, COLORMODE_ALTERNATE, COLORMODE_ORDERED };
 
@@ -54,6 +53,11 @@ class Lighting
 		void clear_colorarray();
 		void append_colorarray(uint32_t color);
 		void set_transitionspeed(uint8_t value);
+
+		void set_fadechasemode(String mode);
+		void set_fadechasewidth(uint8_t value);	
+		void set_transitionchasemode(String mode);
+		void set_transitionwidth(uint8_t value);
 
     //void load(); // loads from EEPROM
     //void save(); // saves to EEPROM

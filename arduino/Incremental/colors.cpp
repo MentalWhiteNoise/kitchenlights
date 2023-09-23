@@ -2,7 +2,8 @@
 #include "Arduino.h"
 
 double unitSineWave(double x){
-  return -0.5 * (cos(2*PI*x) + 1);
+  // 0 to 1 to 0 along sine curve
+  return 1 - 0.5 * (cos(2*PI*x) + 1);
 }
 
 

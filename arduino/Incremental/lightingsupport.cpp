@@ -1,11 +1,13 @@
 #include "lightingsupport.h"
 
-uint8_t lookupFromString(String str, const lookup* lookuptable){
-   for (int i = 0;  i < sizeof(lookuptable) / sizeof(lookuptable[0]); ++i){
+uint8_t lookupFromString(String str, const lookup* lookuptable, int lookuptable_size){
+   for (int i = 0;  i < lookuptable_size; ++i){
      if (str == lookuptable[i].str){
        return lookuptable[i].val;
      }
    }
+   Serial.println("NOT FOUND");
+   return -1;
 }
 uint8_t HexToInt8(String str)
 {

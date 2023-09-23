@@ -2,7 +2,7 @@
 #include "lighting.h"
 #include "colors.h"
 
-ColorMode string2colormode (String str) { return (ColorMode) lookupFromString (str, colormode_conversion); }
+ColorMode string2colormode (String str) { return (ColorMode) lookupFromString (str, colormode_conversion, sizeof(colormode_conversion) / sizeof(colormode_conversion[0])); }
 String colormode2string (ColorMode mode) { return String(colormode_conversion[mode].str); }
 
 Lighting::Lighting(){
@@ -15,17 +15,29 @@ Lighting::Lighting(){
 
 void Lighting::draw(unsigned long tick){
   if (_colormode == COLORMODE_OFF){ return; }
-  double fadeEffect = _fade.get_effect(tick);
+  double fadeEffect = _fade.get_effect(tick, 0);
   uint32_t color = 0;
-  if (_colormode == COLORMODE_OFF)
+  if (_colormode == COLORMODE_WHITEONLY)
   { 
-    color = AsColor(0,0,0,_brightness * 1-fadeEffect);
+    color = AsColor(0,0,0,_brightness * (1-fadeEffect));
   }
-  else if (_colormode = COLORMODE_CONSTANT)
+  else if (_colormode == COLORMODE_CONSTANT)
   {
-    color = TransitionColor(_transition.get_firstcolor(), _fade.get_bgcolor(), fadeEffect);
+    if (_transition.perPixel() || _fade.perPixel())
+    {
+      // loop through all pixels for controller...
+    }
+    else 
+    {
+      color = TransitionColor(_transition.get_firstcolor(), _fade.get_bgcolor(), fadeEffect);
+    }
   }
-  Serial.println(String(color, HEX));
+  else 
+  {
+    color = TransitionColor(_transition.get_effect(tick, _fade.bounced, 0), _fade.get_bgcolor(), fadeEffect);
+  }
+  Serial.println(ColorAsHex(color));
+
 }
 void Lighting::turn_on(){
   if (_colormode != COLORMODE_OFF){ return; }
@@ -122,12 +134,16 @@ void Lighting::clear_colorarray(){_transition.clear_colorarray();}
 void Lighting::append_colorarray(uint32_t color){_transition.append_colorarray(color);}
 void Lighting::set_transitionspeed(uint8_t value){_transition.set_speed(value);}
 
+void Lighting::set_fadechasemode(String mode){_fade.set_chasemode(mode);}
+void Lighting::set_fadechasewidth(uint8_t value){_fade.set_chasewidth(value);}
+void Lighting::set_transitionchasemode(String mode){_transition.set_chasemode(mode);}
+void Lighting::set_transitionwidth(uint8_t value){_transition.set_width(value);}
+
 String Lighting::toString(){
   String strOut = colormode2string(_colormode);
   String fadeStr = _fade.toString();
   String transitionStr;
   uint32_t constantColor = 0;
-  
   switch (_colormode){
     case COLORMODE_OFF:
       return strOut;
