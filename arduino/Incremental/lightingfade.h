@@ -37,6 +37,7 @@ class LightingFade
 		void set_chasewidth(uint8_t value);
     bool perPixel();
 
+    String displaySettings();
     String toString();
     bool bounced;    
   private:

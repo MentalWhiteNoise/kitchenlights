@@ -219,6 +219,22 @@ bool LightingTransition::perPixel()
   return _mode == TRANSITIONMODE_CHASE;
 }
 
+String LightingTransition::displaySettings(){  
+  String strOut = "\Transition Mode: " + transitionmode2string(_mode);
+  strOut += "\n\t\t(Last Transition Mode: " + transitionmode2string(_lastmode);
+  strOut += "\n\tSpeed: " + String(_speed);
+  strOut += "\n\tWidth: " + String(_width);
+  strOut += "\n\tColor Array: ";
+  for (int i = 0; i < _colorarray_length; i++){ 
+    strOut += "\n\t\t#" + ColorAsHex(_colorarray[i]); 
+  }
+  strOut += "\n\tInternal: ";
+  strOut += "\n\t\tStart Tick: " + String(_tick);
+  strOut += "\n\t\tPaused: " + String(_paused);
+  strOut += "\n\t\tPaused Cycle Percent: " + String(_pausedCyclePercent);
+  strOut += "\n\tChase: \n" + _chase.displaySettings();
+  return strOut;
+}
 String LightingTransition::toString(){  
   String strOut = "";  
   if (_mode == TRANSITIONMODE_OFF){ return ""; }

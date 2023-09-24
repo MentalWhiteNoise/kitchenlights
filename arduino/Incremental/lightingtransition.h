@@ -42,6 +42,7 @@ class LightingTransition
 		void set_chasemode(String mode);
     void set_width(uint8_t value);
 
+    String displaySettings();
     String toString();
     uint32_t get_firstcolor();
     bool perPixel();

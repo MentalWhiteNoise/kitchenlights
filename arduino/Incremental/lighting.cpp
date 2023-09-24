@@ -139,6 +139,14 @@ void Lighting::set_fadechasewidth(uint8_t value){_fade.set_chasewidth(value);}
 void Lighting::set_transitionchasemode(String mode){_transition.set_chasemode(mode);}
 void Lighting::set_transitionwidth(uint8_t value){_transition.set_width(value);}
 
+String Lighting::displaySettings(){  
+  String strOut = "Color Mode: " + colormode2string(_colormode);
+  strOut += "\n\t(Last Color Mode: " + colormode2string(_lastcolormode);
+  strOut += "\nBrightness: " + String(_brightness); 
+  strOut += "\nTransition: \n" + _transition.displaySettings();
+  strOut += "\nFade: \n" + _fade.displaySettings();
+  return strOut;
+}
 String Lighting::toString(){
   String strOut = colormode2string(_colormode);
   String fadeStr = _fade.toString();

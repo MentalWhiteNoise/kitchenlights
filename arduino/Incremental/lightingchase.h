@@ -28,6 +28,7 @@ class LightingChase
     void set_mode(String mode);
     void set_width(uint8_t value);
     //void set_target(String target);
+    String displaySettings();
     String toString();
   private: 
     ChaseMode _mode;

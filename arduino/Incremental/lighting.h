@@ -61,6 +61,7 @@ class Lighting
 
     //void load(); // loads from EEPROM
     //void save(); // saves to EEPROM
+    String displaySettings();
     String toString();
   private:
     ColorMode _colormode;

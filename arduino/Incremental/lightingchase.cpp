@@ -108,6 +108,11 @@ void LightingChase::set_mode(String mode){ _mode = string2chasemode(mode); }
 void LightingChase::set_width(uint8_t value){ _width = value; }
 //void LightingChase::set_target(String target){ _target = string2chasetarget(target); }
 
+String LightingChase::displaySettings(){  
+  String strOut = "Chase Mode: " + chasemode2string(_mode);
+  strOut += "\n\t\tWidth: " + String(_width); 
+  return strOut;
+}
 String LightingChase::toString(){
   String strOut = chasemode2string(_mode);  
   if (_mode == CHASEMODE_OFF){ return ""; }

@@ -112,6 +112,19 @@ bool LightingFade::perPixel()
   return _mode == FADEMODE_CHASE;
 }
 
+String LightingFade::displaySettings(){  
+  String strOut = "\tFade Mode: " + fademode2string(_mode);
+  strOut += "\n\t\t(Last Fade Mode: " + fademode2string(_lastmode);
+  strOut += "\n\tBg Color: #" + ColorAsHex(_bgcolor);
+  strOut += "\n\tSpeed: " + String(_speed);
+  strOut += "\n\tInternal: ";
+  strOut += "\n\t\tStart Tick: " + String(_tick);
+  strOut += "\n\t\tBottom Half of Cycle: " + String(_bottomhalf);
+  strOut += "\n\t\tPaused: " + String(_paused);
+  strOut += "\n\t\tPaused Cycle Percent: " + String(_pausedCyclePercent);
+  strOut += "\n\tChase: \n" + _chase.displaySettings();
+  return strOut;
+}
 String LightingFade::toString(){
   String strOut = "";  
   if (_paused){ strOut += F(" - PAUSED - "); }

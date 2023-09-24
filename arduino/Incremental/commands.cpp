@@ -2,62 +2,77 @@
 #include "lighting.h"
 #include "commands.h"
 
-Commands::Commands(Lighting *lighting, Stream* serial){
+Commands::Commands(Lighting *lighting, Connection *connection, Stream* serial){
   command = "";
   parameters = "";
   _lighting = lighting;
   _serial = serial;
+  _connection = connection;
   commandStream = "";
   invalidStream = false;
 }
-
+String Commands::process_request_string(String text){
+  String rtrn = "";
+  for(int i = 0; i < text.length(); ++i){
+    rtrn += process_request_char(text[i]);
+  }
+  rtrn += process_request_char('|'); // Send end character to clear any extra commands...
+  return rtrn;
+}
+String Commands::process_request_char(char c){
+  String rtrn = "";
+  if (c == '\n' || c == '\r' || c == '\0' || c == '|') { // This is the only thing that submits a process...
+    
+    // check for unprocessed command text
+    if (commandStream.length() > 0 && !invalidStream){
+        if (!parse_command_stream()){
+          invalidStream = true;
+          rtrn += "\nFailed after submission";
+          return rtrn;
+        }
+    }
+    if (!invalidStream && command.length() > 0)
+    {
+      display();
+      apply_command();
+    }
+    if (invalidStream){
+      rtrn += "\nInvalid parameters specified: unexpected value of '";
+      
+      rtrn += commandStream;
+      rtrn += "' at '";
+      rtrn += command;
+      rtrn += "' '";
+      rtrn += parameters;
+      rtrn += "'";
+    }
+    reset_command_stream();
+  }
+  else if (!invalidStream && c == ' ' && commandStream.length() > 0){
+    commandStream.toUpperCase();
+    if (!parse_command_stream()){
+      rtrn += "\nFailed at loop";
+      invalidStream = true;
+      return rtrn;
+    }
+    commandStream = "";
+  }
+  else if(!invalidStream) {
+    commandStream += c;
+  }
+  return rtrn;
+}
 void Commands::process_request_stream()
 {  
   // FUTURE: Add ability to "age out" if they did not send an end character.
   // If invalid, still should read to end of stream and clear out the bad request.
+  String s = "";
   while (_serial->available()) { // how will this impact the timing?  Should I just check if serial is available, and then read it if it is? How about syncing the command?
     char c = _serial->read();  //gets one byte from serial buffer
-    if (c == '\n' || c == '\r' || c == '\0' || c == '|') { // This is the only thing that submits a process...
-      
-      // check for unprocessed command text
-      if (commandStream.length() > 0 && !invalidStream){
-          if (!parse_command_stream()){
-            invalidStream = true;
-            _serial->println(F("Failed after submission"));
-            break;
-          }
-      }
-      if (!invalidStream && command.length() > 0)
-      {
-        display();
-        apply_command();
-      }
-      if (invalidStream){
-        _serial->print(F("Invalid parameters specified: unexpected value of '"));
-        
-        _serial->print(commandStream);
-        _serial->print("' at '");
-        _serial->print(command);
-        _serial->print("' '");
-        _serial->print(parameters);
-        _serial->println("'");
-      }
-      reset_command_stream();
-    }
-    else if (!invalidStream && c == ' ' && commandStream.length() > 0){
-      commandStream.toUpperCase();
-      if (!parse_command_stream()){
-        _serial->println(F("Failed at loop"));
-        invalidStream = true;
-        break;
-      }
-      commandStream = "";
-    }
-    else if(!invalidStream) {
-      commandStream += c;
-    }
+    s += process_request_char(c);
   }
-
+  if (s != "")
+  { _serial->println(s); }
 }
 
 bool Commands::parse_command_stream(){
@@ -145,6 +160,25 @@ bool Commands::is_valid_method(String text){
 }
 
 void Commands::apply_command(){
+  #ifdef PRIMARY_CONTROLLER
+    _connection->ScanForSlave(); // move this whole block to scan and send...
+    if (slave.channel == CHANNEL) { 
+      bool isPaired = manageSlave();
+      if (isPaired) {
+        String cmd = command;
+        if (parameters.length() > 0){
+          cmd += " " + parameters;
+        }
+        _connection->sendData(cmd);
+      } else {
+        // slave pair failed
+        serial->println("Slave pair failed!");
+      }
+    }
+    else {
+      // No slave found to process
+    }
+  #endif
   bool invalidParameter = false;
   
   if (command == F("DEBUG")) {
