@@ -59,6 +59,8 @@ void WirelessPush::ScanForSlave(){
   Serial.println("");
   if (scanResults == 0) {
     Serial.println("No WiFi devices in AP Mode found");
+    _display->SetLine(2, "No WiFi devices in AP");
+    _display->SetLine(3, "  Mode found!");
   } else {
     Serial.print("Found "); Serial.print(scanResults); Serial.println(" devices ");
     for (int i = 0; i < scanResults; ++i) {
@@ -103,8 +105,12 @@ void WirelessPush::ScanForSlave(){
 
   if (slaveFound) {
     Serial.println("Slave Found, processing..");
+    _display->SetLine(2, "Secondary Connected");
+    _display->SetLine(3, "");
   } else {
     Serial.println("Slave Not Found, trying again.");
+    _display->SetLine(2, "Cannot find peer");
+    _display->TemporarilyReplaceLine(3, "  trying again", 1000);
   }
 
   // clean up ram
@@ -181,6 +187,7 @@ void WirelessPush::sendData(uint8_t *data, uint8_t sizeOfData){
     Serial.print("Send Status: ");
     if (result == ESP_OK) {
       Serial.println("Success");
+      _display->TemporarilyReplaceLine(3, "Send Success", 1000);
     } else if (result == ESP_ERR_ESPNOW_NOT_INIT) {
       // How did we get so far!!
       Serial.println("ESPNOW not Init.");
@@ -192,6 +199,7 @@ void WirelessPush::sendData(uint8_t *data, uint8_t sizeOfData){
       Serial.println("ESP_ERR_ESPNOW_NO_MEM");
     } else if (result == ESP_ERR_ESPNOW_NOT_FOUND) {
       Serial.println("Peer not found.");
+      _display->TemporarilyReplaceLine(3, "Peer not found!", 1000);
     } else {
       Serial.println("Not sure what happened");
     }
@@ -202,4 +210,10 @@ void WirelessPush::OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t sta
            mac_addr[0], mac_addr[1], mac_addr[2], mac_addr[3], mac_addr[4], mac_addr[5]);
   Serial.print("Last Packet Sent to: "); Serial.println(macStr);
   Serial.print("Last Packet Send Status: "); Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+  /*if (status == ESP_NOW_SEND_SUCCESS){ Can't send this 'cause it's a static member function, adn I can't seem to create static properties...
+    _display->TemporarilyReplaceLine(3, "Delivery Success", 1000);
+  }
+  else {
+    _display->TemporarilyReplaceLine(3, "Delivery Fail!", 1000);
+  }*/
 }

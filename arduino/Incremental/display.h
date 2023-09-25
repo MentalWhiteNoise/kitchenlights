@@ -24,14 +24,25 @@ Commands success / erred
 */
 // if controller is primary
 // Manage the visual OLED display
+struct TemporaryText {String text; unsigned long expiration;};
+
 class Display
 {
 public:
-    Display(Adafruit_SSD1306 *screen);
-    void ClearDisplay();
-    void ReplaceLine(uint8_t line, String text);
-    void StartDisplay();
+  Display(Adafruit_SSD1306 *screen);
+  void ClearDisplay();
+  void StartDisplay();
+  void SetLine(uint8_t line, String text);
+  void TemporarilyReplaceLine(uint8_t line, String text, uint16_t duration);
+  void TemporarilyReplaceAll(String text, uint16_t duration);
+  void draw(unsigned long tick);
+  void wake();
 private:
   Adafruit_SSD1306 *_screen;
+  String _fixedText[4];
+  TemporaryText _tempText[4];
+  unsigned long _tick;
+  bool _sleep;
+  bool _hasChanged;
 };
 #endif

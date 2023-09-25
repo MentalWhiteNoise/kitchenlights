@@ -14,7 +14,8 @@ void WebInterface::ConfigureInterface(char* ssid, char* password){
     IPAddress IP = WiFi.softAPIP();
     Serial.print("IP address: ");
     Serial.println(IP);
-    _display->ReplaceLine(0, "IP: " + IP.toString());
+    _display->SetLine(0, ssid);
+    _display->SetLine(1, "IP: " + IP.toString());
 
     _server->on("/status", HTTP_GET, [&](AsyncWebServerRequest *request){
       request->send_P(200, "text/plain", _lighting->toString().c_str());
