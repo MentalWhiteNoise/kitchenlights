@@ -39,7 +39,9 @@ class LightingFade
 
     String displaySettings();
     String toString();
-    bool bounced;    
+    bool bounced;
+    void serialize(byte* data);
+    void deserialize(byte* data);
   private:
     unsigned long get_cycle_time(uint8_t speed);
     double get_cycle_percent(unsigned long tick);

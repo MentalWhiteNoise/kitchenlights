@@ -5,16 +5,16 @@
 struct controller {uint8_t controller; uint8_t start; uint8_t end;};
 
 const static controller Controller [] = {
-  { 0, 0, 5 },
-  { 1, 6, 11 }
+  { 0, 0, 17 }, 
+  { 1, 18, 25 } 
 };
 
 struct pixelLocation {const char *locationType; uint8_t instance; uint8_t start; uint8_t end;};
 
 const static pixelLocation PixelLocation [] = {
-    {"ALL", 0, 0, 11},
-    {"STRIP", 0, 0, 5},
-    {"STRIP", 1, 5, 11}
+    {"ALL", 0, 0, 25},
+    {"STRIP", 0, 0, 17},
+    {"STRIP", 1, 18, 25}
     /*
     {"ALL", 0, 0, 59, 0, 108},
     {"ALL", 0, 60, 107, 1, 108},
@@ -53,5 +53,6 @@ const static pixelLocation PixelLocation [] = {
 };
 
 double GetPixelDistanceToEnd(String locationType, uint8_t pixel);
+uint8_t MapToPhysicalLocation(uint8_t pixel);
 
 #endif

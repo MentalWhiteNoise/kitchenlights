@@ -1,5 +1,6 @@
 #include "Arduino.h"
 #include "lightingfade.h"
+#include "colors.h"
 
 FadeMode string2fademode (String str) { return (FadeMode) lookupFromString (str, fademode_conversion, sizeof(fademode_conversion) / sizeof(fademode_conversion[0])); }
 String fademode2string (FadeMode mode) { return String(fademode_conversion[mode].str); }
@@ -152,4 +153,30 @@ String LightingFade::toString(){
     strOut += String(_speed);
   }
   return strOut;
+}
+
+void LightingFade::serialize(byte* data){
+  int start = 2;
+  data[start] = (byte)_mode;
+  data[start+1] = (byte)WhitePart(_bgcolor);
+  data[start+2] = (byte)RedPart(_bgcolor);
+  data[start+3] = (byte)GreenPart(_bgcolor);
+  data[start+4] = (byte)BluePart(_bgcolor);
+  data[start+5] = (byte)_speed;
+  //_shift.serialize_fade(data) // 3 bytes
+  _chase.serialize_fade(data);
+  // bool _paused;
+  // double _pausedCyclePercent;
+  return;
+}
+void LightingFade::deserialize(byte* data){
+  int start = 2;
+  _mode = (FadeMode)data[start];
+  _bgcolor = AsColor((uint8_t)data[start+2], (uint8_t)data[start+3], (uint8_t)data[start+4], (uint8_t)data[start+1]);
+  _speed = (uint8_t)data[start+5];
+  //_shift.deserialize_fade(data) // 3 bytes
+  _chase.deserialize_fade(data);
+  // bool _paused;
+  // double _pausedCyclePercent;
+  return;
 }

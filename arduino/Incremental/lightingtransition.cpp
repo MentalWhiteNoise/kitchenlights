@@ -1,5 +1,6 @@
 #include "lightingtransition.h"
 #include "Arduino.h"
+#include "colors.h"
 
 TransitionMode string2transitionmode (String str) { return (TransitionMode) lookupFromString (str, transitionmode_conversion, sizeof(transitionmode_conversion) / sizeof(transitionmode_conversion[0])); }
 String transitionmode2string (TransitionMode mode) { return String(transitionmode_conversion[mode].str); }
@@ -130,7 +131,7 @@ uint32_t LightingTransition::get_effect(unsigned long tick, bool fade_bounced, u
       altBucket = colorBucket + 1; 
       altPercent = colorPercent - 0.5;
     }
-    altPercent = unitSineWave(altPercent/2); // 0 to 1 along sine curve - is this needed for chase?
+    //altPercent = unitSineWave(altPercent/2); // 0 to 1 along sine curve - is this needed for chase?
     return TransitionColor(_colorarray[colorBucket], _colorarray[altBucket], altPercent);
   }
   return effect;
@@ -198,14 +199,14 @@ void LightingTransition::clear_colorarray(){
   _colorarray_length = 0;
 }
 void LightingTransition::append_colorarray(uint32_t c){
-  if (_colorarray_length < 8)
+  if (_colorarray_length < 16)
   {
     _colorarray_length++;
     _colorarray[_colorarray_length - 1] = c;
   }
   else
   {
-    Serial.print("Currently limitted to 8 colors.");
+    Serial.print("Currently limitted to 16 colors.");
   }
   //_colorarray = (uint32_t*) realloc(_colorarray, _colorarray_length * sizeof(uint32_t));
   //*(_colorarray + (_colorarray_length - 1)) = c;
@@ -267,4 +268,46 @@ String LightingTransition::toString(){
     strOut += String(_width);    
   }
   return strOut;
+}
+void LightingTransition::serialize(byte* data){
+  int start = 11;
+  data[start] = (byte)_mode;
+  data[start+1] = (byte)_colorarray_length;
+  for(int i = 0; i < 16; i++){
+    serialize_color(data, 2 + i*4, _colorarray[i]);
+  }
+  data[start+67] = (byte)_speed;
+  data[start+68] = (byte)_width;
+  //data[start+69] = (byte)_flickerActivation;  
+
+  //_shift.serialize_transition(data) // 3 bytes
+  _chase.serialize_transition(data);
+  // bool _paused;
+  // double _pausedCyclePercent;
+  return;
+}
+void LightingTransition::deserialize(byte* data){
+  int start = 11;
+  _mode = (TransitionMode)data[start];
+  _colorarray_length = (uint8_t)data[start+1];
+  for(int i = 0; i < 16; i++){
+    _colorarray[i] = deserialize_color(data, 2 + i*4);
+  }
+  _speed = (uint8_t)data[start+67];
+  _width = (uint8_t)data[start+68];
+  //_flickerActivation = (uint8_t)data[start+69];  
+  //_shift.deserialize_transition(data) // 3 bytes
+  _chase.deserialize_transition(data);
+  // bool _paused;
+  // double _pausedCyclePercent;
+  return;
+}
+void LightingTransition::serialize_color(byte* data, int start, uint32_t c){
+  data[start+0] = (byte)WhitePart(c);
+  data[start+1] = (byte)RedPart(c);
+  data[start+2] = (byte)GreenPart(c);
+  data[start+3] = (byte)BluePart(c);
+}
+uint32_t LightingTransition::deserialize_color(byte* data, int start){
+  return AsColor((uint8_t)data[start+1], (uint8_t)data[start+2], (uint8_t)data[start+3], (uint8_t)data[start+0]);
 }

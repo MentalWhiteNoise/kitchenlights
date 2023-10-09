@@ -20,45 +20,47 @@ double LightingChase::get_effect(double cyclePercent, bool bounced, uint8_t pixe
   double distancePct = GetPixelDistanceToEnd("ALL", pixel); // no target
   double tempValue = 0;
   double activePoint = 0;
+  double widthFactor = get_width_effect();
 
   switch (_mode){
     case CHASEMODE_BOUNCE: { // chase cycle goes 0 to 1, then 1 to 0. 0 has no effect on 1.
+      
       bool increasing = cyclePercent < 0.5;
       if (increasing) {
         activePoint = cyclePercent * 2;
-        if (distancePct <= activePoint) {
-          tempValue = 1 - (activePoint - distancePct);
+        if (distancePct <= activePoint) { // if left of active point
+          tempValue = 1 - (activePoint - distancePct) * widthFactor; // 1 - distance to active point
         }
-        else {
-          tempValue = 1 - (activePoint + distancePct);
+        else { // if right of active point
+          tempValue = 1 - (activePoint + distancePct) * widthFactor; // 1 - distance to 0 + distance of active point to 0
         }
       }
       else {
         activePoint = 2 - cyclePercent * 2;
-        if (distancePct >= activePoint){
-          tempValue = 1 - (distancePct - activePoint);
+        if (distancePct >= activePoint){ // if right of active point
+          tempValue = 1 - (distancePct - activePoint) * widthFactor; // 1 - distance to active point
         }
-        else {
-          tempValue = distancePct + activePoint - 1;
+        else { // if left of active point
+          tempValue = 1 - (2 - distancePct - activePoint) * widthFactor; // 1 - distance to end + distance active point to end
         }
       }
     } break;
     case CHASEMODE_OUTWARD: { // chase cycle goes 0.5 to 0 and repeats. 0.5 is impacted by the value at 0 (circular). 0.5 to 1.0 mimics state.
       double effectiveCycle = (distancePct<=0.5) ? distancePct : 1-distancePct;
       if (1 - cyclePercent <= effectiveCycle){
-        tempValue = 2-cyclePercent-effectiveCycle;
+        tempValue = 1 - (2+cyclePercent-effectiveCycle) * widthFactor;
       }
       else {
-        tempValue = 1-cyclePercent-effectiveCycle;
+        tempValue = 1-(cyclePercent+effectiveCycle) * widthFactor;
       }
     } break;
     case CHASEMODE_INWARD: { // chase cycle goes 0 to 0.5 and repeats. 0 is impacted by the value at 0.5 (circular). 1.0 to 0.5 mimics state.
       double effectiveCycle = (distancePct<=0.5) ? distancePct : 1-distancePct;
       if(cyclePercent>=effectiveCycle){
-        tempValue = 1-cyclePercent+effectiveCycle;
+        tempValue = 1-(cyclePercent+effectiveCycle) * widthFactor;
       }
       else {
-        tempValue = effectiveCycle-cyclePercent;
+        tempValue = 1 - (effectiveCycle-cyclePercent+1)*widthFactor;
       }
       break;
     }
@@ -67,41 +69,50 @@ double LightingChase::get_effect(double cyclePercent, bool bounced, uint8_t pixe
       if (cyclePercent <= 0.5){
         activePoint = 0.5 - cyclePercent;
         if(effectiveCycle < activePoint){
-          tempValue = effectiveCycle+activePoint;
+          //tempValue = effectiveCycle+activePoint;
+          tempValue = 1 - (1-effectiveCycle-activePoint)*widthFactor;
         }
         else {
-          tempValue = 1-effectiveCycle+activePoint;
+          //tempValue = 1-effectiveCycle+activePoint;
+          tempValue = 1-(effectiveCycle-activePoint)*widthFactor;
         }
       }
       else {
         activePoint = 2 - cyclePercent;
         if(effectiveCycle < activePoint){
-          tempValue = 1-activePoint+effectiveCycle;
+          //tempValue = 1-activePoint+effectiveCycle;
+          tempValue = 1-(activePoint-effectiveCycle)*widthFactor;
         }
         else {
-          tempValue = 1-effectiveCycle-activePoint;
+          //tempValue = 1-effectiveCycle-activePoint;
+          tempValue = 1-(effectiveCycle+activePoint)*widthFactor;
         }
       }
     } break;
     case CHASEMODE_CLOCKWISE: { // chase cycle goes 0 to 1 repeating. 0 is impacted by 1 (circular).
       if(1-cyclePercent <= distancePct){
-        tempValue = 2-cyclePercent-distancePct;
+        //tempValue = 2-cyclePercent-distancePct;
+        tempValue = 1-(distancePct+cyclePercent-1) * widthFactor;
       }
       else {
-        tempValue = 1-cyclePercent-distancePct;
+        //tempValue = 1-cyclePercent-distancePct;
+        tempValue = 1-(cyclePercent+distancePct)*widthFactor;
       }
     } break;
     case CHASEMODE_COUNTER: { // chase cycle goes 1 to 0 repeating. 1 is impacted by 0 (circular)
       if(cyclePercent >= distancePct){
-        tempValue = 1-cyclePercent+distancePct;
+        //tempValue = 1-cyclePercent+distancePct;
+        tempValue = 1-(cyclePercent-distancePct)*widthFactor;
       }
       else {
-        tempValue = distancePct-cyclePercent;
+        //tempValue = distancePct-cyclePercent;
+        tempValue = 1 - (cyclePercent - distancePct + 1) * widthFactor;
       }
     } break;
   }
+  return tempValue; // turning off scalign to test
   // Scale to apply width
-  return 1 - (1 - tempValue) * 1/get_width_effect();
+  //return 1 - (1 - tempValue) * 1/get_width_effect();
 }
 
 void LightingChase::set_mode(String mode){ _mode = string2chasemode(mode); }
@@ -121,4 +132,18 @@ String LightingChase::toString(){
   //strOut += F(" targeting ");
   //strOut += chasetarget2string(_target);
   return strOut;
+}
+void LightingChase::serialize_fade(byte* data) { serialize(data, 8); }
+void LightingChase::serialize_transition(byte* data) { serialize(data, 73); }
+void LightingChase::deserialize_fade(byte* data) { deserialize(data, 8); }
+void LightingChase::deserialize_transition(byte* data) { deserialize(data, 73); }
+void LightingChase::serialize(byte* data, int start){
+  data[start] = (byte)_mode;
+  data[start+1] = (byte)_width;
+  //data[start+2] = (byte)_target;
+}
+void LightingChase::deserialize(byte* data, int start){
+  _mode = (ChaseMode)data[start];
+  _width = (ChaseMode)data[start+1];
+  //_target = (ChaseTarget)data[start+2];
 }

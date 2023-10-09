@@ -46,7 +46,11 @@ class LightingTransition
     String toString();
     uint32_t get_firstcolor();
     bool perPixel();
+    void serialize(byte* data);
+    void deserialize(byte* data);
   private:
+    void serialize_color(byte* data, int start, uint32_t c);
+    uint32_t deserialize_color(byte* data, int start);
     unsigned long get_cycle_time(uint8_t speed);
     double get_cycle_percent(unsigned long tick);
     void set_tick_at_cycle_percent(double cyclePercent, uint8_t speed);
@@ -54,7 +58,7 @@ class LightingTransition
     TransitionMode _mode;
     TransitionMode _lastmode;
     //uint32_t* _colorarray;
-    uint32_t _colorarray[8]; // Keep having problems with dynamic array...
+    uint32_t _colorarray[16]; // Keep having problems with dynamic array...
     uint8_t _colorarray_length;
     uint8_t _speed;
     uint8_t _width;

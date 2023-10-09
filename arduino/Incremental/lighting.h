@@ -27,7 +27,7 @@ class Lighting
   public:
     Lighting();
     
-    void draw(unsigned long tick);
+    uint32_t getColor(unsigned long tick, uint8_t pixel);
     void turn_on();
     void turn_on(uint32_t color);
     void turn_off();
@@ -58,11 +58,15 @@ class Lighting
 		void set_fadechasewidth(uint8_t value);	
 		void set_transitionchasemode(String mode);
 		void set_transitionwidth(uint8_t value);
+    bool perPixel();
+    bool isOff();
 
     //void load(); // loads from EEPROM
     //void save(); // saves to EEPROM
     String displaySettings();
     String toString();
+    void serialize(byte* data);
+    void deserialize(byte* data);
   private:
     ColorMode _colormode;
     uint8_t _brightness;

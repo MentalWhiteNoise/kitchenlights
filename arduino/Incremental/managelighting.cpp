@@ -1,14 +1,24 @@
 #include "managelighting.h"
 
-ManageLighting::ManageLighting(Lighting *lighting, WirelessPush *wirelessPush, Display *display){
+ManageLighting::ManageLighting(Lighting *lighting, WirelessPush *wirelessPush, Display *display, Adafruit_NeoPixel *strip, uint8_t controllerId){
     _lighting = lighting;
     _wirelessPush = wirelessPush;
     _display = display;
+    _strip = strip;
+    _controllerId = controllerId;
+    _off = false;
+    _debug = false;
 }
 void ManageLighting::ApplyCommand(String command, String parameters){
+  // this is still not completely stable... 
   if(_wirelessPush){ // Should only be true for primary controller...
-    Serial.println("HERE");
     _wirelessPush->PushCommand(command, parameters);
+  }
+  if (_display && _debug){
+    String displayText = parameters;
+    displayText.replace(' ', '\n');
+    displayText = command + "\n" + displayText;
+    _display->TemporarilyReplaceAll(displayText, 2000);
   }
 
   bool invalidParameter = false;
@@ -27,10 +37,12 @@ void ManageLighting::ApplyCommand(String command, String parameters){
     else {
       _lighting->turn_on();
     }
+    turnOn();
   }
   
   else if (command == F("OFF")){
     _lighting->turn_off();
+    turnOff();
   }
 
   else if (command == F("SET COLOR")){ // #FFFFFF, #FFFFFFFF
@@ -55,7 +67,7 @@ void ManageLighting::ApplyCommand(String command, String parameters){
       _lighting->enable_whitemode();
     }
     else if (parameters == F("OFF")){
-      _lighting->disable_whitemode();      
+      _lighting->disable_whitemode();
     }
     else{
       invalidParameter = true;
@@ -213,4 +225,77 @@ void ManageLighting::ApplyCommand(String command, String parameters){
     return;
   }
 
+}
+void ManageLighting::turnOff(){
+  _off = true;
+  _strip->clear();
+  _strip->show();
+}
+void ManageLighting::turnOn(){
+  _off = false;
+}
+/* LED Strip Functions:
+begin() / show() / clear() / setPin(int16_t p)) / 
+setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b))
+setPixelColor(uint16_t n, uint8_t r, uint8_t g, uint8_t b, uint8_t w))
+setPixelColor(uint16_t n, uint32_t c)))
+fill(uint32_t c = 0, uint16_t first = 0, uint16_t count = 0)
+setBrightness(uint8_t) / uint8_t getBrightness()
+uint16_t numPixels()
+uint32_t getPixelColor(uint16_t n) 
+static uint8_t gamma8(uint8_t x) // An 8-bit gamma-correction function for basic pixel brightness adjustment. Makes color transitions appear more perceptially correct
+static uint32_t gamma32(uint32_t x) // A gamma-correction function for 32-bit packed RGB or WRGB colors. Makes color transitions appear more perceptially correct.
+static uint32_t Color(uint8_t r, uint8_t g, uint8_t b) 
+static uint32_t Color(uint8_t r, uint8_t g, uint8_t b, uint8_t w) 
+static uint32_t ColorHSV(uint16_t hue, uint8_t sat = 255, uint8_t val = 255)
+*/
+void ManageLighting::draw(unsigned long tick){
+  if (_off){
+    return;
+  }
+  if (_lighting->isOff()){
+    turnOff();
+  }
+  // _strip->setBrightness(BRIGHTNESS); // move brightness here? Would this be better for the lights?
+  if (_lighting->perPixel()){
+    // loop through all defined pixels on controller (based on cabinet location)
+    /*
+    uint32_t color1 = _lighting->getColor(tick,0);
+    uint32_t color2 = _lighting->getColor(tick,8);
+    uint32_t color3 = _lighting->getColor(tick,17);
+
+    Serial.print("#");
+    Serial.print(ColorAsHex(color1));
+    Serial.print(" -> ");
+    Serial.print(ColorAsHex(color2));
+    Serial.print(" -> ");
+    Serial.print(ColorAsHex(color3));
+    Serial.print("     ");
+    Serial.println(tick);
+
+    delay(500);*/
+    for (int i = Controller[_controllerId].start; i<=Controller[_controllerId].end;i++)
+    {
+      uint32_t color = _lighting->getColor(tick,i);
+      // map to actual pixles on strip to set color
+      _strip->setPixelColor(MapToPhysicalLocation(i), color); 
+      /*Serial.print("Set ");
+      Serial.print(i);
+      Serial.print(" (at ");
+      Serial.print(MapToPhysicalLocation(i));
+      Serial.print(") to #");
+      Serial.print(ColorAsHex(color));
+      Serial.println();*/
+    }
+  }
+  else {
+    uint32_t color = _lighting->getColor(tick, 0);
+    _strip->fill(color);
+    /*// For each pixel in strip...
+    for(int i=0; i<_strip->numPixels(); i++) { 
+      _strip->setPixelColor(i, color);
+    }*/
+  }
+  _strip->show();
+  delay(50);
 }

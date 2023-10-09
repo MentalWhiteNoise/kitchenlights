@@ -13,32 +13,21 @@ Lighting::Lighting(){
   _transition = LightingTransition();
 }
 
-void Lighting::draw(unsigned long tick){
-  if (_colormode == COLORMODE_OFF){ return; }
-  double fadeEffect = _fade.get_effect(tick, 0);
+uint32_t Lighting::getColor(unsigned long tick, uint8_t pixel){
+  if (_colormode == COLORMODE_OFF){ return 0; }
+  double fadeEffect = _fade.get_effect(tick, pixel);
   uint32_t color = 0;
   if (_colormode == COLORMODE_WHITEONLY)
   { 
-    color = AsColor(0,0,0,_brightness * (1-fadeEffect));
-  }
-  else if (_colormode == COLORMODE_CONSTANT)
-  {
-    if (_transition.perPixel() || _fade.perPixel())
-    {
-      // loop through all pixels for controller...
-    }
-    else 
-    {
-      color = TransitionColor(_transition.get_firstcolor(), _fade.get_bgcolor(), fadeEffect);
-    }
+    return AsColor(0,0,0,_brightness * (1-fadeEffect));
   }
   else 
   {
-    color = TransitionColor(_transition.get_effect(tick, _fade.bounced, 0), _fade.get_bgcolor(), fadeEffect);
+    return TransitionColor(_transition.get_effect(tick, _fade.bounced, pixel), _fade.get_bgcolor(), fadeEffect);
   }
-  Serial.println(ColorAsHex(color));
-
 }
+bool Lighting::perPixel(){ return _transition.perPixel() || _fade.perPixel(); }
+bool Lighting::isOff(){ return _colormode == COLORMODE_OFF; }
 void Lighting::turn_on(){
   if (_colormode != COLORMODE_OFF){ return; }
   if (_lastcolormode != COLORMODE_OFF){
@@ -222,4 +211,20 @@ String Lighting::toString(){
   }
   if (fadeStr != ""){ strOut += "\nFade: " + fadeStr; }
   return strOut;
+}
+
+void Lighting::serialize(byte* data){
+  data[0] = (byte)_colormode;
+  data[1] = (byte)_brightness;
+  _fade.serialize(data);
+  _transition.serialize(data);
+  return;
+}
+void Lighting::deserialize(byte* data)
+{
+  _colormode = (ColorMode)data[0];
+  _brightness = (uint8_t)data[1];
+  _fade.deserialize(data);
+  _transition.deserialize(data);
+  return;
 }

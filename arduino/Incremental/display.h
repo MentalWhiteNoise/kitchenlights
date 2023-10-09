@@ -44,5 +44,6 @@ private:
   unsigned long _tick;
   bool _sleep;
   bool _hasChanged;
+  unsigned long _nextExpiration;
 };
 #endif

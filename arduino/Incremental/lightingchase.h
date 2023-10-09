@@ -30,7 +30,13 @@ class LightingChase
     //void set_target(String target);
     String displaySettings();
     String toString();
+    void serialize_fade(byte* data);
+    void serialize_transition(byte* data);
+    void deserialize_fade(byte* data);
+    void deserialize_transition(byte* data);
   private: 
+    void serialize(byte* data, int start);
+    void deserialize(byte* data, int start);
     ChaseMode _mode;
     //ChaseTarget _target;
     uint8_t _width;
