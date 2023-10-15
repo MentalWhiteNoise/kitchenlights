@@ -1,45 +1,26 @@
 /* OUTSTANDING ITEMS
 
 Concerns: 
-  * Will the 4.8Amps going through the usbc on the board to the lights be okay?
-
-  * Will the wireless be strong enough from inside the cabinets? (pending test)
-
   * Had some strange colors while testing chase, and chase never did go to the darker side. Maybe a bug with my merging of chase effects? Verify cycles from chase, and application of cycles to colors.
 
-Opportunities: 
-  * Add a button to cause primary display to come on. Maybe touch plate, this late in the game?
-
 Next steps: 
-  * Test wireless in cabintes
-
   * Validate chase pattern / color blending. Might have just been the application of the sign wave, which I turned off...
 
-  * Add targets
-    * Initially, just split by controller.
-
-  * Expand logic to include shift effects 
-    * start will alternate pixels, then alternating by target
-
-  * For the secondary, need to rewire the board to add a second neopixel strip, and need to re-write the manage lighting to allow for an optional second strip (null the pointer for primary)
-
-  * Finish wiring up cabinet lights, out of cabinets, and fully test with correct targets and shift effects
+  * Testing: 
+    * Targets
+    * Shifting    
 
   * Adding pixelate, flicker, alternate, and other random effects. Verify if flicker activation should control anything in any of the other modes.
   
-  * Add ability to save to EEPROM (technically flash memory) so effects resume when light switched flipped.
-
   * Build out web page on touch screen arduino... Is there a way to connect one device to two wireless networks, so I can access the services from our wireless network?
-
-  * Install lights and controllers in cabinets
-
 */
 
 
 #include <stdlib.h>
 #include <EEPROM.h> // For remembering state
 
-#define PRIMARY_CONTROLLER
+#define LOAD_STATE // Disable for initial save... 
+//#define PRIMARY_CONTROLLER
 
 // For web hosting
 #ifdef PRIMARY_CONTROLLER
@@ -97,12 +78,12 @@ Lighting lighting = Lighting();
   Display screen = Display(&display); //Adafruit_SSD1306
   WirelessPush wirelessPush = WirelessPush(&screen, &slave);
   ManageLighting manageLighting = ManageLighting(&lighting, &wirelessPush, &screen, &strip, CONTROLLER_ID); // Adafruit_NeoPixel
-  ParseInput parseInput = ParseInput(&screen, &wirelessPush, &manageLighting);
+  ParseInput parseInput = ParseInput(&manageLighting);
   #include "webinterface.h"
   WebInterface webInterface = WebInterface(&parseInput, &screen, &server, &lighting);
 #else //#ifndef PRIMARY_CONTROLLER
-  ManageLighting  manageLighting = ManageLighting(&lighting, nullptr, nullptr, &strip, CONTROLLER_ID); // Adafruit_NeoPixel
-  ParseInput parseInput = ParseInput(nullptr, nullptr, &manageLighting);
+  ManageLighting manageLighting = ManageLighting(&lighting, nullptr, nullptr, &strip, CONTROLLER_ID); // Adafruit_NeoPixel
+  ParseInput parseInput = ParseInput(&manageLighting);
   #include "wirelessinput.h"
   WirelessInput wirelessInput = WirelessInput(&parseInput);
 #endif
@@ -126,6 +107,9 @@ void OnDataReceive(const uint8_t *mac_addr, const uint8_t *data, int data_len){
 #endif
 void setup() {
 
+  EEPROM.begin(92);
+  delay(500);
+  
   startMillis = millis(); 
   lastCheckedEspNow = 0;
   
@@ -162,6 +146,12 @@ void setup() {
   strip.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   strip.show(); // Turn OFF all pixels ASAP
 
+
+  #ifdef LOAD_STATE
+    //delay(2000);
+    Serial.print("should load");
+    manageLighting.load();
+  #endif
 }
 #include "lightingchase.h"
 #include "pixellayout.h"
