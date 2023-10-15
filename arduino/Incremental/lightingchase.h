@@ -34,7 +34,7 @@ class LightingChase
 {
   public:
     LightingChase();
-    double get_effect(double cyclePercent, bool bounced, uint8_t pixel);
+    double get_effect(double cyclePercent, bool bounced, uint16_t pixel);
 
     void set_mode(String mode);
     void set_width(uint8_t value);

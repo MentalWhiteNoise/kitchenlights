@@ -33,7 +33,7 @@ void LightingFade::set_tick_at_cycle_percent(double cyclePercent, uint8_t speed)
   unsigned long cycleTime = get_cycle_time(speed);
   _tick = millis() - ((double)cycleTime * cyclePercent);
 }
-double LightingFade::get_effect(unsigned long tick, uint8_t pixel) {
+double LightingFade::get_effect(unsigned long tick, uint16_t pixel) {
   if (_mode == FADEMODE_OFF){ return 0; }
   //note: when speed changes, be sure to capture % thru cycle, then cast tick back to preserve position within cycle...
   double cyclePercent = get_cycle_percent(tick);

@@ -15,7 +15,7 @@ LightingChase::LightingChase(){
 double LightingChase::get_width_effect(){
   return -5.91764255005309*pow(log((255 - _width)+1),0.5) + 14.034983296193;
 }
-double LightingChase::get_effect(double cyclePercent, bool bounced, uint8_t pixel)
+double LightingChase::get_effect(double cyclePercent, bool bounced, uint16_t pixel)
 {
   if (_mode == CHASEMODE_OFF) { return 0; }
 
@@ -124,7 +124,7 @@ void LightingChase::set_target(String target){ _target = string2chasetarget(targ
 String LightingChase::displaySettings(){  
   String strOut = "Chase Mode: " + chasemode2string(_mode);
   strOut += "\n\t\tWidth: " + String(_width); 
-  strOut += "\n\t\Target: " + chasetarget2string(_target); 
+  strOut += "\n\t\tTarget: " + chasetarget2string(_target); 
   return strOut;
 }
 String LightingChase::toString(){

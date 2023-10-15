@@ -16,7 +16,7 @@ void LightingShift::set_mode(String mode) { _mode = string2shiftmode(mode); }
 void LightingShift::set_amount(uint8_t value) { _amount = value; }
 void LightingShift::set_target(String target){ _target = string2shifttarget(target); }
 
-double LightingShift::get_effect(uint8_t pixel, bool switchEffect, uint8_t effectCount){
+double LightingShift::get_effect(uint16_t pixel, bool switchEffect, uint8_t effectCount){
   double stretchAmount = _amount / 127.0;
   if (_mode == SHIFTMODE_OFF) { return 0; }
 
@@ -63,11 +63,14 @@ double LightingShift::get_effect(uint8_t pixel, bool switchEffect, uint8_t effec
 
   return 0;
 }
+bool LightingShift::is_enabled(){
+  return _mode != SHIFTMODE_OFF;
+}
 
 String LightingShift::displaySettings(){
   String strOut = "Shift Mode: " + shiftmode2string(_mode);
   strOut += "\n\t\tAmount: " + String(_amount); 
-  strOut += "\n\t\Target: " + shifttarget2string(_target); 
+  strOut += "\n\t\tTarget: " + shifttarget2string(_target); 
   return strOut;
 }
 String LightingShift::toString(){

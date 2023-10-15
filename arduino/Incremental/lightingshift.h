@@ -31,7 +31,7 @@ class LightingShift
 {
   public:
     LightingShift();
-    double get_effect(uint8_t pixel, bool switchEffect, uint8_t effectCount);
+    double get_effect(uint16_t pixel, bool switchEffect, uint8_t effectCount);
 
     void set_mode(String mode);
     void set_amount(uint8_t value);

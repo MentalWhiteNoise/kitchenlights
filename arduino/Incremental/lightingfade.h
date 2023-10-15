@@ -23,7 +23,7 @@ class LightingFade
 {
   public:
     LightingFade();
-    double get_effect(unsigned long tick, uint8_t pixel);
+    double get_effect(unsigned long tick, uint16_t pixel);
 
     void enable();
     void disable();

@@ -35,7 +35,7 @@ void LightingTransition::set_tick_at_cycle_percent(double cyclePercent, uint8_t 
   unsigned long cycleTime = get_cycle_time(speed);
   _tick = millis() - ((double)cycleTime * cyclePercent);
 }
-uint32_t LightingTransition::get_effect(unsigned long tick, bool fade_bounced, uint8_t pixel) {
+uint32_t LightingTransition::get_effect(unsigned long tick, bool fade_bounced, uint16_t pixel) {
   if (_colorarray_length == 0){ return 0; }
   if (_mode == TRANSITIONMODE_OFF){ return _colorarray[0]; }
   //note: when speed changes, be sure to capture % thru cycle, then cast tick back to preserve position within cycle...
@@ -198,7 +198,7 @@ void LightingTransition::set_mode(String mode){
       if (_width == 0){ _width = defaultWidth; }
       break; 
     default: // keeps others from having width... until implemented.
-      _width == 0;
+      _width = 0;
       break;
   }
 }
@@ -237,7 +237,7 @@ uint32_t LightingTransition::get_firstcolor(){
 }
 bool LightingTransition::perPixel()
 {
-  return _mode == TRANSITIONMODE_CHASE;
+  return _mode == TRANSITIONMODE_CHASE || _mode == TRANSITIONMODE_FLICKER || _mode == TRANSITIONMODE_PIXELATE || _shift.is_enabled();
 }
 
 void LightingTransition::set_chasetarget(String target){_chase.set_target(target);}

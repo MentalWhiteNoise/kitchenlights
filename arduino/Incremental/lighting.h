@@ -27,7 +27,7 @@ class Lighting
   public:
     Lighting();
     
-    uint32_t getColor(unsigned long tick, uint8_t pixel);
+    uint32_t getColor(unsigned long tick, uint16_t pixel);
     void turn_on();
     void turn_on(uint32_t color);
     void turn_off();

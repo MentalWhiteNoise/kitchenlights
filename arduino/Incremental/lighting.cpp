@@ -13,7 +13,7 @@ Lighting::Lighting(){
   _transition = LightingTransition();
 }
 
-uint32_t Lighting::getColor(unsigned long tick, uint8_t pixel){
+uint32_t Lighting::getColor(unsigned long tick, uint16_t pixel){
   if (_colormode == COLORMODE_OFF){ return 0; }
   double fadeEffect = _fade.get_effect(tick, pixel);
   uint32_t color = 0;
@@ -65,7 +65,7 @@ void Lighting::turn_off(){
 
 void Lighting::enable_whitemode(){
   if (_colormode == COLORMODE_WHITEONLY){ return; }
-  _lastcolormode == _colormode;
+  _lastcolormode = _colormode;
   _colormode = COLORMODE_WHITEONLY;
   if (_brightness == 0){ _brightness = defaultbrightness; }
 }

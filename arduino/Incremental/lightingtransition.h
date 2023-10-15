@@ -28,7 +28,7 @@ class LightingTransition
   public:
     LightingTransition();
     //~LightingTransition();
-    uint32_t get_effect(unsigned long tick, bool fade_bounced, uint8_t pixel);
+    uint32_t get_effect(unsigned long tick, bool fade_bounced, uint16_t pixel);
 
     void enable();
     void disable();
