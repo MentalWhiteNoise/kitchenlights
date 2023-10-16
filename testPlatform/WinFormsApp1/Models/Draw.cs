@@ -18,6 +18,7 @@ namespace WinFormsApp1.Models
                 Y = y;
             }
         }
+
         private static Point MapToBitmapLocation(int pixel)
         {
             if (pixel > 212)

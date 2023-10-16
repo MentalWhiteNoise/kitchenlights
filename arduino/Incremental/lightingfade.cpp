@@ -65,7 +65,7 @@ double LightingFade::get_effect(unsigned long tick, uint16_t pixel) {
   }
   else if (_mode == FADEMODE_HEARTBEAT)
   {
-    effect = 1 - (cyclePercent < 0.25 ? unitSineWave(4 * cyclePercent) : 0) + (cyclePercent > 0.15 && cyclePercent < 0.48333 ? 0.8 * unitSineWave(3 * cyclePercent) : 0);
+    effect = 1 - ((cyclePercent < 0.25 ? unitSineWave(4 * cyclePercent) : 0) + (cyclePercent > 0.15 && cyclePercent < 0.48333 ? 0.8 * unitSineWave(3 * (cyclePercent - 0.15)) : 0));
   }
   else if (_mode == FADEMODE_CHASE)
   {    

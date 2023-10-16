@@ -78,11 +78,11 @@ namespace WinFormsApp1.Models
             {
                 _lastP0 = (byte)((int)(cyclePercent * _colorarray_length));
             }
-            cyclePercent = cyclePercent + shift;
+            //cyclePercent = cyclePercent + shift;
             cyclePercent = cyclePercent - ((int)cyclePercent);
 
-            int colorBucket = (int)(cyclePercent * _colorarray_length);
-            double colorPercent = (cyclePercent * _colorarray_length) - (double)colorBucket;
+            int colorBucket = (int)(cyclePercent * _colorarray_length + shift) % _colorarray_length;
+            double colorPercent = (cyclePercent * _colorarray_length + shift) - (double)colorBucket;
             double effect = 0;
             if (_mode == TransitionMode.TRANSITIONMODE_IMMIDIATE)
             {
