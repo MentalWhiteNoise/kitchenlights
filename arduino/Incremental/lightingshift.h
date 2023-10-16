@@ -43,6 +43,7 @@ class LightingShift
     void serialize_transition(byte* data);
     void deserialize_fade(byte* data);
     void deserialize_transition(byte* data);
+    bool is_enabled();
   private: 
     void serialize(byte* data, int start);
     void deserialize(byte* data, int start);

@@ -30,11 +30,11 @@ namespace WinFormsApp1.Models
         #endregion
 
         #region Private Properties
-        private ColorMode _colormode { get; set; }
-        private byte _brightness{ get; set; }
-        private ColorMode _lastcolormode { get; set; }
-        private LightingFade _fade { get; set; }
-        private LightingTransition _transition{ get; set; }
+        public ColorMode _colormode { get; set; }
+        public byte _brightness{ get; set; }
+        public ColorMode _lastcolormode { get; set; }
+        public LightingFade _fade { get; set; }
+        public LightingTransition _transition { get; set; }
         #endregion
 
         #region Methods
@@ -240,7 +240,7 @@ namespace WinFormsApp1.Models
                     transitionStr = _transition.toString();
                     if (transitionStr == "")
                     {
-                        strOut += F(" - BROKEN - ");
+                        strOut += (" - BROKEN - ");
                         return strOut;
                     }
                     strOut += (" at a brightness of ");

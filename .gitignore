@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+testPlatform/WinFormsApp1/.vs/
+testPlatform/WinFormsApp1/bin/
+testPlatform/WinFormsApp1/obj/

@@ -18,27 +18,27 @@ namespace WinFormsApp1.Models
             {ShiftMode.SHIFTMODE_ALTERNATE, "ALTERNATE"},
             {ShiftMode.SHIFTMODE_RANDOM, "RANDOM"}
         };
-        ShiftMode string2shiftmode(String str) => shiftmode_conversion.First(x => x.Value == str).Key;
-        String shiftmode2string(ShiftMode mode) => shiftmode_conversion[mode];
+        public static ShiftMode string2shiftmode(String str) => shiftmode_conversion.First(x => x.Value == str).Key;
+        public static String shiftmode2string(ShiftMode mode) => shiftmode_conversion[mode];
 
-        public static Dictionary<ShiftTarget, string> chasetarget_conversion = new Dictionary<ShiftTarget, string>()
+        public static Dictionary<ShiftTarget, string> shifttarget_conversion = new Dictionary<ShiftTarget, string>()
         {
             {ShiftTarget.SHIFTTARGET_PIXEL, "PIXEL"},
             {ShiftTarget.SHIFTTARGET_DOORS, "DOORS"},
             {ShiftTarget.SHIFTTARGET_CABINETS, "CABINETS"},
             {ShiftTarget.SHIFTTARGET_SIDES, "SIDES"},
         };
-        ShiftTarget string2shifttarget(String str) => chasetarget_conversion.First(x => x.Value == str).Key;
-        String shifttarget2string(ShiftTarget target) => chasetarget_conversion[target];
+        public static ShiftTarget string2shifttarget(String str) => shifttarget_conversion.First(x => x.Value == str).Key;
+        public static String shifttarget2string(ShiftTarget target) => shifttarget_conversion[target];
         #endregion
 
         #region Private Properties
-        private ShiftMode _mode;
-        private ShiftTarget _target;
-        private byte _amount;
-        private uint _step;
+        public ShiftMode _mode;
+        public ShiftTarget _target;
+        public byte _amount;
+        public uint _step;
 
-        private Random random; // for C#
+        public Random random; // for C#
         #endregion
 
         #region Methods

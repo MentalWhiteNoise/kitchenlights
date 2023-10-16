@@ -121,7 +121,7 @@ uint32_t LightingFade::get_bgcolor(){ return _bgcolor; }
 
 bool LightingFade::perPixel()
 {
-  return _mode == FADEMODE_CHASE;
+  return _mode == FADEMODE_CHASE || _mode == FADEMODE_FLICKER || _shift.is_enabled();
 }
 void LightingFade::set_chasetarget(String target){_chase.set_target(target);}
 

@@ -47,11 +47,10 @@ uint32_t LightingTransition::get_effect(unsigned long tick, bool fade_bounced, u
   if (pixel == 0 && (int)(cyclePercent * _colorarray_length) == 0){
     _lastP0 = (int)(cyclePercent * _colorarray_length);
   }
-  cyclePercent = cyclePercent + shift;
   cyclePercent = cyclePercent - ((int)cyclePercent);
 
-  int colorBucket = (int)(cyclePercent * _colorarray_length);
-  double colorPercent = (cyclePercent * _colorarray_length) - (double)colorBucket;
+  int colorBucket = (int)(cyclePercent * _colorarray_length + shift) % _colorarray_length;
+  double colorPercent = (cyclePercent * _colorarray_length + shift) - (double)colorBucket;
   double effect = 0;
   if (_mode == TRANSITIONMODE_IMMIDIATE)
   {

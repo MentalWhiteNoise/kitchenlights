@@ -21,8 +21,8 @@ namespace WinFormsApp1.Models
             {ChaseMode.CHASEMODE_CLOCKWISE, "CLOCKWISE"},
             {ChaseMode.CHASEMODE_COUNTER, "COUNTER"},
         };
-        ChaseMode string2chasemode(String str) => chasemode_conversion.First(x => x.Value == str).Key;
-        String chasemode2string(ChaseMode mode) => chasemode_conversion[mode];
+        public static ChaseMode string2chasemode(String str) => chasemode_conversion.First(x => x.Value == str).Key;
+        public static String chasemode2string(ChaseMode mode) => chasemode_conversion[mode];
 
         public static Dictionary<ChaseTarget, string> chasetarget_conversion = new Dictionary<ChaseTarget, string>()
         {
@@ -31,14 +31,14 @@ namespace WinFormsApp1.Models
             {ChaseTarget.CHASETARGET_CABINETS, "CABINETS"},
             {ChaseTarget.CHASETARGET_SIDES, "SIDES"},
         };
-        ChaseTarget string2chasetarget(String str) => chasetarget_conversion.First(x => x.Value == str).Key;
-        String chasetarget2string(ChaseTarget target) => chasetarget_conversion[target];
+        public static ChaseTarget string2chasetarget(String str) => chasetarget_conversion.First(x => x.Value == str).Key;
+        public static String chasetarget2string(ChaseTarget target) => chasetarget_conversion[target];
         #endregion
 
         #region Private Properties
-        private ChaseMode _mode { get; set; }
-        private ChaseTarget _target { get; set; }
-        private byte _width { get; set; }
+        public ChaseMode _mode { get; set; }
+        public ChaseTarget _target { get; set; }
+        public byte _width { get; set; }
 
         #endregion
 
@@ -204,7 +204,7 @@ namespace WinFormsApp1.Models
             strOut += chasetarget2string(_target);
             return strOut;
         }
-        private double get_width_effect() {
+        public double get_width_effect() {
             //return -5.91764255005309 * pow(log((255 - _width) + 1), 0.5) + 14.034983296193; 
             return -5.91764255005309 * Math.Pow(Math.Log((255 - _width) + 1), 0.5) + 14.034983296193; 
         }

@@ -218,17 +218,17 @@ namespace WinFormsApp1.Models
             }
             return strOut;
         }
-        private ulong get_cycle_time(byte speed)
+        public ulong get_cycle_time(byte speed)
         {
             // -108.11195963 * log(_speed + 1) + 600; // base model
             return (ulong)(1000 * (-76.42549758 * Math.Log(10 * speed + 1) + 600)); // 10x model
         }
-        private double get_cycle_percent(ulong tick)
+        public double get_cycle_percent(ulong tick)
         {
             ulong cycleTime = get_cycle_time(_speed);
             return ((tick - _tick) % cycleTime) / (double)cycleTime;
         }
-        private void set_tick_at_cycle_percent(double cyclePercent, byte speed, ulong millis)
+        public void set_tick_at_cycle_percent(double cyclePercent, byte speed, ulong millis)
         {
             ulong cycleTime = get_cycle_time(speed);
             _tick = (ulong)(millis - ((double)cycleTime * cyclePercent));

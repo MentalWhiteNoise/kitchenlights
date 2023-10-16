@@ -27,21 +27,21 @@ namespace WinFormsApp1.Models
         #endregion
 
         #region Private Properties
-        private bool _paused { get; set; }
-        private TransitionMode _mode { get; set; }
-        private TransitionMode _lastmode { get; set; }
+        public bool _paused { get; set; }
+        public TransitionMode _mode { get; set; }
+        public TransitionMode _lastmode { get; set; }
         //uint32_t* _colorarray;
-        private ulong[] _colorarray { get; set; } // Keep having problems with dynamic array...
-        private byte _colorarray_length { get; set; }
-        private byte _speed { get; set; }
-        private byte _width { get; set; }
-        private byte _flickeractivation { get; set; }
-        private ulong _tick { get; set; }
-        private double _pausedCyclePercent { get; set; }
-        private byte _lastColorItem { get; set; }
-        private LightingChase _chase { get; set; }
-        private LightingShift _shift { get; set; }
-        private byte _lastP0 { get; set; }
+        public ulong[] _colorarray { get; set; } // Keep having problems with dynamic array...
+        public byte _colorarray_length { get; set; }
+        public byte _speed { get; set; }
+        public byte _width { get; set; }
+        public byte _flickeractivation { get; set; }
+        public ulong _tick { get; set; }
+        public double _pausedCyclePercent { get; set; }
+        public byte _lastColorItem { get; set; }
+        public LightingChase _chase { get; set; }
+        public LightingShift _shift { get; set; }
+        public byte _lastP0 { get; set; }
         #endregion
 
         #region Methods
@@ -51,6 +51,7 @@ namespace WinFormsApp1.Models
             _mode = TransitionMode.TRANSITIONMODE_OFF;
             _lastmode = TransitionMode.TRANSITIONMODE_OFF;
             //_colorarray = {(uint32_t)0,(uint32_t)0,(uint32_t)0,(uint32_t)0,(uint32_t)0,(uint32_t)0,(uint32_t)0,(uint32_t)0};
+            _colorarray = new ulong[16];
             _colorarray_length = 0;
             _speed = 0;
             _width = 0;
@@ -185,7 +186,7 @@ namespace WinFormsApp1.Models
             {
                 throw new Exception("Not sure what to do here!");
             }
-            return effect;
+            return (ulong)effect;
         }
 
         public void enable()
@@ -348,18 +349,18 @@ namespace WinFormsApp1.Models
         }
 
 
-        private ulong get_cycle_time(byte speed)
+        public ulong get_cycle_time(byte speed)
         {
             // -108.11195963 * log(_speed + 1) + 600; // base model
             return (ulong)(1000 * (-76.42549758 * Math.Log(10 * speed + 1) + 600) * _colorarray_length); // 10x model
         }
-        private double get_cycle_percent(ulong tick)
+        public double get_cycle_percent(ulong tick)
         {
             // how does speed relate to time?
             ulong cycleTime = get_cycle_time(_speed);
             return ((tick - _tick) % cycleTime) / (double)cycleTime;
         }
-        private void set_tick_at_cycle_percent(double cyclePercent, byte speed, ulong millis)
+        public void set_tick_at_cycle_percent(double cyclePercent, byte speed, ulong millis)
         {
             ulong cycleTime = get_cycle_time(speed);
             _tick = (ulong)(millis - ((double)cycleTime * cyclePercent));
