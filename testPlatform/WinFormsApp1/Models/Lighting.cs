@@ -178,9 +178,11 @@ namespace WinFormsApp1.Models
         public void set_transitionchasetarget(String target) { _transition.set_chasetarget(target); }
 
         public void set_fadeshiftamount(byte value) { _fade.set_shiftamount(value); }
+        public void set_fadeshiftwidth(byte value) { _fade.set_shiftwidth(value); }
         public void set_fadeshiftmode(String mode) { _fade.set_shiftmode(mode); }
         public void set_fadeshifttarget(String target) {_fade.set_shifttarget(target); }
         public void set_transitionshiftamount(byte value) { _transition.set_shiftamount(value); }
+        public void set_transitionshiftwidth(byte value) { _transition.set_shiftwidth(value); }
         public void set_transitionshiftmode(String mode) { _transition.set_shiftmode(mode); }
         public void set_transitionshifttarget(String target) { _transition.set_shifttarget(target); }
 

@@ -35,6 +35,7 @@ class LightingShift
 
     void set_mode(String mode);
     void set_amount(uint8_t value);
+    void set_width(uint8_t value);
     void set_target(String target);
 
     String displaySettings();
@@ -50,6 +51,7 @@ class LightingShift
     ShiftMode _mode;
     ShiftTarget _target;
     uint8_t _amount;
+    uint8_t _width;
     unsigned int _step;
 };
 #endif

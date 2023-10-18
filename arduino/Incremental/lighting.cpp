@@ -132,9 +132,11 @@ void Lighting::set_fadechasetarget(String target){_fade.set_chasetarget(target);
 void Lighting::set_transitionchasetarget(String target){_transition.set_chasetarget(target);}
 
 void Lighting::set_fadeshiftamount(uint8_t value){_fade.set_shiftamount(value);}
+void Lighting::set_fadeshiftwidth(uint8_t value){_fade.set_shiftwidth(value);}
 void Lighting::set_fadeshiftmode(String mode){_fade.set_shiftmode(mode);}
 void Lighting::set_fadeshifttarget(String target){_fade.set_shifttarget(target);}
 void Lighting::set_transitionshiftamount(uint8_t value){_transition.set_shiftamount(value);}
+void Lighting::set_transitionshiftwidth(uint8_t value){_transition.set_shiftwidth(value);}
 void Lighting::set_transitionshiftmode(String mode){_transition.set_shiftmode(mode);}
 void Lighting::set_transitionshifttarget(String target){_transition.set_shifttarget(target);}
 
@@ -229,15 +231,15 @@ String Lighting::toString(){
 void Lighting::serialize(byte* data){
   data[0] = (byte)_colormode;
   data[1] = (byte)_brightness;
-  _fade.serialize(data); // 2 -> 15
-  _transition.serialize(data); // 16 -> 91
+  _fade.serialize(data); // 2 -> 16
+  _transition.serialize(data); // 17 -> 93
   return;
 }
 void Lighting::deserialize(byte* data)
 {
   _colormode = (ColorMode)data[0];
   _brightness = (uint8_t)data[1];
-  _fade.deserialize(data); // 2 -> 15
-  _transition.deserialize(data); // 16 -> 91
+  _fade.deserialize(data); // 2 -> 16
+  _transition.deserialize(data); // 17 -> 93
   return;
 }

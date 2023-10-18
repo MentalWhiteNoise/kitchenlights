@@ -65,9 +65,11 @@ class Lighting
 		void set_transitionchasetarget(String target);
 
 		void set_fadeshiftamount(uint8_t value);
+		void set_fadeshiftwidth(uint8_t value);
 		void set_fadeshiftmode(String mode);
 		void set_fadeshifttarget(String target);
 		void set_transitionshiftamount(uint8_t value);
+		void set_transitionshiftwidth(uint8_t value);
 		void set_transitionshiftmode(String mode);
 		void set_transitionshifttarget(String target);
 

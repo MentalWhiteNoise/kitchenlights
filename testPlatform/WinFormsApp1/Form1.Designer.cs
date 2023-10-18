@@ -49,7 +49,9 @@
             this.label15 = new System.Windows.Forms.Label();
             this.nmTransitionShiftStep = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
+            this.nmTransitionShiftWidth = new System.Windows.Forms.NumericUpDown();
             this.nmTransitionShiftAmount = new System.Windows.Forms.NumericUpDown();
+            this.label30 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
@@ -82,6 +84,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.nmFadeShiftStep = new System.Windows.Forms.NumericUpDown();
             this.label19 = new System.Windows.Forms.Label();
+            this.nmFadeShiftWidth = new System.Windows.Forms.NumericUpDown();
+            this.label31 = new System.Windows.Forms.Label();
             this.nmFadeShiftAmount = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
@@ -113,6 +117,7 @@
             this.groupBox3.SuspendLayout();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftAmount)).BeginInit();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionChaseWidth)).BeginInit();
@@ -122,6 +127,7 @@
             this.groupBox4.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftStep)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftAmount)).BeginInit();
             this.groupBox8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeChaseWidth)).BeginInit();
@@ -279,7 +285,9 @@
             this.groupBox7.Controls.Add(this.label15);
             this.groupBox7.Controls.Add(this.nmTransitionShiftStep);
             this.groupBox7.Controls.Add(this.label12);
+            this.groupBox7.Controls.Add(this.nmTransitionShiftWidth);
             this.groupBox7.Controls.Add(this.nmTransitionShiftAmount);
+            this.groupBox7.Controls.Add(this.label30);
             this.groupBox7.Controls.Add(this.label16);
             this.groupBox7.Location = new System.Drawing.Point(255, 80);
             this.groupBox7.Name = "groupBox7";
@@ -299,7 +307,7 @@
             // 
             // txtTransitionShiftEffect
             // 
-            this.txtTransitionShiftEffect.Location = new System.Drawing.Point(179, 86);
+            this.txtTransitionShiftEffect.Location = new System.Drawing.Point(179, 114);
             this.txtTransitionShiftEffect.Name = "txtTransitionShiftEffect";
             this.txtTransitionShiftEffect.Size = new System.Drawing.Size(49, 23);
             this.txtTransitionShiftEffect.TabIndex = 9;
@@ -316,7 +324,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(116, 89);
+            this.label14.Location = new System.Drawing.Point(115, 120);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(64, 15);
             this.label14.TabIndex = 8;
@@ -362,6 +370,19 @@
             this.label12.TabIndex = 8;
             this.label12.Text = "Step";
             // 
+            // nmTransitionShiftWidth
+            // 
+            this.nmTransitionShiftWidth.Location = new System.Drawing.Point(179, 85);
+            this.nmTransitionShiftWidth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nmTransitionShiftWidth.Name = "nmTransitionShiftWidth";
+            this.nmTransitionShiftWidth.Size = new System.Drawing.Size(47, 23);
+            this.nmTransitionShiftWidth.TabIndex = 9;
+            this.nmTransitionShiftWidth.ValueChanged += new System.EventHandler(this.nmTransitionShiftWidth_ValueChanged);
+            // 
             // nmTransitionShiftAmount
             // 
             this.nmTransitionShiftAmount.Location = new System.Drawing.Point(62, 86);
@@ -374,6 +395,15 @@
             this.nmTransitionShiftAmount.Size = new System.Drawing.Size(47, 23);
             this.nmTransitionShiftAmount.TabIndex = 9;
             this.nmTransitionShiftAmount.ValueChanged += new System.EventHandler(this.nmTransitionShiftAmount_ValueChanged);
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.Location = new System.Drawing.Point(128, 88);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(39, 15);
+            this.label30.TabIndex = 8;
+            this.label30.Text = "Width";
             // 
             // label16
             // 
@@ -621,6 +651,8 @@
             this.groupBox6.Controls.Add(this.label18);
             this.groupBox6.Controls.Add(this.nmFadeShiftStep);
             this.groupBox6.Controls.Add(this.label19);
+            this.groupBox6.Controls.Add(this.nmFadeShiftWidth);
+            this.groupBox6.Controls.Add(this.label31);
             this.groupBox6.Controls.Add(this.nmFadeShiftAmount);
             this.groupBox6.Controls.Add(this.label20);
             this.groupBox6.Location = new System.Drawing.Point(255, 80);
@@ -641,7 +673,7 @@
             // 
             // txtFadeShiftEffect
             // 
-            this.txtFadeShiftEffect.Location = new System.Drawing.Point(179, 86);
+            this.txtFadeShiftEffect.Location = new System.Drawing.Point(179, 114);
             this.txtFadeShiftEffect.Name = "txtFadeShiftEffect";
             this.txtFadeShiftEffect.Size = new System.Drawing.Size(49, 23);
             this.txtFadeShiftEffect.TabIndex = 9;
@@ -658,7 +690,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(116, 89);
+            this.label17.Location = new System.Drawing.Point(116, 117);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(64, 15);
             this.label17.TabIndex = 8;
@@ -703,6 +735,28 @@
             this.label19.Size = new System.Drawing.Size(30, 15);
             this.label19.TabIndex = 8;
             this.label19.Text = "Step";
+            // 
+            // nmFadeShiftWidth
+            // 
+            this.nmFadeShiftWidth.Location = new System.Drawing.Point(179, 85);
+            this.nmFadeShiftWidth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nmFadeShiftWidth.Name = "nmFadeShiftWidth";
+            this.nmFadeShiftWidth.Size = new System.Drawing.Size(47, 23);
+            this.nmFadeShiftWidth.TabIndex = 9;
+            this.nmFadeShiftWidth.ValueChanged += new System.EventHandler(this.nmFadeShiftWidth_ValueChanged);
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Location = new System.Drawing.Point(128, 88);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(39, 15);
+            this.label31.TabIndex = 8;
+            this.label31.Text = "Width";
             // 
             // nmFadeShiftAmount
             // 
@@ -972,6 +1026,7 @@
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftAmount)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -984,6 +1039,7 @@
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftStep)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftAmount)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
@@ -1078,5 +1134,9 @@
         private Label label29;
         private PictureBox picDisplay;
         private System.Windows.Forms.Timer timer1;
+        private NumericUpDown nmTransitionShiftWidth;
+        private Label label30;
+        private NumericUpDown nmFadeShiftWidth;
+        private Label label31;
     }
 }

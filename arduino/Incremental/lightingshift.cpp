@@ -7,21 +7,28 @@ ShiftTarget string2shifttarget (String str) { return (ShiftTarget) lookupFromStr
 String shifttarget2string (ShiftTarget target) { return String(shifttarget_conversion[target].str); }
 
 LightingShift::LightingShift(){
-  _amount = 0;
+  _amount = 127;
+  _width = 1;
   _mode = SHIFTMODE_OFF;
   _target = SHIFTTARGET_PIXEL;
   _step = 0;
 }
 void LightingShift::set_mode(String mode) { _mode = string2shiftmode(mode); }
 void LightingShift::set_amount(uint8_t value) { _amount = value; }
+void LightingShift::set_width(uint8_t value) { _width = value; }
 void LightingShift::set_target(String target){ _target = string2shifttarget(target); }
 
 double LightingShift::get_effect(uint16_t pixel, bool switchEffect, uint8_t effectCount){
-  double stretchAmount = _amount / 127.0;
+  double stretchAmount = (_amount + 1) / 128.0;
   if (_mode == SHIFTMODE_OFF) { return 0; }
 
   String target = shifttarget2string(_target);
-  uint8_t instance = GetLocationInstance(target, pixel);
+  uint16_t effectivePixel = pixel;
+  if (_target == SHIFTTARGET_PIXEL)
+  {
+      effectivePixel = (uint16_t)(pixel / _width);
+  }
+  uint8_t instance = GetLocationInstance(target, effectivePixel);
   //instances = GetInstanceCount(target);
 
   if (_mode == SHIFTMODE_ORDERED) { 
@@ -70,6 +77,10 @@ bool LightingShift::is_enabled(){
 String LightingShift::displaySettings(){
   String strOut = "Shift Mode: " + shiftmode2string(_mode);
   strOut += "\n\t\tAmount: " + String(_amount); 
+  if (_target == SHIFTTARGET_PIXEL)
+  {
+    strOut += "\n\t\tWidth: " + String(_width); 
+  }
   strOut += "\n\t\tTarget: " + shifttarget2string(_target); 
   return strOut;
 }
@@ -77,21 +88,25 @@ String LightingShift::toString(){
   String strOut = shiftmode2string(_mode);
   if (_mode == SHIFTMODE_OFF){ return ""; }
   strOut += " " + String(_amount) + " ";  
+  if (_target == SHIFTTARGET_PIXEL)
+  { strOut += " (" + String(_width) + " pixels) "; }
   strOut += shifttarget2string(_target);
   return strOut;
 }
 
 void LightingShift::serialize_fade(byte* data) { serialize(data, 10); }
-void LightingShift::serialize_transition(byte* data) { serialize(data, 86); }
+void LightingShift::serialize_transition(byte* data) { serialize(data, 87); }
 void LightingShift::deserialize_fade(byte* data) { deserialize(data, 10); }
-void LightingShift::deserialize_transition(byte* data) { deserialize(data, 86); }
+void LightingShift::deserialize_transition(byte* data) { deserialize(data, 87); }
 void LightingShift::serialize(byte* data, int start){
   data[start] = (byte)_mode;
   data[start+1] = (byte)_amount;
-  data[start+2] = (byte)_target;
+  data[start+2] = (byte)_width;
+  data[start+3] = (byte)_target;
 }
 void LightingShift::deserialize(byte* data, int start){
   _mode = (ShiftMode)data[start];
   _amount = (uint8_t)data[start+1];
+  _width = (uint8_t)data[start+1];
   _target = (ShiftTarget)data[start+2];
 }

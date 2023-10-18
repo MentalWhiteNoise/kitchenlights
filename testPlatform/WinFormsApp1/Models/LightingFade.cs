@@ -162,6 +162,7 @@ namespace WinFormsApp1.Models
         public void set_chasetarget(String target) { _chase.set_target(target); }
 
         public void set_shiftamount(byte value) { _shift.set_amount(value); }
+        public void set_shiftwidth(byte value) { _shift.set_width(value); }
         public void set_shiftmode(String mode) { _shift.set_mode(mode); }
         public void set_shifttarget(String target) { _shift.set_target(target); }
 

@@ -12,7 +12,7 @@ double GetPixelDistanceToEnd(String locationType, uint16_t pixel){
 }
 uint16_t GetLocationInstance(String locationType, uint16_t pixel){
   if (locationType == "PIXEL"){
-    locationType = "ALL";
+    return pixel;
   }
   for (int i = 0;  i < sizeof(PixelLocation) / sizeof(PixelLocation[0]); ++i){
     if (locationType == PixelLocation[i].locationType && pixel >= PixelLocation[i].start && pixel <= PixelLocation[i].end){

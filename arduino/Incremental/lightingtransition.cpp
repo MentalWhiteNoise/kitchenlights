@@ -242,6 +242,7 @@ bool LightingTransition::perPixel()
 void LightingTransition::set_chasetarget(String target){_chase.set_target(target);}
 
 void LightingTransition::set_shiftamount(uint8_t value){_shift.set_amount(value);}
+void LightingTransition::set_shiftwidth(uint8_t value){_shift.set_width(value);}
 void LightingTransition::set_shiftmode(String mode){_shift.set_mode(mode);}
 void LightingTransition::set_shifttarget(String target){_shift.set_target(target);}
 
@@ -299,7 +300,7 @@ String LightingTransition::toString(){
   return strOut;
 }
 void LightingTransition::serialize(byte* data){
-  int start = 16; // -> 91
+  int start = 17; // -> 93
   data[start] = (byte)_mode;
   data[start+1] = (byte)_colorarray_length;
   for(int i = 0; i < 16; i++){
@@ -319,7 +320,7 @@ void LightingTransition::serialize(byte* data){
   return;
 }
 void LightingTransition::deserialize(byte* data){
-  int start = 16;
+  int start = 17;
   _mode = (TransitionMode)data[start];
   _colorarray_length = (uint8_t)data[start+1];
   for(int i = 0; i < 16; i++){

@@ -69,11 +69,11 @@ namespace WinFormsApp1.Models
 
             return -1; // Not managed by controller
         }
-        public static byte GetLocationInstance(String locationType, ushort pixel)
+        public static ushort GetLocationInstance(String locationType, ushort pixel)
         {
             if (locationType == "PIXEL")
             {
-                locationType = "ALL";
+                return pixel;
             }
             //for (int i = 0; i < sizeof(PixelLocation) / sizeof(PixelLocation[0]); ++i)
             for (int i = 0; i < PixelLocations.Length; ++i)

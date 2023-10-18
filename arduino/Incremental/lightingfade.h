@@ -42,6 +42,7 @@ class LightingFade
 		void set_chasetarget(String target);
     
 		void set_shiftamount(uint8_t value);
+		void set_shiftwidth(uint8_t value);
 		void set_shiftmode(String mode);
 		void set_shifttarget(String target);
 

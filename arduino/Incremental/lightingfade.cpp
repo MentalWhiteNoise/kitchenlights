@@ -126,6 +126,7 @@ bool LightingFade::perPixel()
 void LightingFade::set_chasetarget(String target){_chase.set_target(target);}
 
 void LightingFade::set_shiftamount(uint8_t value){_shift.set_amount(value);}
+void LightingFade::set_shiftwidth(uint8_t value){_shift.set_width(value);}
 void LightingFade::set_shiftmode(String mode){_shift.set_mode(mode);}
 void LightingFade::set_shifttarget(String target){_shift.set_target(target);}
 

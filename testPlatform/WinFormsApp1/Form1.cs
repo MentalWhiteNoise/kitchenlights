@@ -595,5 +595,33 @@ namespace WinFormsApp1
         {
             nmTicks.Value += 1;
         }
+
+        private void nmFadeShiftWidth_ValueChanged(object sender, EventArgs e)
+        {
+            var lighting = GetSelectedLighting();
+            if (lighting == null) return;
+            if (nmFadeShiftWidth.Value == null)
+            {
+                nmFadeShiftWidth.Value = lighting._fade._shift._width;
+            }
+            else
+            {
+                lighting.set_fadeshiftwidth((byte)nmFadeShiftWidth.Value);
+            }
+        }
+
+        private void nmTransitionShiftWidth_ValueChanged(object sender, EventArgs e)
+        {
+            var lighting = GetSelectedLighting();
+            if (lighting == null) return;
+            if (nmTransitionShiftWidth.Value == null)
+            {
+                nmTransitionShiftWidth.Value = lighting._transition._shift._width;
+            }
+            else
+            {
+                lighting.set_transitionshiftwidth((byte)nmTransitionShiftWidth.Value);
+            }
+        }
     }
 }

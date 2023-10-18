@@ -36,6 +36,7 @@ namespace WinFormsApp1.Models
         public ShiftMode _mode;
         public ShiftTarget _target;
         public byte _amount;
+        public byte _width;
         public uint _step;
 
         public Random random; // for C#
@@ -45,7 +46,8 @@ namespace WinFormsApp1.Models
 
         public LightingShift()
         {
-            _amount = 0;
+            _amount = 127;
+            _width = 1;
             _mode = ShiftMode.SHIFTMODE_OFF;
             _target = ShiftTarget.SHIFTTARGET_PIXEL;
             _step = 0;
@@ -54,11 +56,16 @@ namespace WinFormsApp1.Models
         }
         public double get_effect(ushort pixel, bool switchEffect, byte effectCount)
         {
-            double stretchAmount = _amount / 127.0;
+            double stretchAmount = (_amount + 1) / 128.0;
             if (_mode == ShiftMode.SHIFTMODE_OFF) { return 0; }
 
             String target = shifttarget2string(_target);
-            byte instance = PixelLayout.GetLocationInstance(target, pixel);
+            ushort effectivePixel = pixel;
+            if (_target == ShiftTarget.SHIFTTARGET_PIXEL)
+            {
+                effectivePixel = (ushort)(pixel / _width);
+            }
+            ushort instance = PixelLayout.GetLocationInstance(target, effectivePixel);
             //instances = GetInstanceCount(target);
 
             if (_mode == ShiftMode.SHIFTMODE_ORDERED)
@@ -117,6 +124,7 @@ namespace WinFormsApp1.Models
 
         public void set_mode(String mode) { _mode = string2shiftmode(mode); }
         public void set_amount(byte value) { _amount = value; }
+        public void set_width(byte value) { _width = value; }
         public void set_target(String target) { _target = string2shifttarget(target); }
 
         public string displaySettings()
