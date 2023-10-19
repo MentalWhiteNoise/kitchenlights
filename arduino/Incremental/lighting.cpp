@@ -113,6 +113,7 @@ void Lighting::resume_fade(){_fade.resume();}
 void Lighting::enable_fade(){_fade.enable();}
 void Lighting::set_bgcolor(uint32_t color){_fade.set_bgcolor(color);}
 void Lighting::set_fadespeed(uint8_t value){_fade.set_speed(value);}
+void Lighting::set_fadewidth(uint8_t value){_fade.set_width(value);}
 
 void Lighting::set_transitionmode(String mode){_transition.set_mode(mode);}
 void Lighting::disable_transition(){_transition.disable();}
@@ -231,15 +232,15 @@ String Lighting::toString(){
 void Lighting::serialize(byte* data){
   data[0] = (byte)_colormode;
   data[1] = (byte)_brightness;
-  _fade.serialize(data); // 2 -> 16
-  _transition.serialize(data); // 17 -> 93
+  _fade.serialize(data); // 2 -> 17
+  _transition.serialize(data); // 18 -> 94
   return;
 }
 void Lighting::deserialize(byte* data)
 {
   _colormode = (ColorMode)data[0];
   _brightness = (uint8_t)data[1];
-  _fade.deserialize(data); // 2 -> 16
-  _transition.deserialize(data); // 17 -> 93
+  _fade.deserialize(data); // 2 -> 17
+  _transition.deserialize(data); // 18 -> 94
   return;
 }

@@ -32,6 +32,7 @@ class LightingFade
     
     void set_mode(String mode);
     void set_speed(uint8_t value);
+    void set_width(uint8_t value);
     void set_bgcolor(uint32_t color);
     uint32_t get_bgcolor();
     
@@ -63,6 +64,7 @@ class LightingFade
     FadeMode _mode;
     FadeMode _lastmode;
     uint8_t _speed;
+    uint8_t _width;
     uint8_t _flickeractivation;
     unsigned long _tick;
     double _pausedCyclePercent;

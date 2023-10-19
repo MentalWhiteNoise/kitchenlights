@@ -96,6 +96,13 @@ void ManageLighting::ApplyCommand(String command, String parameters){
     //}
     //catch(...){invalidParameter = true;}
   }
+  else if (command == F("SET FADE WIDTH")){ // #FF
+    //try{
+      uint8_t v = HexToInt8(parameters);
+      _lighting->set_fadewidth(v);
+    //}
+    //catch(...){invalidParameter = true;}
+  }
   else if (command == F("SET FADE MODE")) { // "OFF", "PULSE", "LINEAR", "HEARTBEAT", "FLASH", "CHASE", "FLICKER"
     //try{
       _lighting->set_fademode(parameters);
@@ -229,6 +236,13 @@ void ManageLighting::ApplyCommand(String command, String parameters){
     //}
     //catch(...){invalidParameter = true;}
   }
+  else if (command == F("SET TRANSITION SHIFT WIDTH")) {
+    //try{
+      uint8_t v = HexToInt8(parameters);
+      _lighting->set_transitionshiftwidth(v);
+    //}
+    //catch(...){invalidParameter = true;}
+  }
   else if (command == F("SET TRANSITION SHIFT MODE")) { // "OFF", "ALTERNATE", "RANDOM"
     //try{
       _lighting->set_transitionchasemode(parameters);
@@ -245,6 +259,13 @@ void ManageLighting::ApplyCommand(String command, String parameters){
     //try{
       uint8_t v = HexToInt8(parameters);
       _lighting->set_fadeshiftamount(v);
+    //}
+    //catch(...){invalidParameter = true;}
+  }
+  else if (command == F("SET FADE SHIFT WIDTH")) {
+    //try{
+      uint8_t v = HexToInt8(parameters);
+      _lighting->set_fadeshiftwidth(v);
     //}
     //catch(...){invalidParameter = true;}
   }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpTime = new System.Windows.Forms.GroupBox();
             this.cmbTimeStep = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.rdoRealTime = new System.Windows.Forms.RadioButton();
@@ -39,8 +39,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cmbPresets = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.grpTransition = new System.Windows.Forms.GroupBox();
+            this.grpTransitionShift = new System.Windows.Forms.GroupBox();
             this.cmbTransitionShiftTarget = new System.Windows.Forms.ComboBox();
             this.txtTransitionShiftEffect = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@
             this.label30 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grpTransitionChase = new System.Windows.Forms.GroupBox();
             this.cmbTransitionChaseTarget = new System.Windows.Forms.ComboBox();
             this.txtTransitionChaseEffect = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -74,8 +74,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtColorBucket = new System.Windows.Forms.TextBox();
             this.prgTransitionCycle = new System.Windows.Forms.ProgressBar();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.grpFade = new System.Windows.Forms.GroupBox();
+            this.grpFadeShift = new System.Windows.Forms.GroupBox();
             this.cmbFadeShiftTarget = new System.Windows.Forms.ComboBox();
             this.txtFadeShiftEffect = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -89,7 +89,7 @@
             this.nmFadeShiftAmount = new System.Windows.Forms.NumericUpDown();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.grpFadeChase = new System.Windows.Forms.GroupBox();
             this.cmbFadeChaseTarget = new System.Windows.Forms.ComboBox();
             this.txtFadeChaseEffect = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
@@ -105,54 +105,58 @@
             this.label27 = new System.Windows.Forms.Label();
             this.nmFadeSpeed = new System.Windows.Forms.NumericUpDown();
             this.label28 = new System.Windows.Forms.Label();
+            this.nmFadeWidth = new System.Windows.Forms.NumericUpDown();
             this.prgFadeCycle = new System.Windows.Forms.ProgressBar();
-            this.Focus = new System.Windows.Forms.GroupBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.grpFocus = new System.Windows.Forms.GroupBox();
             this.nmPixel = new System.Windows.Forms.NumericUpDown();
             this.label29 = new System.Windows.Forms.Label();
             this.picDisplay = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.groupBox1.SuspendLayout();
+            this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+            this.grpTime.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTicks)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox7.SuspendLayout();
+            this.grpTransition.SuspendLayout();
+            this.grpTransitionShift.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftStep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftAmount)).BeginInit();
-            this.groupBox5.SuspendLayout();
+            this.grpTransitionChase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionChaseWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionFlicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionSpeed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionWidth)).BeginInit();
-            this.groupBox4.SuspendLayout();
-            this.groupBox6.SuspendLayout();
+            this.grpFade.SuspendLayout();
+            this.grpFadeShift.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftStep)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftAmount)).BeginInit();
-            this.groupBox8.SuspendLayout();
+            this.grpFadeChase.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeChaseWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeFlicker)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeSpeed)).BeginInit();
-            this.Focus.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmFadeWidth)).BeginInit();
+            this.grpFocus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmPixel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox1
+            // grpTime
             // 
-            this.groupBox1.Controls.Add(this.cmbTimeStep);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.rdoRealTime);
-            this.groupBox1.Controls.Add(this.rdoSlow);
-            this.groupBox1.Controls.Add(this.rdoManual);
-            this.groupBox1.Controls.Add(this.nmTicks);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(894, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(253, 100);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Time";
+            this.grpTime.Controls.Add(this.cmbTimeStep);
+            this.grpTime.Controls.Add(this.label2);
+            this.grpTime.Controls.Add(this.rdoRealTime);
+            this.grpTime.Controls.Add(this.rdoSlow);
+            this.grpTime.Controls.Add(this.rdoManual);
+            this.grpTime.Controls.Add(this.nmTicks);
+            this.grpTime.Controls.Add(this.label1);
+            this.grpTime.Location = new System.Drawing.Point(894, 12);
+            this.grpTime.Name = "grpTime";
+            this.grpTime.Size = new System.Drawing.Size(253, 100);
+            this.grpTime.TabIndex = 0;
+            this.grpTime.TabStop = false;
+            this.grpTime.Text = "Time";
             // 
             // cmbTimeStep
             // 
@@ -215,7 +219,7 @@
             // 
             this.nmTicks.Location = new System.Drawing.Point(72, 17);
             this.nmTicks.Maximum = new decimal(new int[] {
-            10000,
+            100000,
             0,
             0,
             0});
@@ -252,49 +256,49 @@
             this.cmbPresets.TabIndex = 4;
             this.cmbPresets.SelectedIndexChanged += new System.EventHandler(this.cmbPresets_SelectedIndexChanged);
             // 
-            // groupBox3
+            // grpTransition
             // 
-            this.groupBox3.Controls.Add(this.groupBox7);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.groupBox5);
-            this.groupBox3.Controls.Add(this.cmbColorArray);
-            this.groupBox3.Controls.Add(this.cmbTransitionMode);
-            this.groupBox3.Controls.Add(this.lblMode);
-            this.groupBox3.Controls.Add(this.nmTransitionFlicker);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.nmTransitionSpeed);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.nmTransitionWidth);
-            this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.txtColorBucket);
-            this.groupBox3.Controls.Add(this.prgTransitionCycle);
-            this.groupBox3.Location = new System.Drawing.Point(12, 503);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(531, 246);
-            this.groupBox3.TabIndex = 2;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Transition";
+            this.grpTransition.Controls.Add(this.grpTransitionShift);
+            this.grpTransition.Controls.Add(this.label6);
+            this.grpTransition.Controls.Add(this.grpTransitionChase);
+            this.grpTransition.Controls.Add(this.cmbColorArray);
+            this.grpTransition.Controls.Add(this.cmbTransitionMode);
+            this.grpTransition.Controls.Add(this.lblMode);
+            this.grpTransition.Controls.Add(this.nmTransitionFlicker);
+            this.grpTransition.Controls.Add(this.label5);
+            this.grpTransition.Controls.Add(this.nmTransitionSpeed);
+            this.grpTransition.Controls.Add(this.label10);
+            this.grpTransition.Controls.Add(this.nmTransitionWidth);
+            this.grpTransition.Controls.Add(this.label4);
+            this.grpTransition.Controls.Add(this.txtColorBucket);
+            this.grpTransition.Controls.Add(this.prgTransitionCycle);
+            this.grpTransition.Location = new System.Drawing.Point(12, 503);
+            this.grpTransition.Name = "grpTransition";
+            this.grpTransition.Size = new System.Drawing.Size(531, 246);
+            this.grpTransition.TabIndex = 2;
+            this.grpTransition.TabStop = false;
+            this.grpTransition.Text = "Transition";
             // 
-            // groupBox7
+            // grpTransitionShift
             // 
-            this.groupBox7.Controls.Add(this.cmbTransitionShiftTarget);
-            this.groupBox7.Controls.Add(this.txtTransitionShiftEffect);
-            this.groupBox7.Controls.Add(this.label13);
-            this.groupBox7.Controls.Add(this.label14);
-            this.groupBox7.Controls.Add(this.cmbTransitionShiftMode);
-            this.groupBox7.Controls.Add(this.label15);
-            this.groupBox7.Controls.Add(this.nmTransitionShiftStep);
-            this.groupBox7.Controls.Add(this.label12);
-            this.groupBox7.Controls.Add(this.nmTransitionShiftWidth);
-            this.groupBox7.Controls.Add(this.nmTransitionShiftAmount);
-            this.groupBox7.Controls.Add(this.label30);
-            this.groupBox7.Controls.Add(this.label16);
-            this.groupBox7.Location = new System.Drawing.Point(255, 80);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(243, 151);
-            this.groupBox7.TabIndex = 4;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Shift";
+            this.grpTransitionShift.Controls.Add(this.cmbTransitionShiftTarget);
+            this.grpTransitionShift.Controls.Add(this.txtTransitionShiftEffect);
+            this.grpTransitionShift.Controls.Add(this.label13);
+            this.grpTransitionShift.Controls.Add(this.label14);
+            this.grpTransitionShift.Controls.Add(this.cmbTransitionShiftMode);
+            this.grpTransitionShift.Controls.Add(this.label15);
+            this.grpTransitionShift.Controls.Add(this.nmTransitionShiftStep);
+            this.grpTransitionShift.Controls.Add(this.label12);
+            this.grpTransitionShift.Controls.Add(this.nmTransitionShiftWidth);
+            this.grpTransitionShift.Controls.Add(this.nmTransitionShiftAmount);
+            this.grpTransitionShift.Controls.Add(this.label30);
+            this.grpTransitionShift.Controls.Add(this.label16);
+            this.grpTransitionShift.Location = new System.Drawing.Point(255, 80);
+            this.grpTransitionShift.Name = "grpTransitionShift";
+            this.grpTransitionShift.Size = new System.Drawing.Size(243, 151);
+            this.grpTransitionShift.TabIndex = 4;
+            this.grpTransitionShift.TabStop = false;
+            this.grpTransitionShift.Text = "Shift";
             // 
             // cmbTransitionShiftTarget
             // 
@@ -423,22 +427,22 @@
             this.label6.TabIndex = 13;
             this.label6.Text = "Preset Color Array";
             // 
-            // groupBox5
+            // grpTransitionChase
             // 
-            this.groupBox5.Controls.Add(this.cmbTransitionChaseTarget);
-            this.groupBox5.Controls.Add(this.txtTransitionChaseEffect);
-            this.groupBox5.Controls.Add(this.label8);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Controls.Add(this.cmbTransitionChaseMode);
-            this.groupBox5.Controls.Add(this.label7);
-            this.groupBox5.Controls.Add(this.nmTransitionChaseWidth);
-            this.groupBox5.Controls.Add(this.label9);
-            this.groupBox5.Location = new System.Drawing.Point(6, 111);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(243, 122);
-            this.groupBox5.TabIndex = 4;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Chase";
+            this.grpTransitionChase.Controls.Add(this.cmbTransitionChaseTarget);
+            this.grpTransitionChase.Controls.Add(this.txtTransitionChaseEffect);
+            this.grpTransitionChase.Controls.Add(this.label8);
+            this.grpTransitionChase.Controls.Add(this.label11);
+            this.grpTransitionChase.Controls.Add(this.cmbTransitionChaseMode);
+            this.grpTransitionChase.Controls.Add(this.label7);
+            this.grpTransitionChase.Controls.Add(this.nmTransitionChaseWidth);
+            this.grpTransitionChase.Controls.Add(this.label9);
+            this.grpTransitionChase.Location = new System.Drawing.Point(6, 111);
+            this.grpTransitionChase.Name = "grpTransitionChase";
+            this.grpTransitionChase.Size = new System.Drawing.Size(243, 122);
+            this.grpTransitionChase.TabIndex = 4;
+            this.grpTransitionChase.TabStop = false;
+            this.grpTransitionChase.Text = "Chase";
             // 
             // cmbTransitionChaseTarget
             // 
@@ -621,46 +625,48 @@
             this.prgTransitionCycle.Size = new System.Drawing.Size(471, 23);
             this.prgTransitionCycle.TabIndex = 4;
             // 
-            // groupBox4
+            // grpFade
             // 
-            this.groupBox4.Controls.Add(this.groupBox6);
-            this.groupBox4.Controls.Add(this.label21);
-            this.groupBox4.Controls.Add(this.groupBox8);
-            this.groupBox4.Controls.Add(this.cmbFadeBgColor);
-            this.groupBox4.Controls.Add(this.cmbFadeMode);
-            this.groupBox4.Controls.Add(this.label26);
-            this.groupBox4.Controls.Add(this.nmFadeFlicker);
-            this.groupBox4.Controls.Add(this.label27);
-            this.groupBox4.Controls.Add(this.nmFadeSpeed);
-            this.groupBox4.Controls.Add(this.label28);
-            this.groupBox4.Controls.Add(this.prgFadeCycle);
-            this.groupBox4.Location = new System.Drawing.Point(560, 503);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(506, 246);
-            this.groupBox4.TabIndex = 2;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Fade";
+            this.grpFade.Controls.Add(this.grpFadeShift);
+            this.grpFade.Controls.Add(this.label21);
+            this.grpFade.Controls.Add(this.grpFadeChase);
+            this.grpFade.Controls.Add(this.cmbFadeBgColor);
+            this.grpFade.Controls.Add(this.cmbFadeMode);
+            this.grpFade.Controls.Add(this.label26);
+            this.grpFade.Controls.Add(this.nmFadeFlicker);
+            this.grpFade.Controls.Add(this.label27);
+            this.grpFade.Controls.Add(this.nmFadeSpeed);
+            this.grpFade.Controls.Add(this.label28);
+            this.grpFade.Controls.Add(this.nmFadeWidth);
+            this.grpFade.Controls.Add(this.prgFadeCycle);
+            this.grpFade.Controls.Add(this.label32);
+            this.grpFade.Location = new System.Drawing.Point(560, 503);
+            this.grpFade.Name = "grpFade";
+            this.grpFade.Size = new System.Drawing.Size(532, 246);
+            this.grpFade.TabIndex = 2;
+            this.grpFade.TabStop = false;
+            this.grpFade.Text = "Fade";
             // 
-            // groupBox6
+            // grpFadeShift
             // 
-            this.groupBox6.Controls.Add(this.cmbFadeShiftTarget);
-            this.groupBox6.Controls.Add(this.txtFadeShiftEffect);
-            this.groupBox6.Controls.Add(this.label3);
-            this.groupBox6.Controls.Add(this.label17);
-            this.groupBox6.Controls.Add(this.cmbFadeShiftMode);
-            this.groupBox6.Controls.Add(this.label18);
-            this.groupBox6.Controls.Add(this.nmFadeShiftStep);
-            this.groupBox6.Controls.Add(this.label19);
-            this.groupBox6.Controls.Add(this.nmFadeShiftWidth);
-            this.groupBox6.Controls.Add(this.label31);
-            this.groupBox6.Controls.Add(this.nmFadeShiftAmount);
-            this.groupBox6.Controls.Add(this.label20);
-            this.groupBox6.Location = new System.Drawing.Point(255, 80);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(243, 151);
-            this.groupBox6.TabIndex = 4;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Shift";
+            this.grpFadeShift.Controls.Add(this.cmbFadeShiftTarget);
+            this.grpFadeShift.Controls.Add(this.txtFadeShiftEffect);
+            this.grpFadeShift.Controls.Add(this.label3);
+            this.grpFadeShift.Controls.Add(this.label17);
+            this.grpFadeShift.Controls.Add(this.cmbFadeShiftMode);
+            this.grpFadeShift.Controls.Add(this.label18);
+            this.grpFadeShift.Controls.Add(this.nmFadeShiftStep);
+            this.grpFadeShift.Controls.Add(this.label19);
+            this.grpFadeShift.Controls.Add(this.nmFadeShiftWidth);
+            this.grpFadeShift.Controls.Add(this.label31);
+            this.grpFadeShift.Controls.Add(this.nmFadeShiftAmount);
+            this.grpFadeShift.Controls.Add(this.label20);
+            this.grpFadeShift.Location = new System.Drawing.Point(255, 80);
+            this.grpFadeShift.Name = "grpFadeShift";
+            this.grpFadeShift.Size = new System.Drawing.Size(243, 151);
+            this.grpFadeShift.TabIndex = 4;
+            this.grpFadeShift.TabStop = false;
+            this.grpFadeShift.Text = "Shift";
             // 
             // cmbFadeShiftTarget
             // 
@@ -789,22 +795,22 @@
             this.label21.TabIndex = 13;
             this.label21.Text = "Background Color";
             // 
-            // groupBox8
+            // grpFadeChase
             // 
-            this.groupBox8.Controls.Add(this.cmbFadeChaseTarget);
-            this.groupBox8.Controls.Add(this.txtFadeChaseEffect);
-            this.groupBox8.Controls.Add(this.label22);
-            this.groupBox8.Controls.Add(this.label23);
-            this.groupBox8.Controls.Add(this.cmbFadeChaseMode);
-            this.groupBox8.Controls.Add(this.label24);
-            this.groupBox8.Controls.Add(this.nmFadeChaseWidth);
-            this.groupBox8.Controls.Add(this.label25);
-            this.groupBox8.Location = new System.Drawing.Point(6, 111);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(243, 122);
-            this.groupBox8.TabIndex = 4;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Chase";
+            this.grpFadeChase.Controls.Add(this.cmbFadeChaseTarget);
+            this.grpFadeChase.Controls.Add(this.txtFadeChaseEffect);
+            this.grpFadeChase.Controls.Add(this.label22);
+            this.grpFadeChase.Controls.Add(this.label23);
+            this.grpFadeChase.Controls.Add(this.cmbFadeChaseMode);
+            this.grpFadeChase.Controls.Add(this.label24);
+            this.grpFadeChase.Controls.Add(this.nmFadeChaseWidth);
+            this.grpFadeChase.Controls.Add(this.label25);
+            this.grpFadeChase.Location = new System.Drawing.Point(6, 111);
+            this.grpFadeChase.Name = "grpFadeChase";
+            this.grpFadeChase.Size = new System.Drawing.Size(243, 122);
+            this.grpFadeChase.TabIndex = 4;
+            this.grpFadeChase.TabStop = false;
+            this.grpFadeChase.Text = "Chase";
             // 
             // cmbFadeChaseTarget
             // 
@@ -909,7 +915,7 @@
             // 
             // nmFadeFlicker
             // 
-            this.nmFadeFlicker.Location = new System.Drawing.Point(445, 51);
+            this.nmFadeFlicker.Location = new System.Drawing.Point(474, 51);
             this.nmFadeFlicker.Maximum = new decimal(new int[] {
             255,
             0,
@@ -923,7 +929,7 @@
             // label27
             // 
             this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(348, 53);
+            this.label27.Location = new System.Drawing.Point(377, 53);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(98, 15);
             this.label27.TabIndex = 8;
@@ -931,7 +937,7 @@
             // 
             // nmFadeSpeed
             // 
-            this.nmFadeSpeed.Location = new System.Drawing.Point(295, 51);
+            this.nmFadeSpeed.Location = new System.Drawing.Point(324, 51);
             this.nmFadeSpeed.Maximum = new decimal(new int[] {
             255,
             0,
@@ -945,29 +951,51 @@
             // label28
             // 
             this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(252, 53);
+            this.label28.Location = new System.Drawing.Point(281, 53);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(39, 15);
             this.label28.TabIndex = 8;
             this.label28.Text = "Speed";
             // 
+            // nmFadeWidth
+            // 
+            this.nmFadeWidth.Location = new System.Drawing.Point(230, 51);
+            this.nmFadeWidth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.nmFadeWidth.Name = "nmFadeWidth";
+            this.nmFadeWidth.Size = new System.Drawing.Size(47, 23);
+            this.nmFadeWidth.TabIndex = 9;
+            this.nmFadeWidth.ValueChanged += new System.EventHandler(this.nmFadeWidth_ValueChanged);
+            // 
             // prgFadeCycle
             // 
             this.prgFadeCycle.Location = new System.Drawing.Point(10, 22);
             this.prgFadeCycle.Name = "prgFadeCycle";
-            this.prgFadeCycle.Size = new System.Drawing.Size(488, 23);
+            this.prgFadeCycle.Size = new System.Drawing.Size(517, 23);
             this.prgFadeCycle.TabIndex = 4;
             // 
-            // Focus
+            // label32
             // 
-            this.Focus.Controls.Add(this.nmPixel);
-            this.Focus.Controls.Add(this.label29);
-            this.Focus.Location = new System.Drawing.Point(535, 12);
-            this.Focus.Name = "Focus";
-            this.Focus.Size = new System.Drawing.Size(121, 49);
-            this.Focus.TabIndex = 3;
-            this.Focus.TabStop = false;
-            this.Focus.Text = "Focus";
+            this.label32.AutoSize = true;
+            this.label32.Location = new System.Drawing.Point(185, 53);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(39, 15);
+            this.label32.TabIndex = 8;
+            this.label32.Text = "Width";
+            // 
+            // grpFocus
+            // 
+            this.grpFocus.Controls.Add(this.nmPixel);
+            this.grpFocus.Controls.Add(this.label29);
+            this.grpFocus.Location = new System.Drawing.Point(535, 12);
+            this.grpFocus.Name = "grpFocus";
+            this.grpFocus.Size = new System.Drawing.Size(121, 49);
+            this.grpFocus.TabIndex = 3;
+            this.grpFocus.TabStop = false;
+            this.grpFocus.Text = "Focus";
             // 
             // nmPixel
             // 
@@ -1009,45 +1037,46 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 744);
             this.Controls.Add(this.picDisplay);
-            this.Controls.Add(this.Focus);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.grpFocus);
+            this.Controls.Add(this.grpFade);
+            this.Controls.Add(this.grpTransition);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.grpTime);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.grpTime.ResumeLayout(false);
+            this.grpTime.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTicks)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
+            this.grpTransition.ResumeLayout(false);
+            this.grpTransition.PerformLayout();
+            this.grpTransitionShift.ResumeLayout(false);
+            this.grpTransitionShift.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionShiftAmount)).EndInit();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
+            this.grpTransitionChase.ResumeLayout(false);
+            this.grpTransitionChase.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionChaseWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionFlicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionSpeed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmTransitionWidth)).EndInit();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
+            this.grpFade.ResumeLayout(false);
+            this.grpFade.PerformLayout();
+            this.grpFadeShift.ResumeLayout(false);
+            this.grpFadeShift.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftStep)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeShiftAmount)).EndInit();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
+            this.grpFadeChase.ResumeLayout(false);
+            this.grpFadeChase.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeChaseWidth)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeFlicker)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmFadeSpeed)).EndInit();
-            this.Focus.ResumeLayout(false);
-            this.Focus.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nmFadeWidth)).EndInit();
+            this.grpFocus.ResumeLayout(false);
+            this.grpFocus.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmPixel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
             this.ResumeLayout(false);
@@ -1056,18 +1085,18 @@
 
         #endregion
 
-        private GroupBox groupBox1;
+        private GroupBox grpTime;
         private NumericUpDown nmTicks;
         private Label label1;
         private GroupBox groupBox2;
-        private GroupBox groupBox3;
+        private GroupBox grpTransition;
         private ComboBox cmbTimeStep;
         private Label label2;
         private RadioButton rdoRealTime;
         private RadioButton rdoSlow;
         private RadioButton rdoManual;
         private ComboBox cmbPresets;
-        private GroupBox groupBox7;
+        private GroupBox grpTransitionShift;
         private ComboBox cmbTransitionShiftTarget;
         private TextBox txtTransitionShiftEffect;
         private Label label13;
@@ -1079,7 +1108,7 @@
         private NumericUpDown nmTransitionShiftAmount;
         private Label label16;
         private Label label6;
-        private GroupBox groupBox5;
+        private GroupBox grpTransitionChase;
         private ComboBox cmbTransitionChaseTarget;
         private TextBox txtTransitionChaseEffect;
         private Label label8;
@@ -1099,8 +1128,8 @@
         private Label label4;
         private TextBox txtColorBucket;
         private ProgressBar prgTransitionCycle;
-        private GroupBox groupBox4;
-        private GroupBox groupBox6;
+        private GroupBox grpFade;
+        private GroupBox grpFadeShift;
         private ComboBox cmbFadeShiftTarget;
         private TextBox txtFadeShiftEffect;
         private Label label3;
@@ -1112,7 +1141,7 @@
         private NumericUpDown nmFadeShiftAmount;
         private Label label20;
         private Label label21;
-        private GroupBox groupBox8;
+        private GroupBox grpFadeChase;
         private ComboBox cmbFadeChaseTarget;
         private TextBox txtFadeChaseEffect;
         private Label label22;
@@ -1129,7 +1158,7 @@
         private NumericUpDown nmFadeSpeed;
         private Label label28;
         private ProgressBar prgFadeCycle;
-        private GroupBox Focus;
+        private GroupBox grpFocus;
         private NumericUpDown nmPixel;
         private Label label29;
         private PictureBox picDisplay;
@@ -1138,5 +1167,8 @@
         private Label label30;
         private NumericUpDown nmFadeShiftWidth;
         private Label label31;
+        private HelpProvider helpProvider1;
+        private NumericUpDown nmFadeWidth;
+        private Label label32;
     }
 }

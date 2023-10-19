@@ -157,6 +157,7 @@ namespace WinFormsApp1.Models
         public void enable_fade() { _fade.enable(); }
         public void set_bgcolor(ulong color) { _fade.set_bgcolor(color); }
         public void set_fadespeed(byte value, ulong millis) { _fade.set_speed(value, millis); }
+        public void set_fadewidth(byte value) { _fade.set_width(value); }
 
         public void set_transitionmode(String mode) { _transition.set_mode(mode); }
         public void disable_transition() { _transition.disable(); }

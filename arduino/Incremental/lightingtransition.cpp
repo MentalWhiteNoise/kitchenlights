@@ -42,10 +42,12 @@ uint32_t LightingTransition::get_effect(unsigned long tick, bool fade_bounced, u
   double cyclePercent = get_cycle_percent(tick);
   
   bool shiftBounced = (pixel == 0 && fade_bounced || _lastP0 > 0 && (int)(cyclePercent * _colorarray_length) == 0);
+  uint8_t p0Bucket = (uint8_t)(cyclePercent * _colorarray_length) % _colorarray_length;
+  bool shiftBounced = (pixel == 0 && fade_bounced || pixel == 0 && _lastP0 != p0Bucket);
   double shift = _shift.get_effect(pixel, shiftBounced, _colorarray_length);
 
-  if (pixel == 0 && (int)(cyclePercent * _colorarray_length) == 0){
-    _lastP0 = (int)(cyclePercent * _colorarray_length);
+  if (pixel == 0 /*&& (int)(cyclePercent * _colorarray_length) == 0*/){
+    _lastP0 = (uint8_t)p0Bucket
   }
   cyclePercent = cyclePercent - ((int)cyclePercent);
 
@@ -300,7 +302,7 @@ String LightingTransition::toString(){
   return strOut;
 }
 void LightingTransition::serialize(byte* data){
-  int start = 17; // -> 93
+  int start = 18; // -> 94
   data[start] = (byte)_mode;
   data[start+1] = (byte)_colorarray_length;
   for(int i = 0; i < 16; i++){
@@ -320,7 +322,7 @@ void LightingTransition::serialize(byte* data){
   return;
 }
 void LightingTransition::deserialize(byte* data){
-  int start = 17;
+  int start = 18;
   _mode = (TransitionMode)data[start];
   _colorarray_length = (uint8_t)data[start+1];
   for(int i = 0; i < 16; i++){

@@ -71,12 +71,13 @@ namespace WinFormsApp1.Models
             //note: when speed changes, be sure to capture % thru cycle, then cast tick back to preserve position within cycle...
             double cyclePercent = get_cycle_percent(tick);
 
-            bool shiftBounced = (pixel == 0 && fade_bounced || _lastP0 > 0 && (int)(cyclePercent * _colorarray_length) == 0);
+            int p0Bucket = (int)(cyclePercent * _colorarray_length) % _colorarray_length;
+            bool shiftBounced = (pixel == 0 && fade_bounced || pixel == 0 && _lastP0 != p0Bucket);
             double shift = _shift.get_effect(pixel, shiftBounced, _colorarray_length);
 
-            if (pixel == 0 && (int)(cyclePercent * _colorarray_length) == 0)
+            if (pixel == 0/* && (int)(cyclePercent * _colorarray_length) == 0*/)
             {
-                _lastP0 = (byte)((int)(cyclePercent * _colorarray_length));
+                _lastP0 = (byte)p0Bucket;
             }
             //cyclePercent = cyclePercent + shift;
             cyclePercent = cyclePercent - ((int)cyclePercent);

@@ -136,10 +136,10 @@ String LightingChase::toString(){
   strOut += chasetarget2string(_target);
   return strOut;
 }
-void LightingChase::serialize_fade(byte* data) { serialize(data, 14); }
-void LightingChase::serialize_transition(byte* data) { serialize(data, 91); }
-void LightingChase::deserialize_fade(byte* data) { deserialize(data, 14); }
-void LightingChase::deserialize_transition(byte* data) { deserialize(data, 91); }
+void LightingChase::serialize_fade(byte* data) { serialize(data, 15); }
+void LightingChase::serialize_transition(byte* data) { serialize(data, 92); }
+void LightingChase::deserialize_fade(byte* data) { deserialize(data, 15); }
+void LightingChase::deserialize_transition(byte* data) { deserialize(data, 92); }
 void LightingChase::serialize(byte* data, int start){
   data[start] = (byte)_mode;
   data[start+1] = (byte)_width;

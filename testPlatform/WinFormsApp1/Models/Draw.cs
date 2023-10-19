@@ -48,7 +48,8 @@ namespace WinFormsApp1.Models
             if (!perPixel)
             {
                 var tempColor = lighting.getColor(tick, 0);
-                color = Color.FromArgb(Colors.RedPart(tempColor), Colors.GreenPart(tempColor), Colors.BluePart(tempColor));
+                var white = Colors.WhitePart(tempColor);
+                color = Color.FromArgb(Math.Max(Colors.RedPart(tempColor), white), Math.Max(Colors.GreenPart(tempColor), white), Math.Max(Colors.BluePart(tempColor), white));
             }
             for (var i = 0; i < PixelLayout.PixelLocations.First(x => x.locationType == "ALL").end; i++)
             {   
@@ -56,8 +57,9 @@ namespace WinFormsApp1.Models
                 if (perPixel)
                 {
                     var tempColor = lighting.getColor(tick, (ushort)i);
-                    color = Color.FromArgb(Colors.RedPart(tempColor), Colors.GreenPart(tempColor), Colors.BluePart(tempColor));
-                }                
+                    var white = Colors.WhitePart(tempColor);
+                    color = Color.FromArgb(Math.Max(Colors.RedPart(tempColor), white), Math.Max(Colors.GreenPart(tempColor), white), Math.Max(Colors.BluePart(tempColor), white));
+                }
                 target.SetPixel(pnt.X * 2, (212 - pnt.Y) * 2, color);
                 target.SetPixel(pnt.X * 2+1, (212 - pnt.Y) * 2, color);
                 target.SetPixel(pnt.X * 2+1, (212 - pnt.Y) * 2+1, color);

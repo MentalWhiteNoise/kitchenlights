@@ -11,6 +11,7 @@ LightingFade::LightingFade(){
   _lastmode = FADEMODE_OFF;
   _bgcolor = 0;
   _speed = 0;
+  _width = 0;
   _flickeractivation = 127;
   _tick = millis();
   _pausedCyclePercent = _tick;
@@ -114,6 +115,7 @@ void LightingFade::set_speed(uint8_t value){
   set_tick_at_cycle_percent(get_cycle_percent(millis()), value);
   _speed = value; 
 }
+void LightingFade::set_width(uint8_t value){ _width = value; }
 void LightingFade::set_chasemode(String mode){ _chase.set_mode(mode); }
 void LightingFade::set_chasewidth(uint8_t value){ _chase.set_width(value); }
 void LightingFade::set_bgcolor(uint32_t color){ _bgcolor = color; }
@@ -137,6 +139,7 @@ String LightingFade::displaySettings(){
   strOut += "\n\t\t(Last Fade Mode: " + fademode2string(_lastmode);
   strOut += "\n\tBg Color: #" + ColorAsHex(_bgcolor);
   strOut += "\n\tSpeed: " + String(_speed);
+  strOut += "\n\tWidth: " + String(_width);
   strOut += "\n\tFlicker Activation: " + String(_flickeractivation);
   strOut += "\n\tInternal: ";
   strOut += "\n\t\tStart Tick: " + String(_tick);
@@ -175,19 +178,24 @@ String LightingFade::toString(){
     strOut += F(" at a speed of ");
     strOut += String(_speed);
   }
+  if (_width > 0){
+    strOut += F(" with a width of ");
+    strOut += String(_width);
+  }
   return strOut;
 }
 
 void LightingFade::serialize(byte* data){
-  int start = 2; // -> 15
+  int start = 2; // -> 16
   data[start] = (byte)_mode;
   data[start+1] = (byte)WhitePart(_bgcolor);
   data[start+2] = (byte)RedPart(_bgcolor);
   data[start+3] = (byte)GreenPart(_bgcolor);
   data[start+4] = (byte)BluePart(_bgcolor);
   data[start+5] = (byte)_speed;
-  data[start+6] = (byte)_flickeractivation;
-  data[start+7] = (_paused) ? 1 + (byte)uint(_pausedCyclePercent*100) : 0;
+  data[start+6] = (byte)_width;
+  data[start+7] = (byte)_flickeractivation;
+  data[start+8] = (_paused) ? 1 + (byte)uint(_pausedCyclePercent*100) : 0;
   _shift.serialize_fade(data);
   _chase.serialize_fade(data);
   return;
@@ -197,8 +205,9 @@ void LightingFade::deserialize(byte* data){
   _mode = (FadeMode)data[start];
   _bgcolor = AsColor((uint8_t)data[start+2], (uint8_t)data[start+3], (uint8_t)data[start+4], (uint8_t)data[start+1]);
   _speed = (uint8_t)data[start+5];
-  _flickeractivation = (uint8_t)data[start+6];
-  uint8_t tempPercent = (uint8_t)data[start+7];
+  _width = (uint8_t)data[start+6];
+  _flickeractivation = (uint8_t)data[start+7];
+  uint8_t tempPercent = (uint8_t)data[start+8];
   if (tempPercent > 0){
     _pausedCyclePercent = double(tempPercent - 1)/100;
     _paused = false;

@@ -72,14 +72,33 @@ namespace WinFormsApp1
             lightingPreset = getLightingPresets();
             presetColorArrays = getPresetColorArrays();
             presetBgColors = getPresetBgColors();
+
+            helpProvider1.SetShowHelp(nmPixel, true);
+            helpProvider1.SetHelpString(nmPixel, "Select a pixel to see the corresponding effects from at this point.");
+            helpProvider1.SetShowHelp(nmTicks, true);
+            helpProvider1.SetHelpString(nmTicks, "Increments the drawing. Corresponds to milliseconds, but real time is actually much slower than ms based on redraws.");
+
+            helpProvider1.SetShowHelp(nmFadeChaseWidth, true);
+            helpProvider1.SetShowHelp(nmFadeFlicker, true);
+            helpProvider1.SetShowHelp(nmFadeShiftAmount, true);
+            helpProvider1.SetShowHelp(nmFadeShiftWidth, true);
+            helpProvider1.SetShowHelp(nmFadeSpeed, true);
+            helpProvider1.SetShowHelp(nmTransitionChaseWidth, true);
+            helpProvider1.SetShowHelp(nmTransitionFlicker, true);
+            helpProvider1.SetShowHelp(nmTransitionShiftAmount, true);
+            helpProvider1.SetShowHelp(nmTransitionShiftWidth, true);
+            helpProvider1.SetShowHelp(nmTransitionWidth, true);
         }
 
         private void redraw()
         {
+            #region Refresh lighting display
             var lighting = GetSelectedLighting();
             Draw.RenderLights((ulong)nmTicks.Value, lighting, (Bitmap)picDisplay.Image);
             picDisplay.Refresh();
+            #endregion
 
+            #region Refresh lighting values
             var pixel = (ushort)nmPixel.Value;
 
             var fCycle = lighting._fade.get_cycle_percent((ulong)nmTicks.Value);
@@ -102,11 +121,167 @@ namespace WinFormsApp1
             txtTransitionShiftEffect.Text = tShiftEffect.ToString();
             nmTransitionShiftStep.Value = lighting._transition._shift._step;
 
-
             prgFadeCycle.Value = (int)(100 * fCycle);
             txtFadeChaseEffect.Text = fChaseEffect.ToString();
             txtFadeShiftEffect.Text = fShiftEffect.ToString();
             nmFadeShiftStep.Value = lighting._fade._shift._step;
+            #endregion
+
+            #region Enable / disable options and set help
+            if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_OFF)
+            {
+                nmTransitionSpeed.Enabled = false;
+                nmTransitionChaseWidth.Enabled = false;
+                nmTransitionFlicker.Enabled = false;
+                nmTransitionWidth.Enabled = false;
+                grpTransitionChase.Enabled = false;
+                grpTransitionShift.Enabled = false;
+            }
+            else if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_IMMIDIATE || lighting._transition._mode == TransitionMode.TRANSITIONMODE_BLEND || lighting._transition._mode == TransitionMode.TRANSITIONMODE_ONBOUNCE)
+            {
+                nmTransitionSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionSpeed, "Time between cycles");
+                nmTransitionChaseWidth.Enabled = false;
+                nmTransitionFlicker.Enabled = false;
+                nmTransitionWidth.Enabled = false;
+                grpTransitionChase.Enabled = false;
+                grpTransitionShift.Enabled = true;
+            }
+            else if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_STICKYBLEND)
+            {
+                nmTransitionSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionSpeed, "Time between cycles");
+                nmTransitionFlicker.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionWidth, "Length of time full off");
+                nmTransitionWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionWidth, "Length of time full on");
+                grpTransitionChase.Enabled = false;
+                grpTransitionShift.Enabled = true;
+            }
+            else if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_CHASE)
+            {
+                nmTransitionSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionSpeed, "Time between cycles");
+                nmTransitionFlicker.Enabled = false;
+                nmTransitionWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionWidth, "Width of effected cycle, as a percent of full cycle (compression)");
+                grpTransitionChase.Enabled = true;
+                grpTransitionShift.Enabled = true;
+
+                nmTransitionChaseWidth.Enabled = lighting._transition._chase._mode != ChaseMode.CHASEMODE_OFF;
+                helpProvider1.SetHelpString(nmTransitionChaseWidth, "Number of cycles \"in Range\" at one time.");
+            }
+            else if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_FLICKER)
+            {
+                nmTransitionSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionSpeed, "Time on for \"flicker\"");
+                nmTransitionFlicker.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionFlicker, "Number of pixels turning on/ off");
+                nmTransitionWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionWidth, "Maximum size of activated \"flicker\" pixels (distance from center to impact)");
+                grpTransitionChase.Enabled = false;
+                grpTransitionShift.Enabled = true;
+            }
+            else if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_PIXELATE)
+            {
+                nmTransitionSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionSpeed, "Time between cycles");
+                nmTransitionFlicker.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionFlicker, "Max number of pixels to switch on at once");
+                nmTransitionWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmTransitionWidth, "Percent of time fully on");
+                grpTransitionChase.Enabled = false;
+                grpTransitionShift.Enabled = true;
+            }
+            if (grpTransitionShift.Enabled)
+            {
+                if (lighting._transition._shift._mode == ShiftMode.SHIFTMODE_OFF)
+                {
+                    nmTransitionShiftAmount.Enabled = false;
+                    nmTransitionShiftWidth.Enabled = false;
+                }
+                else
+                {
+                    nmTransitionShiftAmount.Enabled = true;
+                    if (lighting._transition._shift._target == ShiftTarget.SHIFTTARGET_PIXEL)
+                    { nmTransitionShiftWidth.Enabled = true; }
+                    else
+                    { nmTransitionShiftWidth.Enabled = false; }
+                }
+            }
+
+            if (lighting._fade._mode == FadeMode.FADEMODE_OFF)
+            {
+                nmFadeSpeed.Enabled = false;
+                nmFadeWidth.Enabled = false;
+                nmFadeFlicker.Enabled = false;
+                grpFadeChase.Enabled = false;
+                grpFadeShift.Enabled = false;
+            }
+            else if (lighting._fade._mode == FadeMode.FADEMODE_PULSE || lighting._fade._mode == FadeMode.FADEMODE_LINEAR)
+            {
+                nmFadeSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeSpeed, "Time between pulses");
+                nmFadeWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeWidth, "Length of time on");
+                nmFadeFlicker.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeFlicker, "Length of time off");
+                grpFadeChase.Enabled = false;
+                grpFadeShift.Enabled = true;
+            }
+            else if (lighting._fade._mode == FadeMode.FADEMODE_HEARTBEAT)
+            {
+                nmFadeSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeSpeed, "Time between beats");
+                nmFadeWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeWidth, "amount of cycle on vs off");
+                nmFadeFlicker.Enabled = false; // maybe in the future?
+                //helpProvider1.SetHelpString(nmFadeFlicker, "Size of small beat to large?");
+                grpFadeChase.Enabled = false;
+                grpFadeShift.Enabled = true;
+            }
+            else if (lighting._fade._mode == FadeMode.FADEMODE_CHASE)
+            {
+                nmFadeSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeSpeed, "Time between chase cycles");
+                nmFadeWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeWidth, "Width of effected cycle, as a percent (compresses waves)");
+                nmFadeFlicker.Enabled = false;
+                grpFadeChase.Enabled = true;
+                grpFadeShift.Enabled = true;
+
+                nmFadeChaseWidth.Enabled = lighting._fade._chase._mode != ChaseMode.CHASEMODE_OFF;
+                helpProvider1.SetHelpString(nmFadeChaseWidth, "Number of cycles \"in Range\" at one time.");
+            }
+            else if (lighting._fade._mode == FadeMode.FADEMODE_FLICKER)
+            {
+                nmFadeSpeed.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeSpeed, "Time on for \"flicker\"");
+                nmFadeWidth.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeWidth, "Maximum size of activated \"flicker\" pixels (distance from center to impact)");
+                nmFadeFlicker.Enabled = true;
+                helpProvider1.SetHelpString(nmFadeFlicker, "Number of pixels turning on/ off");
+                grpFadeChase.Enabled = false;
+                grpFadeShift.Enabled = true;
+            }
+            if (grpFadeShift.Enabled)
+            {
+                if (lighting._fade._shift._mode == ShiftMode.SHIFTMODE_OFF)
+                {
+                    nmFadeShiftAmount.Enabled = false;
+                    nmFadeShiftWidth.Enabled = false;
+                }
+                else
+                {
+                    nmFadeShiftAmount.Enabled = true;
+                    if (lighting._fade._shift._target == ShiftTarget.SHIFTTARGET_PIXEL)
+                    { nmFadeShiftWidth.Enabled = true; }
+                    else
+                    { nmFadeShiftWidth.Enabled = false; }
+                }
+            }
+
+            #endregion
         }
         private void nmTicks_ValueChanged(object sender, EventArgs e)
         {
@@ -622,6 +797,21 @@ namespace WinFormsApp1
             {
                 lighting.set_transitionshiftwidth((byte)nmTransitionShiftWidth.Value);
             }
+        }
+
+        private void nmFadeWidth_ValueChanged(object sender, EventArgs e)
+        {
+            var lighting = GetSelectedLighting();
+            if (lighting == null) return;
+            if (nmFadeWidth.Value == null)
+            {
+                nmFadeWidth.Value = lighting._fade._width;
+            }
+            else
+            {
+                lighting.set_fadewidth((byte)nmFadeWidth.Value);
+            }
+
         }
     }
 }

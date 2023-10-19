@@ -70,35 +70,37 @@ namespace WinFormsApp1.Models
 
             if (_mode == ShiftMode.SHIFTMODE_ORDERED)
             {
-                if (switchEffect)
+                /*if (switchEffect)
                 {
                     _step++;
                 }
-                if (_step > effectCount)
+                if (_step * stretchAmount > effectCount)
                 {
                     _step = 0;
-                }
-                return stretchAmount * ((instance + _step) % effectCount);
+                }*/
+                return stretchAmount * ((instance + _step) % (effectCount / stretchAmount));
             }
 
             if (_mode == ShiftMode.SHIFTMODE_ALTERNATE)
             {
-                if (switchEffect)
+                var totalEffects = effectCount * 2 - 2; // Less start and end, so it doesn't have dupes
+
+                /*if (switchEffect)
                 {
                     _step++;
                 }
-                if (_step > effectCount * 2)
+                if (_step * stretchAmount > totalEffects - 1)
                 {
                     _step = 0;
-                }
-                if (_step <= effectCount)
+                }*/
+                var bucket = (stretchAmount * ((instance + _step)) % (totalEffects / stretchAmount));
+                if (bucket < totalEffects / stretchAmount / 2)
                 {
-                    return stretchAmount * ((instance + _step) % effectCount);
-                    _step = 0;
+                    return bucket;
                 }
                 else
                 {
-                    return stretchAmount * (effectCount - (instance + _step) % effectCount);
+                    return totalEffects - bucket;
                 }
             }
             if (_mode == ShiftMode.SHIFTMODE_RANDOM)
@@ -107,14 +109,18 @@ namespace WinFormsApp1.Models
                 {
                     _step++;
                 }
+                if (_step > 255)
+                {
+                    _step = 0;
+                }
                 random = new Random((int)_step);
                 //randomSeed(_step);
                 //byte select = (byte)random(effectCount);
-                byte select = (byte)random.Next(0, effectCount);
+                byte select = (byte)random.Next(0, (int)(effectCount / stretchAmount));
                 for (int i = 0; i < instance; i++)
                 {
                     //select = (byte)random(effectCount);
-                    select = (byte)random.Next(0, effectCount);
+                    select = (byte)random.Next(0, (int)(effectCount / stretchAmount));
                 }
                 return stretchAmount * select;
             }

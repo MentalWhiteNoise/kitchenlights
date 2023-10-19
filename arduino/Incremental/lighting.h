@@ -44,6 +44,7 @@ class Lighting
 		void enable_fade();
 		void set_bgcolor(uint32_t color);
 		void set_fadespeed(uint8_t value);
+		void set_fadewidth(uint8_t value);
     
 		void set_transitionmode(String mode);
 		void disable_transition();

@@ -32,6 +32,7 @@ namespace WinFormsApp1.Models
         public FadeMode _mode { get; set; }
         public FadeMode _lastmode { get; set; }
         public byte _speed { get; set; }
+        public byte _width { get; set; }
         public byte _flickeractivation { get; set; }
         public ulong _tick { get; set; }
         public double _pausedCyclePercent { get; set; }
@@ -152,6 +153,7 @@ namespace WinFormsApp1.Models
             set_tick_at_cycle_percent(get_cycle_percent(millis), value, millis);
             _speed = value;
         }
+        public void set_width(byte value) => _width = value;
         public void set_bgcolor(ulong color) { _bgcolor = color; }
         public ulong get_bgcolor() => _bgcolor;
 

@@ -23,6 +23,7 @@ const static struct {const char method[35]; const char param[15];} methods []  =
     
     {"SET BGCOLOR", "#FFFFFF"},
     {"SET FADE SPEED", "#FF"},
+    {"SET FADE WIDTH", "#FF"},
     {"SET FADE MODE", "OFF"},
     {"SET FADE MODE", "PULSE"},
     {"SET FADE MODE", "LINEAR"},
@@ -79,6 +80,7 @@ const static struct {const char method[35]; const char param[15];} methods []  =
     {"SET TRANSITION CHASE TARGET", "SIDES"},
     
     {"SET TRANSITION SHIFT AMOUNT", "#FF"},
+    {"SET TRANSITION SHIFT WIDTH", "#FF"},
     {"SET FADE SHIFT MODE", "OFF"},
     {"SET FADE SHIFT MODE", "ORDERED"},
     {"SET FADE SHIFT MODE", "ALTERNATE"},
@@ -89,6 +91,7 @@ const static struct {const char method[35]; const char param[15];} methods []  =
     {"SET TRANSITION SHIFT MODE", "RANDOM"},
 
     {"SET FADE SHIFT AMOUNT", "#FF"},
+    {"SET FADE SHIFT WIDTH", "#FF"},
     {"SET FADE SHIFT TARGET", "PIXEL"},
     {"SET FADE SHIFT TARGET", "DOORS"},
     {"SET FADE SHIFT TARGET", "CABINETS"},
