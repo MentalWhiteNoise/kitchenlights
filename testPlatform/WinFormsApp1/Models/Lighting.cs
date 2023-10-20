@@ -172,6 +172,7 @@ namespace WinFormsApp1.Models
         public void set_fadechasewidth(byte value) { _fade.set_chasewidth(value); }
         public void set_transitionchasemode(String mode) { _transition.set_chasemode(mode); }
         public void set_transitionwidth(byte value) { _transition.set_width(value); }
+        public void set_transitionchasewidth(byte value) { _transition.set_chasewidth(value); }
         public bool perPixel() { return _transition.perPixel() || _fade.perPixel(); }
         public bool isOff() { return _colormode == ColorMode.COLORMODE_OFF; }
 

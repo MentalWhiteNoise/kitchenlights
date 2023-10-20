@@ -59,6 +59,7 @@ class Lighting
 		void set_fadechasewidth(uint8_t value);	
 		void set_transitionchasemode(String mode);
 		void set_transitionwidth(uint8_t value);
+		void set_transitionchasewidth(uint8_t value);
     bool perPixel();
     bool isOff();
 

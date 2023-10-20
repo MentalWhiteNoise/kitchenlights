@@ -18,7 +18,7 @@ namespace WinFormsApp1
             alternating.set_transitionmode("BLEND");
             alternating.set_transitionshiftmode("ORDERED");
             alternating.set_transitionshifttarget("DOORS");
-            alternating.set_transitionshiftamount(1);
+            alternating.set_transitionshiftamount(127);
             alternating.set_transitionspeed(0xFD, 0);
             rtrn.Add("alternating", alternating);
             var fadeBounce = new Lighting(0);
@@ -39,6 +39,22 @@ namespace WinFormsApp1
             hearbeat.set_fademode("HEARTBEAT");
             hearbeat.set_fadespeed(0xFD, 0);
             rtrn.Add("hearbeat", hearbeat);
+            var chaseTest = new Lighting(0);
+            chaseTest.append_colorarray(Colors.AsColor(0xFF, 0x00, 0x00, 0x00));
+            chaseTest.append_colorarray(Colors.AsColor(0x00, 0xFF, 0x00, 0x00));
+            chaseTest.append_colorarray(Colors.AsColor(0x00, 0x00, 0xFF, 0x00));
+            chaseTest.append_colorarray(Colors.AsColor(0x00, 0x00, 0x00, 0xFF));
+            chaseTest.set_colormode("ORDERED");
+            chaseTest.set_brightness(0xFF);
+            chaseTest.set_transitionspeed(0xFF, 0);
+            chaseTest.set_transitionmode("CHASE");
+            chaseTest.set_transitionchasemode("BOUNCE");
+            chaseTest.set_transitionchasewidth(127);
+            chaseTest.set_transitionwidth(127);
+            // chaseTest.set_transitionshifttarget("DOORS");
+            //chaseTest.set_transitionshiftamount(1);
+            //chaseTest.set_transitionspeed(0xFD, 0);
+            rtrn.Add("chase test", chaseTest);
             return rtrn;
         }
         public static Dictionary<string, ulong[]> presetColorArrays;
@@ -170,6 +186,7 @@ namespace WinFormsApp1
 
                 nmTransitionChaseWidth.Enabled = lighting._transition._chase._mode != ChaseMode.CHASEMODE_OFF;
                 helpProvider1.SetHelpString(nmTransitionChaseWidth, "Number of cycles \"in Range\" at one time.");
+                cmbTransitionChaseTarget.Enabled = lighting._transition._chase._mode != ChaseMode.CHASEMODE_OFF;
             }
             else if (lighting._transition._mode == TransitionMode.TRANSITIONMODE_FLICKER)
             {
@@ -280,7 +297,6 @@ namespace WinFormsApp1
                     { nmFadeShiftWidth.Enabled = false; }
                 }
             }
-
             #endregion
         }
         private void nmTicks_ValueChanged(object sender, EventArgs e)
@@ -430,6 +446,8 @@ namespace WinFormsApp1
             nmFadeFlicker.Value = lighting._fade._flickeractivation;
             nmFadeChaseWidth.Value = lighting._fade._chase._width;
             nmFadeShiftAmount.Value = lighting._fade._shift._amount;
+
+            redraw();
         }
 
         private void nmPixel_ValueChanged(object sender, EventArgs e)
@@ -483,6 +501,7 @@ namespace WinFormsApp1
             if ((string)cmbTransitionMode.SelectedItem != LightingTransition.transitionmode2string(lighting._transition._mode))
             {
                 lighting.set_transitionmode((string)cmbTransitionMode.SelectedItem);
+                redraw();
             }
         }
 
@@ -496,6 +515,7 @@ namespace WinFormsApp1
             }
             else {
                 lighting.set_transitionwidth((byte)nmTransitionWidth.Value);
+                redraw();
             }
         }
 
@@ -510,6 +530,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_transitionspeed((byte)nmTransitionSpeed.Value, (ulong)nmTicks.Value);
+                redraw();
             }
         }
 
@@ -524,6 +545,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_transitionflickeractivation((byte)nmTransitionFlicker.Value);
+                redraw();
             }
         }
         private Lighting GetSelectedLighting()
@@ -559,6 +581,7 @@ namespace WinFormsApp1
                 {
                     lighting.append_colorarray(c);
                 }
+                redraw();
             }
 
         }
@@ -570,6 +593,7 @@ namespace WinFormsApp1
             if ((string)cmbTransitionChaseMode.SelectedItem != LightingChase.chasemode2string(lighting._transition._chase._mode))
             {
                 lighting.set_transitionchasemode((string)cmbTransitionChaseMode.SelectedItem);
+                redraw();
             }
         }
 
@@ -580,12 +604,12 @@ namespace WinFormsApp1
             if ((string)cmbTransitionChaseTarget.SelectedItem != LightingChase.chasetarget2string(lighting._transition._chase._target))
             {
                 lighting.set_transitionchasetarget((string)cmbTransitionChaseTarget.SelectedItem);
+                redraw();
             }
         }
 
         private void nmTransitionChaseWidth_ValueChanged(object sender, EventArgs e)
         {
-            /*
             var lighting = GetSelectedLighting();
             if (lighting == null) return;
             if (nmTransitionChaseWidth.Value == null)
@@ -595,7 +619,8 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_transitionchasewidth((byte)nmTransitionChaseWidth.Value);
-            }*/
+                redraw();
+            }
         }
 
         private void cmbTransitionShiftMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -605,6 +630,7 @@ namespace WinFormsApp1
             if ((string)cmbTransitionShiftMode.SelectedItem != LightingShift.shiftmode2string(lighting._transition._shift._mode))
             {
                 lighting.set_transitionshiftmode((string)cmbTransitionShiftMode.SelectedItem);
+                redraw();
             }
         }
 
@@ -615,6 +641,7 @@ namespace WinFormsApp1
             if ((string)cmbTransitionShiftTarget.SelectedItem != LightingShift.shifttarget2string(lighting._transition._shift._target))
             {
                 lighting.set_transitionshifttarget((string)cmbTransitionShiftTarget.SelectedItem);
+                redraw();
             }
         }
 
@@ -629,6 +656,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_transitionshiftamount((byte)nmTransitionShiftAmount.Value);
+                redraw();
             }
         }
 
@@ -643,6 +671,7 @@ namespace WinFormsApp1
             if ((string)cmbFadeMode.SelectedItem != LightingFade.fademode2string(lighting._fade._mode))
             {
                 lighting.set_fademode((string)cmbFadeMode.SelectedItem);
+                redraw();
             }
         }
 
@@ -657,6 +686,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_fadespeed((byte)nmFadeSpeed.Value, (ulong)nmTicks.Value);
+                redraw();
             }
         }
 
@@ -671,6 +701,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_fadeflickeractivation((byte)nmFadeFlicker.Value);
+                redraw();
             }
         }
 
@@ -681,6 +712,7 @@ namespace WinFormsApp1
             if ((string)cmbFadeChaseMode.SelectedItem != LightingChase.chasemode2string(lighting._fade._chase._mode))
             {
                 lighting.set_fadechasemode((string)cmbFadeChaseMode.SelectedItem);
+                redraw();
             }
         }
 
@@ -691,6 +723,7 @@ namespace WinFormsApp1
             if ((string)cmbFadeChaseTarget.SelectedItem != LightingChase.chasetarget2string(lighting._fade._chase._target))
             {
                 lighting.set_fadechasetarget((string)cmbFadeChaseTarget.SelectedItem);
+                redraw();
             }
         }
 
@@ -705,6 +738,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_fadechasewidth((byte)nmFadeChaseWidth.Value);
+                redraw();
             }
         }
 
@@ -715,6 +749,7 @@ namespace WinFormsApp1
             if ((string)cmbFadeShiftMode.SelectedItem != LightingShift.shiftmode2string(lighting._fade._shift._mode))
             {
                 lighting.set_fadeshiftmode((string)cmbFadeShiftMode.SelectedItem);
+                redraw();
             }
         }
 
@@ -725,6 +760,7 @@ namespace WinFormsApp1
             if ((string)cmbFadeShiftTarget.SelectedItem != LightingShift.shifttarget2string(lighting._fade._shift._target))
             {
                 lighting.set_fadeshifttarget((string)cmbFadeShiftTarget.SelectedItem);
+                redraw();
             }
         }
 
@@ -739,6 +775,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_fadeshiftamount((byte)nmFadeShiftAmount.Value);
+                redraw();
             }
         }
 
@@ -763,6 +800,7 @@ namespace WinFormsApp1
             if (((KeyValuePair<string,ulong>)cmbFadeBgColor.SelectedItem).Value != lighting._fade._bgcolor)
             {
                 lighting.set_bgcolor(((KeyValuePair<string, ulong>)cmbFadeBgColor.SelectedItem).Value);
+                redraw();
             }
         }
 
@@ -782,6 +820,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_fadeshiftwidth((byte)nmFadeShiftWidth.Value);
+                redraw();
             }
         }
 
@@ -796,6 +835,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_transitionshiftwidth((byte)nmTransitionShiftWidth.Value);
+                redraw();
             }
         }
 
@@ -810,6 +850,7 @@ namespace WinFormsApp1
             else
             {
                 lighting.set_fadewidth((byte)nmFadeWidth.Value);
+                redraw();
             }
 
         }

@@ -44,6 +44,7 @@ class LightingTransition
     
 		void set_chasemode(String mode);
     void set_width(uint8_t value);
+		void set_chasewidth(uint8_t value);
     
 		void set_chasetarget(String target);
     

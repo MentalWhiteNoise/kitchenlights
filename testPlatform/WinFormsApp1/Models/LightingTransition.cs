@@ -156,7 +156,12 @@ namespace WinFormsApp1.Models
                 double revisedCyclePercent = _chase.get_effect(cyclePercent, fade_bounced, pixel);
                 colorBucket = (int)(revisedCyclePercent * _colorarray_length);
                 colorPercent = (revisedCyclePercent * _colorarray_length) - (double)colorBucket;
-
+                if (colorPercent < 0)
+                {
+                    colorBucket = colorBucket - 1;
+                    colorPercent = colorPercent + 1;
+                }
+                colorBucket = colorBucket % _colorarray_length;
                 if (colorPercent == 0.5)
                 { return _colorarray[colorBucket]; }
                 int altBucket = colorBucket - 1;
@@ -265,11 +270,8 @@ namespace WinFormsApp1.Models
         }
 
         public void set_chasemode(String mode) { _chase.set_mode(mode); }
-        public void set_width(byte value)
-        {
-            _width = value;
-            _chase.set_width(value);
-        }
+        public void set_chasewidth(byte value) { _chase.set_width(value); }
+        public void set_width(byte value) { _width = value; }
 
         public void set_chasetarget(String target) { _chase.set_target(target); }
 

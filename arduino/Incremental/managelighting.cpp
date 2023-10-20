@@ -216,6 +216,13 @@ void ManageLighting::ApplyCommand(String command, String parameters){
     //}
     //catch(...){invalidParameter = true;}
   }
+  else if (command == F("SET TRANSITION CHASE WIDTH")){ // #FF
+    //try{
+      uint8_t v = HexToInt8(parameters);
+      _lighting->set_transitionchasewidth(v);
+    //}
+    //catch(...){invalidParameter = true;}
+  }
   else if (command == F("SET TRANSITION CHASE MODE")) { // "OFF", "BOUNCE", "OUTWARD", "INWARD", "CENTERBOUNCE", "CLOCKWISE", "COUNTER"
     //try{
       _lighting->set_transitionchasemode(parameters);

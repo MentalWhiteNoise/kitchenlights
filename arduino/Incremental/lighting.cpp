@@ -128,6 +128,7 @@ void Lighting::set_fadechasemode(String mode){_fade.set_chasemode(mode);}
 void Lighting::set_fadechasewidth(uint8_t value){_fade.set_chasewidth(value);}
 void Lighting::set_transitionchasemode(String mode){_transition.set_chasemode(mode);}
 void Lighting::set_transitionwidth(uint8_t value){_transition.set_width(value);}
+void Lighting::set_transitionchasewidth(uint8_t value){_transition.set_chasewidth(value);}
 
 void Lighting::set_fadechasetarget(String target){_fade.set_chasetarget(target);}
 void Lighting::set_transitionchasetarget(String target){_transition.set_chasetarget(target);}

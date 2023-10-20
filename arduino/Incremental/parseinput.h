@@ -62,6 +62,7 @@ const static struct {const char method[35]; const char param[15];} methods []  =
     {"SET FADE CHASE MODE", "COUNTER"},
     {"SET TRANSITION MODE", "CHASE"},
     {"SET TRANSITION WIDTH", "#FF"},
+    {"SET TRANSITION CHASE WIDTH", "#FF"},
     {"SET TRANSITION CHASE MODE", "OFF"},
     {"SET TRANSITION CHASE MODE", "BOUNCE"},
     {"SET TRANSITION CHASE MODE", "OUTWARD"},

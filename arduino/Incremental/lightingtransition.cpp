@@ -207,10 +207,8 @@ void LightingTransition::set_speed(uint8_t value){
   set_tick_at_cycle_percent(get_cycle_percent(millis()), value);
   _speed = value; 
 }
-void LightingTransition::set_width(uint8_t value){
-  _width = value;
-  _chase.set_width(value);
-}
+void LightingTransition::set_width(uint8_t value){ _width = value; }
+void LightingTransition::set_chasewidth(uint8_t value) { _chase.set_width(value); }
 void LightingTransition::set_chasemode(String mode){ _chase.set_mode(mode); }
 uint8_t LightingTransition::count_colorarray(){ return _colorarray_length; }
 bool LightingTransition::is_paused(){ return _paused; }
