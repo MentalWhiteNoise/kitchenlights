@@ -16,13 +16,14 @@ const static lookup shiftmode_conversion [] = {
 ShiftMode string2shiftmode (String str);
 String shiftmode2string (ShiftMode mode);
 
-enum ShiftTarget : uint8_t { SHIFTTARGET_PIXEL, SHIFTTARGET_DOORS, SHIFTTARGET_CABINETS, SHIFTTARGET_SIDES, SHIFTTARGET_STRAIGHTS };
+enum ShiftTarget : uint8_t { SHIFTTARGET_PIXEL, SHIFTTARGET_DOORS, SHIFTTARGET_CABINETS, SHIFTTARGET_SIDES, SHIFTTARGET_STRAIGHTS, SHIFTTARGET_ALTCABINETS };
 
 const static lookup shifttarget_conversion [] = {
     {SHIFTTARGET_PIXEL, "PIXEL"},
     {SHIFTTARGET_DOORS, "DOORS"},
     {SHIFTTARGET_CABINETS, "CABINETS"},
-    {SHIFTTARGET_SIDES, "SIDES"}
+    {SHIFTTARGET_SIDES, "SIDES"},
+    {SHIFTTARGET_ALTCABINETS, "ALTCABINETS"}
 };
 ShiftTarget string2shifttarget (String str);
 String shifttarget2string (ShiftTarget target);

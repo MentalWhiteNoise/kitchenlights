@@ -93,7 +93,7 @@ namespace WinFormsApp1.Models
                 {
                     _step = 0;
                 }*/
-                var bucket = (stretchAmount * ((instance + _step)) % (totalEffects / stretchAmount));
+                var bucket = ((int)(stretchAmount * ((instance + _step))) % (int)(totalEffects / stretchAmount));
                 if (bucket < totalEffects / stretchAmount / 2)
                 {
                     return bucket;

@@ -26,6 +26,9 @@ void ManageLighting::ApplyCommand(String command, String parameters){
   bool invalidParameter = false;
   _changed = millis();
   if (command == F("DEBUG")) {
+    Serial.println(_lighting->displaySettings());
+  }
+  if (command == F("DISPLAY")) {
     Serial.println(_lighting->toString());
   }
   else if (command == F("ON")){ 
@@ -245,13 +248,13 @@ void ManageLighting::ApplyCommand(String command, String parameters){
   }
   else if (command == F("SET TRANSITION SHIFT MODE")) { // "OFF", "ALTERNATE", "RANDOM"
     //try{
-      _lighting->set_transitionchasemode(parameters);
+      _lighting->set_transitionshiftmode(parameters);
     //}
     //catch(...){invalidParameter = true;}
   }
   else if (command == F("SET TRANSITION SHIFT TARGET")) { // "PIXEL", "DOORS", "CABINETS", "SIDES"
     //try{
-      _lighting->set_transitionshiftmode(parameters);
+      _lighting->set_transitionshifttarget(parameters);
     //}
     //catch(...){invalidParameter = true;}
   }
@@ -271,13 +274,13 @@ void ManageLighting::ApplyCommand(String command, String parameters){
   }
   else if (command == F("SET FADE SHIFT MODE")) { // "OFF", "ALTERNATE", "RANDOM"
     //try{
-      _lighting->set_fadechasemode(parameters);
+      _lighting->set_fadeshiftmode(parameters);
     //}
     //catch(...){invalidParameter = true;}
   }
   else if (command == F("SET FADE SHIFT TARGET")) { // "PIXEL", "DOORS", "CABINETS", "SIDES"
     //try{
-      _lighting->set_fadeshiftmode(parameters);
+      _lighting->set_fadeshifttarget(parameters);
     //}
     //catch(...){invalidParameter = true;}
   }
@@ -397,7 +400,7 @@ void ManageLighting::draw(unsigned long tick){
 }
 
 void ManageLighting::save(){
-  byte data[92];
+  byte data[96];
   _lighting->serialize((byte*)&data);
   //Serial.println(String(data));
 
@@ -418,7 +421,7 @@ void ManageLighting::save(){
   EEPROM.commit();
 }
 void ManageLighting::load(){
-  byte data[92];
+  byte data[96];
 
   int addressIndex = 0;
 

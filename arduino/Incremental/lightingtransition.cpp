@@ -41,13 +41,13 @@ uint32_t LightingTransition::get_effect(unsigned long tick, bool fade_bounced, u
   //note: when speed changes, be sure to capture % thru cycle, then cast tick back to preserve position within cycle...
   double cyclePercent = get_cycle_percent(tick);
   
-  bool shiftBounced = (pixel == 0 && fade_bounced || _lastP0 > 0 && (int)(cyclePercent * _colorarray_length) == 0);
+  //bool shiftBounced = (pixel == 0 && fade_bounced || _lastP0 > 0 && (int)(cyclePercent * _colorarray_length) == 0);
   uint8_t p0Bucket = (uint8_t)(cyclePercent * _colorarray_length) % _colorarray_length;
   bool shiftBounced = (pixel == 0 && fade_bounced || pixel == 0 && _lastP0 != p0Bucket);
   double shift = _shift.get_effect(pixel, shiftBounced, _colorarray_length);
 
   if (pixel == 0 /*&& (int)(cyclePercent * _colorarray_length) == 0*/){
-    _lastP0 = (uint8_t)p0Bucket
+    _lastP0 = (uint8_t)p0Bucket;
   }
   cyclePercent = cyclePercent - ((int)cyclePercent);
 
@@ -265,6 +265,7 @@ String LightingTransition::displaySettings(){
   strOut += "\n\t\tPaused: " + String(_paused);
   strOut += "\n\t\tPaused Cycle Percent: " + String(_pausedCyclePercent);
   strOut += "\n\tChase: \n" + _chase.displaySettings();
+  strOut += "\n\tShift: \n" + _shift.displaySettings();
   return strOut;
 }
 String LightingTransition::toString(){  
@@ -284,6 +285,7 @@ String LightingTransition::toString(){
       else { strOut += "(" + chaseStr + ") "; }
     } break;
   }
+  String shiftStr = _shift.toString();
   if (_colorarray_length == 0){ return ""; }
   else if (_colorarray_length == 1){ return "Static #" + ColorAsHex(_colorarray[0]); }
   else{
@@ -298,6 +300,9 @@ String LightingTransition::toString(){
   if (_width > 0){ // what modes should have a width? 
     strOut += F(" and a width of ");
     strOut += String(_width);    
+  }
+  if(shiftStr != ""){
+    strOut += "\nShifted: " + shiftStr;
   }
   return strOut;
 }

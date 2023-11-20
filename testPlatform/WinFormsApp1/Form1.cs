@@ -813,5 +813,12 @@ namespace WinFormsApp1
             }
 
         }
+
+        private void btnShowText_Click(object sender, EventArgs e)
+        {
+            var lighting = GetSelectedLighting();
+            txtDebug.Text = lighting.displaySettings();
+            txtHelp.Text = lighting.toString();
+        }
     }
 }

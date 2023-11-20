@@ -19,13 +19,14 @@ const static lookup chasemode_conversion [] = {
 ChaseMode string2chasemode (String str);
 String chasemode2string (ChaseMode mode);
 
-enum ChaseTarget : uint8_t { CHASETARGET_ALL, CHASETARGET_DOORS, CHASETARGET_CABINETS, CHASETARGET_SIDES };
+enum ChaseTarget : uint8_t { CHASETARGET_ALL, CHASETARGET_DOORS, CHASETARGET_CABINETS, CHASETARGET_SIDES, CHASETARGET_ALTCABINETS };
 
 const static lookup chasetarget_conversion [] = {
     {CHASETARGET_ALL, "ALL"},
     {CHASETARGET_DOORS, "DOORS"},
     {CHASETARGET_CABINETS, "CABINETS"},
     {CHASETARGET_SIDES, "SIDES"},
+    {CHASETARGET_ALTCABINETS, "ALTCABINETS"}
 };
 ChaseTarget string2chasetarget (String str);
 String chasetarget2string (ChaseTarget target);

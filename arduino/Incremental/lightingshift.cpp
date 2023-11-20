@@ -13,7 +13,9 @@ LightingShift::LightingShift(){
   _target = SHIFTTARGET_PIXEL;
   _step = 0;
 }
-void LightingShift::set_mode(String mode) { _mode = string2shiftmode(mode); }
+void LightingShift::set_mode(String mode) { 
+  _mode = string2shiftmode(mode); 
+}
 void LightingShift::set_amount(uint8_t value) { _amount = value; }
 void LightingShift::set_width(uint8_t value) { _width = value; }
 void LightingShift::set_target(String target){ _target = string2shifttarget(target); }
@@ -38,7 +40,7 @@ double LightingShift::get_effect(uint16_t pixel, bool switchEffect, uint8_t effe
     if (_step > effectCount){
       _step = 0;
     }*/
-    return stretchAmount * ((instance + _step) % effectCount); 
+    return stretchAmount * ((instance + _step) % ((uint8_t)(effectCount / stretchAmount)));
   }
 
   if (_mode == SHIFTMODE_ALTERNATE) { 
@@ -49,7 +51,7 @@ double LightingShift::get_effect(uint16_t pixel, bool switchEffect, uint8_t effe
     if (_step * stretchAmount > totalEffects - 1){
       _step = 0;
     }*/
-    uint8_t bucket = (stretchAmount * ((instance + _step)) % (totalEffects / stretchAmount));
+    uint8_t bucket = ((uint8_t)(stretchAmount * ((instance + _step))) % (uint8_t)(totalEffects / stretchAmount));
     if (bucket < totalEffects / stretchAmount / 2){
       return bucket;
     }
@@ -61,10 +63,14 @@ double LightingShift::get_effect(uint16_t pixel, bool switchEffect, uint8_t effe
     if (switchEffect){
       _step++;
     }
+    if (_step > 255)
+    {
+      _step = 0;
+    }
     randomSeed(_step);
-    uint8_t select = (uint8_t)random.Next(0, (uint8_t)(effectCount / stretchAmount));
+    uint8_t select = (uint8_t)random(0, (uint8_t)(effectCount / stretchAmount));
     for(int i = 0; i < instance; i++){
-      select = (uint8_t)random.Next(0, (uint8_t)(effectCount / stretchAmount));
+      select = (uint8_t)random(0, (uint8_t)(effectCount / stretchAmount));
     }
     return stretchAmount * select;
   }
@@ -96,9 +102,9 @@ String LightingShift::toString(){
 }
 
 void LightingShift::serialize_fade(byte* data) { serialize(data, 11); }
-void LightingShift::serialize_transition(byte* data) { serialize(data, 88); }
+void LightingShift::serialize_transition(byte* data) { serialize(data, 89); }
 void LightingShift::deserialize_fade(byte* data) { deserialize(data, 11); }
-void LightingShift::deserialize_transition(byte* data) { deserialize(data, 88); }
+void LightingShift::deserialize_transition(byte* data) { deserialize(data, 89); }
 void LightingShift::serialize(byte* data, int start){
   data[start] = (byte)_mode;
   data[start+1] = (byte)_amount;
@@ -108,6 +114,6 @@ void LightingShift::serialize(byte* data, int start){
 void LightingShift::deserialize(byte* data, int start){
   _mode = (ShiftMode)data[start];
   _amount = (uint8_t)data[start+1];
-  _width = (uint8_t)data[start+1];
-  _target = (ShiftTarget)data[start+2];
+  _width = (uint8_t)data[start+2];
+  _target = (ShiftTarget)data[start+3];
 }

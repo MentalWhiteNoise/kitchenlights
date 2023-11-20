@@ -24,6 +24,18 @@ const static pixelLocation PixelLocation [] = {
   {"CABINETS", 6, 302, 344},
   {"CABINETS", 7, 345, 366},
   {"CABINETS", 8, 367, 418},
+  
+  {"ALTCABINETS", 0, 0, 43},
+  {"ALTCABINETS", 1, 44, 67},
+  {"ALTCABINETS", 2, 68, 118},
+  {"ALTCABINETS", 3, 119, 168},
+  {"ALTCABINETS", 4, 169, 212},
+  {"ALTCABINETS", 5, 213, 254},
+  {"ALTCABINETS", 6, 255, 301},
+  {"ALTCABINETS", 7, 302, 344},
+  {"ALTCABINETS", 8, 345, 366},
+  {"ALTCABINETS", 9, 367, 418},
+
   {"DOORS", 0, 0, 21},
   {"DOORS", 1, 22, 43},
   {"DOORS", 2, 44, 67},

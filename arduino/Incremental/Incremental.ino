@@ -20,7 +20,7 @@ Next steps:
 #include <EEPROM.h> // For remembering state
 
 #define LOAD_STATE // Disable for initial save... 
-//#define PRIMARY_CONTROLLER
+#define PRIMARY_CONTROLLER
 
 // For web hosting
 #ifdef PRIMARY_CONTROLLER
@@ -155,37 +155,6 @@ void setup() {
 }
 #include "lightingchase.h"
 #include "pixellayout.h"
-void testChaseEffects(String mode){
-  for(int i = 0; i < 26; i+=4){
-    Serial.print(i);
-    Serial.print(": ");
-    Serial.println(GetPixelDistanceToEnd("ALL", i));
-  }
-  Serial.println();
-  Serial.println(mode);
-  LightingChase chase = LightingChase();
-  chase.set_mode(mode);
-  chase.set_width(127);
-  for(double pct = 0.0; pct <= 1.0; pct+=0.05){
-    testChaseEffectAtPixels(chase, pct);
-  }
-  Serial.println();
-}
-double round_to(double value, double precision = 1.0)
-{
-    return std::round(value / precision) * precision;
-}
-void testChaseEffectAtPixels(LightingChase chase, double cyclePercent){
-  Serial.print(round_to(cyclePercent, 0.01));
-  Serial.print(": ");
-  for(int i = 0; i < 26; i+=4){
-    double results = chase.get_effect(cyclePercent, false, i);
-    Serial.print(round_to(results, 0.01));
-    Serial.print("  ");
-  }
-  Serial.println();
-}
-
 
 void loop() {
   currentMillis = millis();

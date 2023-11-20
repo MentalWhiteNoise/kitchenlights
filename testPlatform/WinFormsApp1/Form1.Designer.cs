@@ -114,6 +114,9 @@
             this.picDisplay = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.helpProvider1 = new System.Windows.Forms.HelpProvider();
+            this.txtHelp = new System.Windows.Forms.TextBox();
+            this.txtDebug = new System.Windows.Forms.TextBox();
+            this.btnShowText = new System.Windows.Forms.Button();
             this.grpTime.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nmTicks)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -1031,11 +1034,40 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // txtHelp
+            // 
+            this.txtHelp.Location = new System.Drawing.Point(902, 342);
+            this.txtHelp.Multiline = true;
+            this.txtHelp.Name = "txtHelp";
+            this.txtHelp.Size = new System.Drawing.Size(238, 122);
+            this.txtHelp.TabIndex = 5;
+            // 
+            // txtDebug
+            // 
+            this.txtDebug.Location = new System.Drawing.Point(909, 196);
+            this.txtDebug.Multiline = true;
+            this.txtDebug.Name = "txtDebug";
+            this.txtDebug.Size = new System.Drawing.Size(238, 122);
+            this.txtDebug.TabIndex = 5;
+            // 
+            // btnShowText
+            // 
+            this.btnShowText.Location = new System.Drawing.Point(967, 129);
+            this.btnShowText.Name = "btnShowText";
+            this.btnShowText.Size = new System.Drawing.Size(75, 23);
+            this.btnShowText.TabIndex = 6;
+            this.btnShowText.Text = "Show Text";
+            this.btnShowText.UseVisualStyleBackColor = true;
+            this.btnShowText.Click += new System.EventHandler(this.btnShowText_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1155, 744);
+            this.Controls.Add(this.btnShowText);
+            this.Controls.Add(this.txtDebug);
+            this.Controls.Add(this.txtHelp);
             this.Controls.Add(this.picDisplay);
             this.Controls.Add(this.grpFocus);
             this.Controls.Add(this.grpFade);
@@ -1080,6 +1112,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nmPixel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picDisplay)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1170,5 +1203,8 @@
         private HelpProvider helpProvider1;
         private NumericUpDown nmFadeWidth;
         private Label label32;
+        private TextBox txtHelp;
+        private TextBox txtDebug;
+        private Button btnShowText;
     }
 }
