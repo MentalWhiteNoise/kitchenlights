@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WinFormsApp1.Models
 {
     public enum ShiftMode { SHIFTMODE_OFF, SHIFTMODE_ORDERED, SHIFTMODE_ALTERNATE, SHIFTMODE_RANDOM };
-    public enum ShiftTarget { SHIFTTARGET_PIXEL, SHIFTTARGET_DOORS, SHIFTTARGET_CABINETS, SHIFTTARGET_SIDES, SHIFTTARGET_STRAIGHTS };
+    public enum ShiftTarget { SHIFTTARGET_PIXEL, SHIFTTARGET_DOORS, SHIFTTARGET_CABINETS, SHIFTTARGET_SIDES, SHIFTTARGET_STRAIGHTS, SHIFTTARGET_ALTCABINETS };
     public class LightingShift
     {
         #region Global C++ Objects
@@ -27,6 +27,7 @@ namespace WinFormsApp1.Models
             {ShiftTarget.SHIFTTARGET_DOORS, "DOORS"},
             {ShiftTarget.SHIFTTARGET_CABINETS, "CABINETS"},
             {ShiftTarget.SHIFTTARGET_SIDES, "SIDES"},
+            {ShiftTarget.SHIFTTARGET_ALTCABINETS, "ALTCABINETS"},
         };
         public static ShiftTarget string2shifttarget(String str) => shifttarget_conversion.First(x => x.Value == str).Key;
         public static String shifttarget2string(ShiftTarget target) => shifttarget_conversion[target];

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace WinFormsApp1.Models
 {
     public enum ChaseMode { CHASEMODE_OFF, CHASEMODE_BOUNCE, CHASEMODE_OUTWARD, CHASEMODE_INWARD, CHASEMODE_CENTERBOUNCE, CHASEMODE_CLOCKWISE, CHASEMODE_COUNTER };
-    public enum ChaseTarget { CHASETARGET_ALL, CHASETARGET_DOORS, CHASETARGET_CABINETS, CHASETARGET_SIDES };
+    public enum ChaseTarget { CHASETARGET_ALL, CHASETARGET_DOORS, CHASETARGET_CABINETS, CHASETARGET_SIDES, CHASETARGET_ALTCABINETS };
     public class LightingChase
     {
         #region Global C++ Objects
@@ -30,6 +30,7 @@ namespace WinFormsApp1.Models
             {ChaseTarget.CHASETARGET_DOORS, "DOORS"},
             {ChaseTarget.CHASETARGET_CABINETS, "CABINETS"},
             {ChaseTarget.CHASETARGET_SIDES, "SIDES"},
+            {ChaseTarget.CHASETARGET_ALTCABINETS, "ALTCABINETS"},
         };
         public static ChaseTarget string2chasetarget(String str) => chasetarget_conversion.First(x => x.Value == str).Key;
         public static String chasetarget2string(ChaseTarget target) => chasetarget_conversion[target];

@@ -351,6 +351,7 @@ namespace WinFormsApp1
             cmbTransitionChaseTarget.Items.Add("DOORS");
             cmbTransitionChaseTarget.Items.Add("CABINETS");
             cmbTransitionChaseTarget.Items.Add("SIDES");
+            cmbTransitionChaseTarget.Items.Add("ALTCABINETS");
             // cmbTransitionShiftMode
             cmbTransitionShiftMode.Items.Add("OFF");
             cmbTransitionShiftMode.Items.Add("ORDERED");
@@ -361,6 +362,7 @@ namespace WinFormsApp1
             cmbTransitionShiftTarget.Items.Add("DOORS");
             cmbTransitionShiftTarget.Items.Add("CABINETS");
             cmbTransitionShiftTarget.Items.Add("SIDES");
+            cmbTransitionShiftTarget.Items.Add("ALTCABINETS");
             // cmbFadeMode
             cmbFadeMode.Items.Add("OFF");
             cmbFadeMode.Items.Add("PULSE");
@@ -385,6 +387,7 @@ namespace WinFormsApp1
             cmbFadeChaseTarget.Items.Add("DOORS");
             cmbFadeChaseTarget.Items.Add("CABINETS");
             cmbFadeChaseTarget.Items.Add("SIDES");
+            cmbFadeChaseTarget.Items.Add("ALTCABINETS");
             // cmbFadeShiftMode
             cmbFadeShiftMode.Items.Add("OFF");
             cmbFadeShiftMode.Items.Add("ORDERED");
@@ -395,6 +398,7 @@ namespace WinFormsApp1
             cmbFadeShiftTarget.Items.Add("DOORS");
             cmbFadeShiftTarget.Items.Add("CABINETS");
             cmbFadeShiftTarget.Items.Add("SIDES");
+            cmbFadeShiftTarget.Items.Add("ALTCABINETS");
 
             // cmbPresets
             cmbPresets.DataSource = new BindingSource(lightingPreset, null);

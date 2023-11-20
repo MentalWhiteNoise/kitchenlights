@@ -343,7 +343,7 @@ void LightingTransition::deserialize(byte* data){
     _pausedCyclePercent = 0;
     _paused = false;
   }
-  _shift.deserialize_fade(data);
+  _shift.deserialize_transition(data);
   _chase.deserialize_transition(data);
   return;
 }

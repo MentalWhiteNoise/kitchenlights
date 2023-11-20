@@ -8,9 +8,7 @@
     "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Tim\\.nuget\\packages\\": {},
-    "C:\\Users\\Tim\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\thartford\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
@@ -18,24 +16,17 @@
       "projectUniqueName": "C:\\git\\kitchenlights\\testPlatform\\WinFormsApp1\\WinFormsApp1.csproj",
       "projectName": "WinFormsApp1",
       "projectPath": "C:\\git\\kitchenlights\\testPlatform\\WinFormsApp1\\WinFormsApp1.csproj",
-      "packagesPath": "C:\\Users\\Tim\\.nuget\\packages\\",
+      "packagesPath": "C:\\Users\\thartford\\.nuget\\packages\\",
       "outputPath": "C:\\git\\kitchenlights\\testPlatform\\WinFormsApp1\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Users\\Tim\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Tim\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Users\\Tim\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\thartford\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0-windows7.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

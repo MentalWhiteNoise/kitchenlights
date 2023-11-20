@@ -36,6 +36,18 @@ namespace WinFormsApp1.Models
           new PixelLocation("CABINETS", 6, 302, 344),
           new PixelLocation("CABINETS", 7, 345, 366),
           new PixelLocation("CABINETS", 8, 367, 418),
+
+          new PixelLocation("ALTCABINETS", 0, 0, 43),
+          new PixelLocation("ALTCABINETS", 1, 44, 67),
+          new PixelLocation("ALTCABINETS", 2, 68, 118),
+          new PixelLocation("ALTCABINETS", 3, 119, 168),
+          new PixelLocation("ALTCABINETS", 4, 169, 212),
+          new PixelLocation("ALTCABINETS", 5, 213, 254),
+          new PixelLocation("ALTCABINETS", 6, 255, 301),
+          new PixelLocation("ALTCABINETS", 7, 302, 344),
+          new PixelLocation("ALTCABINETS", 8, 345, 366),
+          new PixelLocation("ALTCABINETS", 9, 367, 418),
+
           new PixelLocation("DOORS", 0, 0, 21),
           new PixelLocation("DOORS", 1, 22, 43),
           new PixelLocation("DOORS", 2, 44, 67),
