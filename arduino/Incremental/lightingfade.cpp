@@ -147,6 +147,7 @@ String LightingFade::displaySettings(){
   strOut += "\n\t\tPaused: " + String(_paused);
   strOut += "\n\t\tPaused Cycle Percent: " + String(_pausedCyclePercent);
   strOut += "\n\tChase: \n" + _chase.displaySettings();
+  strOut += "\n\tShift: \n" + _shift.displaySettings();
   return strOut;
 }
 String LightingFade::toString(){
@@ -154,6 +155,7 @@ String LightingFade::toString(){
   if (_paused){ strOut += F(" - PAUSED - "); }
   strOut += fademode2string(_mode);
   String chaseStr = _chase.toString();
+  String shiftStr = _shift.toString();
   switch (_mode){
     case FADEMODE_OFF:
       return "";
@@ -181,6 +183,9 @@ String LightingFade::toString(){
   if (_width > 0){
     strOut += F(" with a width of ");
     strOut += String(_width);
+  }
+  if(shiftStr != ""){
+    strOut += "\nShifted: " + shiftStr;
   }
   return strOut;
 }

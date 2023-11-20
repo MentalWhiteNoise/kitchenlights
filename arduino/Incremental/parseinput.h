@@ -10,6 +10,7 @@
 
 const static struct {const char method[35]; const char param[15];} methods []  = { // []PROGMEM = {
     {"DEBUG", ""},
+    {"DISPLAY", ""},
     {"ON", ""},
     {"ON", "#FFFFFF"},
     {"OFF", ""},
@@ -74,10 +75,12 @@ const static struct {const char method[35]; const char param[15];} methods []  =
     {"SET FADE CHASE TARGET", "ALL"},
     {"SET FADE CHASE TARGET", "DOORS"},
     {"SET FADE CHASE TARGET", "CABINETS"},
+    {"SET FADE CHASE TARGET", "ALTCABINETS"},
     {"SET FADE CHASE TARGET", "SIDES"},
     {"SET TRANSITION CHASE TARGET", "ALL"},
     {"SET TRANSITION CHASE TARGET", "DOORS"},
     {"SET TRANSITION CHASE TARGET", "CABINETS"},
+    {"SET TRANSITION CHASE TARGET", "ALTCABINETS"},
     {"SET TRANSITION CHASE TARGET", "SIDES"},
     
     {"SET TRANSITION SHIFT AMOUNT", "#FF"},
@@ -96,10 +99,12 @@ const static struct {const char method[35]; const char param[15];} methods []  =
     {"SET FADE SHIFT TARGET", "PIXEL"},
     {"SET FADE SHIFT TARGET", "DOORS"},
     {"SET FADE SHIFT TARGET", "CABINETS"},
+    {"SET FADE SHIFT TARGET", "ALTCABINETS"},
     {"SET FADE SHIFT TARGET", "SIDES"},
     {"SET TRANSITION SHIFT TARGET", "PIXEL"},
     {"SET TRANSITION SHIFT TARGET", "DOORS"},
     {"SET TRANSITION SHIFT TARGET", "CABINETS"},
+    {"SET TRANSITION SHIFT TARGET", "ALTCABINETS"},
     {"SET TRANSITION SHIFT TARGET", "SIDES"},
     
     {"SET FADE FLICKER ACTIVATION", "#FF"},

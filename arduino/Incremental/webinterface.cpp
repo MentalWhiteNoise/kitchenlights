@@ -21,7 +21,7 @@ void WebInterface::ConfigureInterface(char* ssid, char* password){
       request->send_P(200, "text/plain", _lighting->toString().c_str());
     });
     
-    _server->on("/status", HTTP_GET, [&](AsyncWebServerRequest *request){
+    _server->on("/debug", HTTP_GET, [&](AsyncWebServerRequest *request){
       request->send_P(200, "text/plain", WebInterface::_lighting->displaySettings().c_str());
     });
 
